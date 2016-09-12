@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">PinMoney</string>
+    <string name="first_start_welcome">Bitte wählen sie ihren Status:</string>
 </resources>
