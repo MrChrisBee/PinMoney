@@ -2,7 +2,7 @@
     <string name="app_name">PinMoney</string>
 
     <string name="first_start_welcome"><u>Bitte wählen sie ihren Status:</u></string>
-    <string name="empfaenger_neu"><u>Neuer Taschengeldempfänger:</u></string>
+    <string name="empfaenger_neu">Neuer Taschengeldempfänger:</string>
     <string name="rythm"><u>Taschengeld-Rhythmus:</u></string>
     <string name="preference"><u>Vorgaben:</u></string>
 
