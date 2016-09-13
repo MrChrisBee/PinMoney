@@ -84,8 +84,8 @@
         android:layout_weight="0.06">
 
         <RadioButton
-            android:layout_width="30px"
-            android:layout_height="30px"
+            android:layout_width="50px"
+            android:layout_height="50px"
             android:text=""
             android:layout_marginLeft="30dp"
             android:id="@+id/radioButton_dayli" />
@@ -99,8 +99,8 @@
             android:id="@+id/title_dayli" />
 
         <RadioButton
-            android:layout_width="30px"
-            android:layout_height="30px"
+            android:layout_width="50px"
+            android:layout_height="50px"
             android:text=""
             android:layout_marginLeft="30dp"
             android:id="@+id/radioButton_weekly" />
@@ -114,8 +114,8 @@
             android:id="@+id/title_weekly" />
 
         <RadioButton
-            android:layout_width="30px"
-            android:layout_height="30px"
+            android:layout_width="50px"
+            android:layout_height="50px"
             android:text=""
             android:layout_marginLeft="30dp"
             android:id="@+id/radioButton_monthly" />
@@ -243,8 +243,8 @@
             android:id="@+id/textView" />
 
         <RadioButton
-            android:layout_width="30px"
-            android:layout_height="30px"
+            android:layout_width="50px"
+            android:layout_height="50px"
             android:text=""
             android:layout_marginLeft="100px"
             android:id="@+id/radioButton" />
@@ -258,8 +258,8 @@
             android:id="@+id/textView2" />
 
         <RadioButton
-            android:layout_width="30px"
-            android:layout_height="30px"
+            android:layout_width="50px"
+            android:layout_height="50px"
             android:layout_marginLeft="80px"
             android:text=""
             android:id="@+id/radioButton2" />
