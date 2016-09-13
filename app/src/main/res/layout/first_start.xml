@@ -28,6 +28,6 @@
         android:id="@+id/button_child"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="100px"
-        android:enabled="true" />/>
+        android:enabled="true" />
 
 </LinearLayout>

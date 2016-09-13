@@ -7,11 +7,231 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bitte geben sie einen neuen Taschengeldempfänger ein:"
+        android:text="@string/empfaenger_neu"
         android:id="@+id/empfaenger_neu"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50px"
-        android:textSize="20dp"
+        android:layout_marginTop="30px"
+        android:textSize="22dp"
+        android:textStyle="bold"
         android:textAlignment="center"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30px"
+        android:layout_weight="0.02">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="15px"
+            android:text="Name:"
+            android:textSize="20dp"
+            android:id="@+id/title_name" />
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="15px"
+            android:id="@+id/input_name"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20px"
+        android:layout_weight="0.04">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="15px"
+            android:text="Geb.Dat.:"
+            android:textSize="20dp"
+            android:id="@+id/title_birthday" />
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="15px"
+            android:id="@+id/input_birthday"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Taschengeld-Rhythmus:"
+        android:id="@+id/rythm"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30px"
+        android:textSize="22dp"
+        android:textStyle="bold"
+        android:textAlignment="center"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_weight="0.06">
+
+        <RadioButton
+            android:layout_width="30px"
+            android:layout_height="30px"
+            android:text=""
+            android:layout_marginLeft="30dp"
+            android:id="@+id/radioButton_dayli" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="täglich"
+            android:layout_marginLeft="10dp"
+            android:textSize="16dp"
+            android:id="@+id/title_dayli" />
+
+        <RadioButton
+            android:layout_width="30px"
+            android:layout_height="30px"
+            android:text=""
+            android:layout_marginLeft="30dp"
+            android:id="@+id/radioButton_weekly" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="wöchentlich"
+            android:layout_marginLeft="10dp"
+            android:textSize="16dp"
+            android:id="@+id/title_weekly" />
+
+        <RadioButton
+            android:layout_width="30px"
+            android:layout_height="30px"
+            android:text=""
+            android:layout_marginLeft="30dp"
+            android:id="@+id/radioButton_monthly" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="monatlich"
+            android:layout_marginLeft="10dp"
+            android:textSize="16dp"
+            android:id="@+id/title_monthly" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_weight="0.12">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="15px"
+            android:text="Betrag:"
+            android:textSize="20dp"
+            android:id="@+id/title_count" />
+
+        <EditText
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="15px"
+            android:id="@+id/input_count"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:text="€"
+            android:id="@+id/euro" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vorgaben:"
+        android:id="@+id/peference"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30px"
+        android:textSize="22dp"
+        android:textStyle="bold"
+        android:textAlignment="center"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_weight="0.12">
+
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="15px"
+            android:text="Startbetrag:"
+            android:textSize="20dp"
+            android:id="@+id/title_money" />
+
+        <EditText
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="15px"
+            android:id="@+id/input_money"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:text="€"
+            android:id="@+id/euro1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_weight="0.12">
+
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="15px"
+            android:text="Startdat.:"
+            android:textSize="20dp"
+            android:id="@+id/title_startDate" />
+
+        <EditText
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="15px"
+            android:id="@+id/input_startDate"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="350px"
+        android:layout_height="100px"
+        android:text="Speichern"
+        android:id="@+id/button_save_new_child"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10px"
+        android:enabled="true" />
 
 </LinearLayout>
