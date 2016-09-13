@@ -156,6 +156,8 @@
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:layout_marginRight="15px"
+            android:textAlignment="textEnd"
+            android:layout_gravity="end"
             android:id="@+id/input_count"/>
             <!--android:layout_weight="1" />-->
 
@@ -197,6 +199,8 @@
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:layout_marginRight="15px"
+            android:textAlignment="textEnd"
+            android:layout_gravity="end"
             android:id="@+id/input_money_start"/>
             <!--android:layout_weight="1" />-->
 
