@@ -67,7 +67,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Taschengeld-Rhythmus:"
+        android:text="@string/rythm"
         android:id="@+id/rythm"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30px"
@@ -162,7 +162,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Vorgaben:"
+        android:text="@string/preference"
         android:id="@+id/peference"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30px"
