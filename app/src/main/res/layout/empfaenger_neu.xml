@@ -280,7 +280,7 @@
         android:text="Speichern"
         android:id="@+id/button_save_new_child"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="80px"
+        android:layout_marginTop="40px"
         android:enabled="true" />
 
 </LinearLayout>
