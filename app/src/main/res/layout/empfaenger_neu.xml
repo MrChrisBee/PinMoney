@@ -185,13 +185,13 @@
             android:layout_marginLeft="15px"
             android:text="Startbetrag:"
             android:textSize="16dp"
-            android:id="@+id/title_money" />
+            android:id="@+id/title_money_start" />
 
         <EditText
             android:layout_width="150dp"
             android:layout_height="40dp"
             android:layout_marginRight="15px"
-            android:id="@+id/input_money"
+            android:id="@+id/input_money_start"
             android:layout_weight="1" />
 
         <TextView
@@ -241,14 +241,14 @@
             android:layout_marginLeft="15px"
             android:textSize="16dp"
             android:text="Handy:"
-            android:id="@+id/textView" />
+            android:id="@+id/title_mobile" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
             android:layout_marginLeft="100px"
-            android:id="@+id/radioButton" />
+            android:id="@+id/radioButton_yes" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -256,14 +256,14 @@
             android:layout_marginLeft="30px"
             android:textSize="16dp"
             android:text="Ja"
-            android:id="@+id/textView2" />
+            android:id="@+id/title_yes" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="80px"
             android:text=""
-            android:id="@+id/radioButton2" />
+            android:id="@+id/radioButton_no" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -271,7 +271,7 @@
             android:layout_marginLeft="30px"
             android:textSize="16dp"
             android:text="Nein"
-            android:id="@+id/textView3" />
+            android:id="@+id/title_no" />
     </LinearLayout>
 
     <Button
