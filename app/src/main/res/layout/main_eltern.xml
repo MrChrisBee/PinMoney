@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30px"
+        android:layout_weight="0.02"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="100px"
+            android:layout_height="40px"
+            android:layout_marginLeft="30px"
+            android:text="Kind:"
+            android:textSize="16dp"
+            android:id="@+id/title_select_child" />
+
+        <ExpandableListView
+            android:layout_width="700px"
+            android:layout_height="110dp"
+            android:layout_marginLeft="60px"
+            android:id="@+id/name_list"
+            android:layout_weight="0.49" />
+    </LinearLayout>
+
+    <Button
+        android:layout_width="400px"
+        android:layout_height="120px"
+        android:text="Kontoauszug"
+        android:id="@+id/eltern_kontoauszug"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="200px"
+        android:layout_weight="0.02" />
+
+    <Button
+        android:layout_width="400px"
+        android:layout_height="120px"
+        android:text="Auszahlung"
+        android:id="@+id/auszahlung"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="100px"
+        android:layout_weight="0.02" />
+
+    <Button
+        android:layout_width="400px"
+        android:layout_height="120px"
+        android:text="Einzahlung"
+        android:id="@+id/einzahlung"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="100px"
+        android:layout_weight="0.02" />
+</LinearLayout>
