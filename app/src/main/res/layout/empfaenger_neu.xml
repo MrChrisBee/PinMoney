@@ -21,18 +21,20 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30px"
+        android:layout_marginLeft="50px"
+        android:layout_marginRight="50px"
         android:layout_weight="0.02">
 
         <TextView
             android:layout_width="100dp"
             android:layout_height="40dp"
-            android:layout_marginLeft="15px"
+            android:layout_marginLeft="30px"
             android:text="Vorname:"
             android:textSize="16dp"
             android:id="@+id/title_name" />
 
         <EditText
-            android:layout_width="300dp"
+            android:layout_width="100dp"
             android:layout_height="40dp"
             android:layout_marginRight="15px"
             android:id="@+id/input_name"
@@ -46,12 +48,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20px"
+        android:layout_marginLeft="50px"
+        android:layout_marginRight="50px"
         android:layout_weight="0.04">
 
         <TextView
             android:layout_width="100dp"
             android:layout_height="40dp"
-            android:layout_marginLeft="15px"
+            android:layout_marginLeft="30px"
             android:text="Geb.Dat.:"
             android:textSize="16dp"
             android:id="@+id/title_birthday" />
@@ -85,48 +89,48 @@
         android:layout_weight="0.06">
 
         <RadioButton
-            android:layout_width="50px"
-            android:layout_height="50px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text=""
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="25dp"
             android:id="@+id/radioButton_dayli" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="täglich"
-            android:layout_marginLeft="10dp"
-            android:textSize="16dp"
+            android:layout_marginLeft="5dp"
+            android:textSize="14dp"
             android:id="@+id/title_dayli" />
 
         <RadioButton
-            android:layout_width="50px"
-            android:layout_height="50px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text=""
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="10dp"
             android:id="@+id/radioButton_weekly" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="wöchentlich"
-            android:layout_marginLeft="10dp"
-            android:textSize="16dp"
+            android:layout_marginLeft="5dp"
+            android:textSize="14dp"
             android:id="@+id/title_weekly" />
 
         <RadioButton
-            android:layout_width="50px"
-            android:layout_height="50px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text=""
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="10dp"
             android:id="@+id/radioButton_monthly" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="monatlich"
-            android:layout_marginLeft="10dp"
-            android:textSize="16dp"
+            android:layout_marginLeft="5dp"
+            android:textSize="14dp"
             android:id="@+id/title_monthly" />
     </LinearLayout>
 
@@ -244,8 +248,8 @@
             android:id="@+id/textView" />
 
         <RadioButton
-            android:layout_width="50px"
-            android:layout_height="50px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text=""
             android:layout_marginLeft="100px"
             android:id="@+id/radioButton" />
@@ -253,14 +257,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20px"
+            android:layout_marginLeft="30px"
             android:textSize="16dp"
             android:text="Ja"
             android:id="@+id/textView2" />
 
         <RadioButton
-            android:layout_width="50px"
-            android:layout_height="50px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="80px"
             android:text=""
             android:id="@+id/radioButton2" />
@@ -268,7 +272,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20px"
+            android:layout_marginLeft="30px"
             android:textSize="16dp"
             android:text="Nein"
             android:id="@+id/textView3" />
@@ -276,7 +280,7 @@
 
     <Button
         android:layout_width="400px"
-        android:layout_height="120px"
+        android:layout_height="wrap_content"
         android:text="Speichern"
         android:id="@+id/button_save_new_child"
         android:layout_gravity="center_horizontal"
