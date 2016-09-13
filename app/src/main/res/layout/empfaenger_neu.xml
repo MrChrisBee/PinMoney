@@ -246,7 +246,7 @@
             android:layout_width="30px"
             android:layout_height="30px"
             android:text=""
-            android:layout_marginLeft="50px"
+            android:layout_marginLeft="100px"
             android:id="@+id/radioButton" />
 
         <TextView
@@ -260,7 +260,7 @@
         <RadioButton
             android:layout_width="30px"
             android:layout_height="30px"
-            android:layout_marginLeft="50px"
+            android:layout_marginLeft="80px"
             android:text=""
             android:id="@+id/radioButton2" />
 
@@ -279,7 +279,7 @@
         android:text="Speichern"
         android:id="@+id/button_save_new_child"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30px"
+        android:layout_marginTop="80px"
         android:enabled="true" />
 
 </LinearLayout>
