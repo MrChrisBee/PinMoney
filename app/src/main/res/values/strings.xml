@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">PinMoney</string>
 
+    <string name="action_settings">Einstellungen</string>
+
     <string name="first_start_welcome">Bitte wählen sie ihren Status:</string>
     <string name="empfaenger_neu">Neuer Taschengeldempfänger:</string>
 
