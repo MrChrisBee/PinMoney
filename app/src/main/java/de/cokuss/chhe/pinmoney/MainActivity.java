@@ -9,7 +9,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_eltern);
+        setContentView(R.layout.first_start);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

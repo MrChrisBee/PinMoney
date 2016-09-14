@@ -19,6 +19,8 @@
     <string name="button_konto">Kontoauszug</string>
     <string name="button_auszahlung">Auszahlung</string>
     <string name="button_einzahlung">Einzahlung</string>
+    <string name="button_parents">Eltern</string>
+    <string name="button_child">Kind</string>
 
 
 </resources>
