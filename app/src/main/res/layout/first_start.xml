@@ -19,9 +19,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="50px"
+            android:layout_marginTop="20dp"
             android:text="@string/first_start_welcome"
-            android:textSize="22dp"
+            android:textSize="22sp"
             android:textStyle="bold"/>
 
         <Button
@@ -29,7 +29,7 @@
             android:layout_width="100pt"
             android:layout_height="20pt"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="100px"
+            android:layout_marginTop="60dp"
             android:enabled="true"
             android:text="@string/button_parents" />
 
@@ -38,7 +38,7 @@
             android:layout_width="100pt"
             android:layout_height="20pt"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="100px"
+            android:layout_marginTop="60dp"
             android:enabled="true"
             android:text="@string/button_child" />
 

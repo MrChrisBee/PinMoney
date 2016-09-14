@@ -33,6 +33,8 @@
     <string name="title_monthly">monatlich</string>
     <string name="title_weekly">wöchentlich</string>
     <string name="title_dayli">täglich</string>
+    <string name="empfaenger_vorname">Vorname:</string>
+    <string name="empfaenger_neu_geb_dat">Geb.Dat.:</string>
 
 
 </resources>
