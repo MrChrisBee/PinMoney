@@ -6,5 +6,9 @@
     <string name="first_start_welcome">Bitte wählen sie ihren Status:</string>
     <string name="empfaenger_neu">Neuer Taschengeldempfänger:</string>
 
+    <string name="days_10">10 Tage</string>
+    <string name="days_30">30 Tage</string>
+    <string name="days_60">60 Tage</string>
+
 
 </resources>

@@ -66,10 +66,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="10 Tage"
+                android:text="@string/days_10"
                 android:layout_marginLeft="5dp"
                 android:textSize="14dp"
-                android:id="@+id/title_dayli" />
+                android:id="@+id/title_10" />
 
             <RadioButton
                 android:layout_width="wrap_content"
@@ -81,10 +81,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="30 Tage"
+                android:text="@string/days_30"
                 android:layout_marginLeft="5dp"
                 android:textSize="14dp"
-                android:id="@+id/title_weekly" />
+                android:id="@+id/title_30" />
 
             <RadioButton
                 android:layout_width="wrap_content"
@@ -96,10 +96,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="60 Tage"
+                android:text="@string/days_60"
                 android:layout_marginLeft="5dp"
                 android:textSize="14dp"
-                android:id="@+id/title_monthly" />
+                android:id="@+id/title_60" />
         </LinearLayout>
 
         <ListView
