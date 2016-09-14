@@ -18,7 +18,7 @@
         android:text="Eltern"
         android:id="@+id/button_parents"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="200px"
+        android:layout_marginTop="100px"
         android:enabled="true" />
 
     <Button
