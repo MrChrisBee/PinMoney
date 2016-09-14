@@ -2,6 +2,9 @@
     <string name="app_name">PinMoney</string>
 
     <string name="action_settings">Einstellungen</string>
+    <string name="menu_empfaenger_neu">Neuer Empfänger</string>
+    <string name="menu_empfaenger_change">Empfänger bearbeiten</string>
+    <string name="menu_empfaenger_delete">Empfänger löschen</string>
 
     <string name="first_start_welcome">Bitte wählen sie ihren Status:</string>
     <string name="empfaenger_neu">Neuer Taschengeldempfänger:</string>
