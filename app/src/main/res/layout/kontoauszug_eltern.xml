@@ -12,7 +12,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:weightSum="1">
 
@@ -28,7 +28,7 @@
                 android:layout_width="70dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="50px"
-                android:text="Aktuell:"
+                android:text="@string/title_actual_count"
                 android:textSize="16dp" />
 
             <TextView
@@ -43,7 +43,7 @@
                 android:id="@+id/euro"
                 android:layout_width="50dp"
                 android:layout_height="40dp"
-                android:text="€"
+                android:text="@string/euro"
                 android:textStyle="bold"
                 android:textSize="16dp" />
         </LinearLayout>

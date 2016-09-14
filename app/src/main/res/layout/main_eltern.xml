@@ -29,7 +29,7 @@
                 android:layout_width="100dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="15px"
-                android:text="@string/title_name_main"
+                android:text="@string/main_title_name"
                 android:textSize="18dp"
                 android:textStyle="bold" />
 

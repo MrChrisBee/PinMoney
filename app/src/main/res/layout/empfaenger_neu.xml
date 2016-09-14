@@ -101,7 +101,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="täglich"
+            android:text="@string/title_dayli"
             android:layout_marginLeft="5dp"
             android:textSize="14dp"
             android:id="@+id/title_dayli" />
@@ -116,7 +116,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="wöchentlich"
+            android:text="@string/title_weekly"
             android:layout_marginLeft="5dp"
             android:textSize="14dp"
             android:id="@+id/title_weekly" />
@@ -131,7 +131,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="monatlich"
+            android:text="@string/title_monthly"
             android:layout_marginLeft="5dp"
             android:textSize="14dp"
             android:id="@+id/title_monthly" />
@@ -147,7 +147,7 @@
         <TextView
             android:layout_width="100dp"
             android:layout_height="40dp"
-            android:text="TG-Betrag:"
+            android:text="@string/tg_betrag"
             android:textSize="16dp"
             android:id="@+id/title_count" />
 
@@ -163,7 +163,7 @@
         <TextView
             android:layout_width="50dp"
             android:layout_height="40dp"
-            android:text="€"
+            android:text="@string/euro"
             android:textSize="16dp"
             android:id="@+id/euro" />
     </LinearLayout>
@@ -189,7 +189,7 @@
         <TextView
             android:layout_width="100dp"
             android:layout_height="40dp"
-            android:text="Startbetrag:"
+            android:text="@string/start_count"
             android:textSize="16dp"
             android:id="@+id/title_money_start" />
 
@@ -205,7 +205,7 @@
         <TextView
             android:layout_width="50dp"
             android:layout_height="40dp"
-            android:text="€"
+            android:text="@string/euro"
             android:textSize="16dp"
             android:id="@+id/euro1" />
     </LinearLayout>
@@ -220,7 +220,7 @@
         <TextView
             android:layout_width="100dp"
             android:layout_height="40dp"
-            android:text="Startdatum:"
+            android:text="@string/start_date"
             android:textSize="16dp"
             android:id="@+id/title_startDate" />
 
@@ -246,7 +246,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16dp"
-            android:text="Handy:"
+            android:text="@string/title_mobile"
             android:id="@+id/title_mobile" />
 
         <RadioButton
@@ -261,8 +261,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10px"
             android:textSize="16dp"
-            android:text="Ja"
-            android:id="@+id/title_yes" />
+            android:text="@string/mobile_yes"
+            android:id="@+id/title_mobile_yes" />
 
         <RadioButton
             android:layout_width="wrap_content"
@@ -276,8 +276,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10px"
             android:textSize="16dp"
-            android:text="Nein"
-            android:id="@+id/title_no" />
+            android:text="@string/mobile_no"
+            android:id="@+id/title_mobile_no" />
     </LinearLayout>
 
     <Button
