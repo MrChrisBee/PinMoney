@@ -45,4 +45,11 @@
 
     </item>
 
+    <item
+
+        android:id="@+id/action_close_app"
+        android:orderInCategory="140"
+        android:title="@string/app_close"
+        app:showAsAction="never" />
+
 </menu>
