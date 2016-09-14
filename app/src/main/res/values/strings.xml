@@ -13,5 +13,9 @@
     <string name="days_30">30 Tage</string>
     <string name="days_60">60 Tage</string>
 
+    <string name="button_konto">Kontoauszug</string>
+    <string name="button_auszahlung">Auszahlung</string>
+    <string name="button_einzahlung">Einzahlung</string>
+
 
 </resources>
