@@ -48,5 +48,21 @@
             android:layout_marginTop="30pt"
             android:text="@string/button_konto" />
 
+        <Button
+            android:id="@+id/button_auszahlung"
+            android:layout_width="100pt"
+            android:layout_height="20pt"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20pt"
+            android:text="@string/button_auszahlung" />
+
+        <Button
+            android:id="@+id/button_einzahlung"
+            android:layout_width="100pt"
+            android:layout_height="20pt"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20pt"
+            android:text="@string/button_einzahlung" />
+
     </LinearLayout>
 </ScrollView>

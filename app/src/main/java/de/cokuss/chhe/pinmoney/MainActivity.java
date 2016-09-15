@@ -1,6 +1,5 @@
 package de.cokuss.chhe.pinmoney;
 
-import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,7 +8,9 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
     String viewInfo = "first_start";
+    SPHelper spHelper = new SPHelper("AppData","Kein Wert hinterlegt");
 
+    //hier wird das Bundle (savedInstanceState) aktualisiert
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -29,31 +30,43 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case "first_start":
                     setContentView(R.layout.first_start);
-                    registerParentButton();
+                    registerFirstStart();
                     break;
             }
-
         } else {
             setContentView(R.layout.first_start);
-            registerParentButton();
+            registerFirstStart();
         }
-
-
-
-
     }
 
-    private void registerParentButton() {
+    private void registerFirstStart() {
         Button buttonParents = (Button) findViewById(R.id.button_parents);
         buttonParents.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
                 // fuer Bundle festhalten wo wir sind
+                // elternversion setzen ? Dialog mit OK und zurück Button
+
+
                 viewInfo = "main_eltern";
+                spHelper.safeString("AppVersion","Zahler");
                 setContentView(R.layout.main_eltern);
             }
         });
+        Button buttonChild = (Button) findViewById(R.id.button_child);
+        buttonParents.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // fuer Bundle festhalten wo wir sind
+                // kinderversion setzen ? Dialog mit OK und zurück Button
+
+
+                viewInfo = "main_eltern";
+                spHelper.safeString("AppVersion","Zahler");
+                setContentView(R.layout.main_eltern);
+            }
+        });
+
     }
 
     @Override
