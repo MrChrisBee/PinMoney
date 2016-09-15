@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        System.out.println("onSaveInstanceState");
         outState.putString("inView", viewInfo);
     }
 
@@ -22,7 +23,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // welche Version der App nutzen wir
-        if ((viewInfo = (String) savedInstanceState.get("inView")) != null) {
+        if (savedInstanceState != null) {
+            viewInfo = (String) savedInstanceState.get("inView");
             switch (viewInfo) {
                 case "main_eltern":
                     setContentView(R.layout.main_eltern);
