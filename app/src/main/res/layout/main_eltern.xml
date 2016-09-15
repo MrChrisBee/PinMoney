@@ -28,9 +28,9 @@
                 android:id="@+id/title_name_main"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
-                android:layout_marginLeft="15px"
+                android:layout_marginStart="10dp"
                 android:text="@string/main_title_name"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <ExpandableListView

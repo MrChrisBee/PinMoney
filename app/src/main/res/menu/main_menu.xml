@@ -49,7 +49,7 @@
 
         android:id="@+id/action_close_app"
         android:orderInCategory="140"
-        android:title="@string/app_close"
+        android:title="@string/close_app"
         app:showAsAction="never" />
 
 </menu>
