@@ -10,21 +10,47 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.first_start);
+    String viewInfo = "first_start";
 
-        Button b = (Button)findViewById(R.id.button_parents);
-        b.setOnClickListener(new View.OnClickListener(){
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        System.out.println("onSaveInstanceState");
+        outState.putString("inView", viewInfo);
+    }
+
+    @Override
+    protected void onCreate(final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // welche Version der App nutzen wir
+        if (savedInstanceState != null) {
+            viewInfo = (String) savedInstanceState.get("inView");
+            switch (viewInfo) {
+                case "main_eltern":
+                    setContentView(R.layout.main_eltern);
+                    break;
+                case "first_start":
+                    setContentView(R.layout.first_start);
+                    break;
+            }
+
+        } else {
+            setContentView(R.layout.first_start);
+        }
+
+        Button b = (Button) findViewById(R.id.button_parents);
+        b.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
+                // über Bundle festhalten wo wir sind
+                viewInfo = "main_eltern";
                 setContentView(R.layout.main_eltern);
             }
         });
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
