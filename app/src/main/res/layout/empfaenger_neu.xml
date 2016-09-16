@@ -184,7 +184,7 @@
                 android:layout_width="50dp"
                 android:layout_height="40dp"
                 android:text="@string/euro"
-                android:textSize="16dp" />
+                android:textSize="16sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -199,7 +199,7 @@
                 android:layout_width="100dp"
                 android:layout_height="40dp"
                 android:text="@string/start_date"
-                android:textSize="16dp" />
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/input_startDate"
@@ -224,7 +224,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/title_mobile"
-                android:textSize="16dp" />
+                android:textSize="16sp" />
 
             <RadioButton
                 android:id="@+id/radioButton_yes"
@@ -239,7 +239,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10px"
                 android:text="@string/mobile_yes"
-                android:textSize="16dp" />
+                android:textSize="16sp" />
 
             <RadioButton
                 android:id="@+id/radioButton_no"
@@ -259,8 +259,8 @@
 
         <Button
             android:id="@+id/button_save_new_child"
-            android:layout_width="200px"
-            android:layout_height="50px"
+            android:layout_width="110dp"
+            android:layout_height="30dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="15pt"
             android:background="@drawable/button_save"
