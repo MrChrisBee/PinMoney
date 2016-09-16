@@ -10,70 +10,71 @@
     android:paddingTop="@dimen/activity_vertical_margin">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:weightSum="1">
 
-         <TextView
+        <TextView
+            android:id="@+id/empfaenger_neu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/empfaenger_neu"
-            android:id="@+id/empfaenger_neu"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="5dp"
+            android:text="@string/empfaenger_neu"
+            android:textAlignment="center"
+            android:textColor="#000000"
             android:textSize="22sp"
-            android:textStyle="bold"
-            android:textAlignment="center"/>
+            android:textStyle="bold" />
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="5dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:text="@string/empfaenger_vorname"
-            android:textSize="16sp"
-            android:id="@+id/title_name" />
+            <TextView
+                android:id="@+id/title_name"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:text="@string/empfaenger_vorname"
+                android:textSize="16sp" />
 
-        <EditText
-            android:layout_width="200dp"
-            android:layout_height="40dp"
-            android:layout_marginRight="10dp"
-            android:layout_toRightOf="@+id/title_name"
-            android:id="@+id/input_name"/>
+            <EditText
+                android:id="@+id/input_name"
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/title_name" />
 
-    </LinearLayout>
+        </LinearLayout>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="5dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:text="@string/empfaenger_neu_geb_dat"
-            android:textSize="16sp"
-            android:id="@+id/title_birthday" />
+            <TextView
+                android:id="@+id/title_birthday"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:text="@string/empfaenger_neu_geb_dat"
+                android:textSize="16sp" />
 
-        <EditText
-            android:layout_width="120dp"
-            android:layout_height="40dp"
-            android:layout_marginRight="10dp"
-            android:id="@+id/input_birthday"
-            android:inputType="date" />
+            <EditText
+                android:id="@+id/input_birthday"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="10dp"
+                android:inputType="date" />
             <!--android:layout_weight="1" />-->
 
-    </LinearLayout>
+        </LinearLayout>
 
-    <!--<TextView-->
+        <!--<TextView-->
         <!--android:layout_width="wrap_content"-->
         <!--android:layout_height="wrap_content"-->
         <!--android:text="@string/rythm"-->
@@ -84,91 +85,91 @@
         <!--android:textStyle="bold"-->
         <!--android:textAlignment="center"/>-->
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp">
-
-        <RadioButton
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=""
-            android:layout_marginStart="10dp"
-            android:id="@+id/radioButton_dayli" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
+            <RadioButton
+                android:id="@+id/radioButton_dayli"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/title_dayli"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="@string/title_dayli"
+                android:textSize="14sp" />
+
+            <RadioButton
+                android:id="@+id/radioButton_weekly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/title_weekly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="@string/title_weekly"
+                android:textSize="14sp" />
+
+            <RadioButton
+                android:id="@+id/radioButton_monthly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/title_monthly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="@string/title_monthly"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/title_dayli"
-            android:layout_marginStart="5dp"
-            android:textSize="14sp"
-            android:id="@+id/title_dayli" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:layout_marginStart="10dp"
-            android:id="@+id/radioButton_weekly" />
+            <TextView
+                android:id="@+id/title_count"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:text="@string/tg_betrag"
+                android:textSize="16dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/title_weekly"
-            android:layout_marginStart="5dp"
-            android:textSize="14sp"
-            android:id="@+id/title_weekly" />
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:layout_marginStart="10dp"
-            android:id="@+id/radioButton_monthly" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/title_monthly"
-            android:layout_marginStart="5dp"
-            android:textSize="14sp"
-            android:id="@+id/title_monthly" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp">
-
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:text="@string/tg_betrag"
-            android:textSize="16dp"
-            android:id="@+id/title_count" />
-
-        <EditText
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:layout_marginRight="15px"
-            android:textAlignment="textEnd"
-            android:id="@+id/input_count"
-            android:inputType="numberDecimal" />
+            <EditText
+                android:id="@+id/input_count"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="15px"
+                android:inputType="numberDecimal"
+                android:textAlignment="textEnd" />
             <!--android:layout_weight="1" />-->
 
-        <TextView
-            android:layout_width="50dp"
-            android:layout_height="40dp"
-            android:text="@string/euro"
-            android:textSize="16dp"
-            android:id="@+id/euro" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/euro"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:text="@string/euro"
+                android:textSize="16dp" />
+        </LinearLayout>
 
-    <!--<TextView-->
+        <!--<TextView-->
         <!--android:layout_width="wrap_content"-->
         <!--android:layout_height="wrap_content"-->
         <!--android:text="@string/preference"-->
@@ -179,115 +180,115 @@
         <!--android:textStyle="bold"-->
         <!--android:textAlignment="center"/>-->
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:text="@string/start_count"
-            android:textSize="16dp"
-            android:id="@+id/title_money_start" />
+            <TextView
+                android:id="@+id/title_money_start"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:text="@string/start_count"
+                android:textSize="16dp" />
 
-        <EditText
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:layout_marginRight="15px"
-            android:textAlignment="textEnd"
-            android:id="@+id/input_money_start"
-            android:inputType="numberDecimal" />
+            <EditText
+                android:id="@+id/input_money_start"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="15px"
+                android:inputType="numberDecimal"
+                android:textAlignment="textEnd" />
             <!--android:layout_weight="1" />-->
 
-        <TextView
-            android:layout_width="50dp"
-            android:layout_height="40dp"
-            android:text="@string/euro"
-            android:textSize="16dp"
-            android:id="@+id/euro1" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/euro1"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:text="@string/euro"
+                android:textSize="16dp" />
+        </LinearLayout>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:text="@string/start_date"
-            android:textSize="16dp"
-            android:id="@+id/title_startDate" />
+            <TextView
+                android:id="@+id/title_startDate"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:text="@string/start_date"
+                android:textSize="16dp" />
 
-        <EditText
-            android:layout_width="120dp"
-            android:layout_height="40dp"
-            android:layout_marginRight="15px"
-            android:id="@+id/input_startDate"
-            android:inputType="date" />
+            <EditText
+                android:id="@+id/input_startDate"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="15px"
+                android:inputType="date" />
             <!--android:layout_weight="1" />-->
 
-    </LinearLayout>
+        </LinearLayout>
 
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30px">
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16dp"
-            android:text="@string/title_mobile"
-            android:id="@+id/title_mobile" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30px"
+            android:orientation="horizontal">
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:layout_marginLeft="100px"
-            android:id="@+id/radioButton_yes" />
+            <TextView
+                android:id="@+id/title_mobile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_mobile"
+                android:textSize="16dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10px"
-            android:textSize="16dp"
-            android:text="@string/mobile_yes"
-            android:id="@+id/title_mobile_yes" />
+            <RadioButton
+                android:id="@+id/radioButton_yes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="100px"
+                android:text="" />
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="80px"
-            android:text=""
-            android:id="@+id/radioButton_no" />
+            <TextView
+                android:id="@+id/title_mobile_yes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10px"
+                android:text="@string/mobile_yes"
+                android:textSize="16dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:textSize="16sp"
-            android:text="@string/mobile_no"
-            android:id="@+id/title_mobile_no" />
-    </LinearLayout>
+            <RadioButton
+                android:id="@+id/radioButton_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="80px"
+                android:text="" />
 
-    <Button
-        android:layout_width="200px"
-        android:layout_height="50px"
-        android:background="@drawable/button_save"
-        android:id="@+id/button_save_new_child"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="15pt"
-        android:enabled="true"  />
+            <TextView
+                android:id="@+id/title_mobile_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="@string/mobile_no"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/button_save_new_child"
+            android:layout_width="200px"
+            android:layout_height="50px"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15pt"
+            android:background="@drawable/button_save"
+            android:enabled="true" />
 
     </LinearLayout>
 </ScrollView>
