@@ -35,6 +35,7 @@
     <string name="title_dayli">täglich</string>
     <string name="empfaenger_vorname">Vorname:</string>
     <string name="empfaenger_neu_geb_dat">Geb.Dat.:</string>
+    <string name="dialog_first_choice">Haben sie die richtige Wahl getroffen?</string>
 
 
 </resources>
