@@ -66,18 +66,22 @@ public class DBDataSource {
     }
 
     private Buchung cursorToBuchung(Cursor cursor) {
-        int idIndex = cursor.getColumnIndex(ShoppingMemoDbHelper.COLUMN_ID);
-        int idProduct = cursor.getColumnIndex(ShoppingMemoDbHelper.COLUMN_PRODUCT);
-        int idQuantity = cursor.getColumnIndex(ShoppingMemoDbHelper.COLUMN_QUANTITY);
-        int idChecked = cursor.getColumnIndex(ShoppingMemoDbHelper.COLUMN_CHECKED);
+        int idDate =   cursor.getColumnIndex(DBHelper.COLUMN_DATE);
+        int idValue = cursor.getColumnIndex(DBHelper.COLUMN_VALUE);
+        int idText = cursor.getColumnIndex(DBHelper.COLUMN_TEXT);
+        int idVeryID = cursor.getColumnIndex(DBHelper.COLUMN_VERI_ID);
+        int idVeryType =cursor.getColumnIndex(DBHelper.COLUMN_VERI_TYPE);
+        int idBalanve = cursor.getColumnIndex(DBHelper.COLUMN_BALANCE);
 
-        String product = cursor.getString(idProduct);
-        int quality = cursor.getInt(idQuantity);
-        long id = cursor.getLong(idIndex);
-        int intValueChecked = cursor.getInt(idChecked);
-        boolean isChecked = (intValueChecked != 0);
-        // TODO buchung erzeugen
-        Buchung buchung = new Buchung(alle nötigen parameter übergeben);
+// Beispiel Am Samstag dem 17.8.2016 gab es eine Einzahlung mit dem Text "Taschengeld von Oma"
+
+//        String product = cursor.getString(idProduct);
+//        int quality = cursor.getInt(idQuantity);
+//        long id = cursor.getLong(idIndex);
+//        int intValueChecked = cursor.getInt(idChecked);
+//        boolean isChecked = (intValueChecked != 0);
+//        // TODO buchung erzeugen
+        Buchung buchung = new Buchung();
         return buchung;
     }
 
@@ -87,35 +91,30 @@ public class DBDataSource {
         Cursor cursor = db.query(DBHelper.TABLE_NAME, columns, null, null, null, null, null);
         cursor.moveToFirst();
         //// TODO: 15.09.16 hier gehts weiter 
-        ShoppingMemo memo;
+        Buchung buchung;
         while (!cursor.isAfterLast()) {
-            memo = cursorToShoppingMemo(cursor);
-            shoppingMemoList.add(memo);
+            buchung = cursorToBuchung(cursor);
+            konto.add(buchung);
             cursor.moveToNext();
         }
         cursor.close();
-        return shoppingMemoList;
+        return konto;
     }
 
-    public void deleteShoppingMemo(ShoppingMemo shoppingMemo) {
-        long id = shoppingMemo.getId();
-        db.delete(ShoppingMemoDbHelper.TABLE_SHOPPING_LIST, ShoppingMemoDbHelper.COLUMN_ID + "=" + id, null);
-    }
-
-    public ShoppingMemo updateShoppingMemo(long id, String produkt, int quantity, boolean newChecked) {
-        int intValueChecked = (newChecked) ? 1 : 0;
-        ContentValues values = new ContentValues();
-        values.put(ShoppingMemoDbHelper.COLUMN_PRODUCT, produkt);
-        values.put(ShoppingMemoDbHelper.COLUMN_QUANTITY, quantity);
-        values.put(ShoppingMemoDbHelper.COLUMN_CHECKED, intValueChecked);
-
-        db.update(ShoppingMemoDbHelper.TABLE_SHOPPING_LIST, values, ShoppingMemoDbHelper.COLUMN_ID + "=" + id, null);
-        Cursor cursor = db.query(ShoppingMemoDbHelper.TABLE_SHOPPING_LIST, columns,
-                ShoppingMemoDbHelper.COLUMN_ID + "=" + id, null, null, null, null);
-        cursor.moveToFirst();
-        ShoppingMemo shoppingMemo = cursorToShoppingMemo(cursor);
-        cursor.close();
-        return shoppingMemo;
+    public Buchung updateKonto() {
+//        int intValueChecked = (newChecked) ? 1 : 0;
+//        ContentValues values = new ContentValues();
+//        values.put(ShoppingMemoDbHelper.COLUMN_PRODUCT, produkt);
+//        values.put(ShoppingMemoDbHelper.COLUMN_QUANTITY, quantity);
+//        values.put(ShoppingMemoDbHelper.COLUMN_CHECKED, intValueChecked);
+//
+//        db.update(ShoppingMemoDbHelper.TABLE_SHOPPING_LIST, values, ShoppingMemoDbHelper.COLUMN_ID + "=" + id, null);
+//        Cursor cursor = db.query(ShoppingMemoDbHelper.TABLE_SHOPPING_LIST, columns,
+//                ShoppingMemoDbHelper.COLUMN_ID + "=" + id, null, null, null, null);
+//        cursor.moveToFirst();
+//        ShoppingMemo shoppingMemo = cursorToShoppingMemo(cursor);
+//        cursor.close();
+        return null;
     }
 }
 
