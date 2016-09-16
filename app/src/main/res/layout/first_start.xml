@@ -26,13 +26,14 @@
 
         <Button
             android:id="@+id/button_parents"
-            android:layout_width="100pt"
-            android:layout_height="20pt"
+            android:layout_width="200px"
+            android:layout_height="50px"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="60dp"
             android:enabled="true"
-            android:text="@string/button_parents"
-            />
+            android:background="@drawable/button_first_start_parent"/>
+            <!--android:text="@string/button_parents"-->
+
 
         <Button
             android:id="@+id/button_child"
