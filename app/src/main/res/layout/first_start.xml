@@ -31,7 +31,8 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="60dp"
             android:enabled="true"
-            android:text="@string/button_parents" />
+            android:text="@string/button_parents"
+            />
 
         <Button
             android:id="@+id/button_child"
