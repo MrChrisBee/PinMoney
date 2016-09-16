@@ -42,11 +42,11 @@
 
         <Button
             android:id="@+id/button_konto_kind"
-            android:layout_width="100pt"
-            android:layout_height="20pt"
+            android:layout_width="300px"
+            android:layout_height="75px"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30pt"
-            android:text="@string/button_konto" />
+            android:background="@drawable/button_main_parent_konto"/>
 
     </LinearLayout>
 </ScrollView>
