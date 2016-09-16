@@ -37,12 +37,13 @@
 
         <Button
             android:id="@+id/button_child"
-            android:layout_width="100pt"
-            android:layout_height="20pt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="60dp"
             android:enabled="true"
-            android:text="@string/button_child" />
+            android:background="@drawable/button_first_start_kids"/>
+            <!--android:text="@string/button_child"-->
 
     </LinearLayout>
 </ScrollView>
