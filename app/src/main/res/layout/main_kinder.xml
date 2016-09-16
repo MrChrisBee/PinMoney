@@ -24,7 +24,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/title_name_main"
+                android:id="@+id/title_name_main_kind"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="15px"
@@ -33,7 +33,7 @@
                 android:textStyle="bold" />
 
             <ExpandableListView
-                android:id="@+id/expandableListView"
+                android:id="@+id/expandableListView_kind"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
@@ -41,28 +41,12 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/button_konto"
+            android:id="@+id/button_konto_kind"
             android:layout_width="100pt"
             android:layout_height="20pt"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30pt"
             android:text="@string/button_konto" />
-
-        <Button
-            android:id="@+id/button_auszahlung"
-            android:layout_width="100pt"
-            android:layout_height="20pt"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20pt"
-            android:text="@string/button_auszahlung" />
-
-        <Button
-            android:id="@+id/button_einzahlung"
-            android:layout_width="100pt"
-            android:layout_height="20pt"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20pt"
-            android:text="@string/button_einzahlung" />
 
     </LinearLayout>
 </ScrollView>
