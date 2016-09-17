@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:background="@mipmap/background"
         android:weightSum="1">
 
         <TextView
@@ -37,6 +38,7 @@
                 android:id="@+id/title_name"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
+                android:textColor="#000000"
                 android:text="@string/empfaenger_vorname"
                 android:textSize="16sp" />
 
@@ -60,6 +62,7 @@
                 android:layout_width="100dp"
                 android:layout_height="40dp"
                 android:text="@string/empfaenger_neu_geb_dat"
+                android:textColor="#000000"
                 android:textSize="16sp" />
 
             <EditText
@@ -91,6 +94,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
+                android:textColor="#000000"
                 android:text="@string/title_dayli"
                 android:textSize="14sp" />
 
@@ -106,6 +110,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
+                android:textColor="#000000"
                 android:text="@string/title_weekly"
                 android:textSize="14sp" />
 
@@ -121,6 +126,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
+                android:textColor="#000000"
                 android:text="@string/title_monthly"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -136,6 +142,7 @@
                 android:id="@+id/title_count"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
+                android:textColor="#000000"
                 android:text="@string/tg_betrag"
                 android:textSize="16sp" />
 
@@ -152,6 +159,7 @@
                 android:id="@+id/euro"
                 android:layout_width="50dp"
                 android:layout_height="40dp"
+                android:textColor="#000000"
                 android:text="@string/euro"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -167,6 +175,7 @@
                 android:id="@+id/title_money_start"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
+                android:textColor="#000000"
                 android:text="@string/start_count"
                 android:textSize="16sp" />
 
@@ -183,6 +192,7 @@
                 android:id="@+id/euro1"
                 android:layout_width="50dp"
                 android:layout_height="40dp"
+                android:textColor="#000000"
                 android:text="@string/euro"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -198,6 +208,7 @@
                 android:id="@+id/title_startDate"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
+                android:textColor="#000000"
                 android:text="@string/start_date"
                 android:textSize="16sp" />
 
@@ -223,6 +234,7 @@
                 android:id="@+id/title_mobile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#000000"
                 android:text="@string/title_mobile"
                 android:textSize="16sp" />
 
@@ -238,6 +250,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10px"
+                android:textColor="#000000"
                 android:text="@string/mobile_yes"
                 android:textSize="16sp" />
 
@@ -253,6 +266,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
+                android:textColor="#000000"
                 android:text="@string/mobile_no"
                 android:textSize="16sp" />
         </LinearLayout>
