@@ -65,6 +65,7 @@ public class DAODatabase {
         return buchung;
     }
 
+
     private Buchung cursorToBuchung(Cursor cursor) {
         int idDate =   cursor.getColumnIndex(DAOImplSQLight.COLUMN_DATE);
         int idValue = cursor.getColumnIndex(DAOImplSQLight.COLUMN_VALUE);
