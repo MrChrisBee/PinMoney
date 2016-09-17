@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">PinMoney</string>
+
+    <string name="action_settings">Einstellungen</string>
+    <string name="action_empfaenger">Empfänger</string>
+    <string name="close_app">Beenden</string>
+    <string name="menu_empfaenger_neu">Neuer Empfänger</string>
+    <string name="menu_empfaenger_change">Empfänger bearbeiten</string>
+    <string name="menu_empfaenger_delete">Empfänger löschen</string>
+
+    <string name="first_start_welcome">Bitte wählen sie ihren Status:</string>
+    <string name="empfaenger_neu">Neuer Taschengeldempfänger:</string>
+    <string name="main_title_name">Vorname:</string>
+
+    <string name="days_10">10 Tage</string>
+    <string name="days_30">30 Tage</string>
+    <string name="days_60">60 Tage</string>
+
+    <string name="button_konto">Kontoauszug</string>
+    <string name="button_auszahlung">Auszahlung</string>
+    <string name="button_einzahlung">Einzahlung</string>
+    <string name="button_parents">Eltern</string>
+    <string name="button_child">Kind</string>
+
+    <string name="title_mobile">Handy:</string>
+    <string name="mobile_no">Nein</string>
+    <string name="mobile_yes">Ja</string>
+    <string name="euro">€</string>
+    <string name="title_actual_count">Aktuell:</string>
+    <string name="start_date">Startdatum:</string>
+    <string name="start_count">Startbetrag:</string>
+    <string name="tg_betrag">TG-Betrag:</string>
+    <string name="title_monthly">monatlich</string>
+    <string name="title_weekly">wöchentlich</string>
+    <string name="title_dayli">täglich</string>
+    <string name="empfaenger_vorname">Vorname:</string>
+    <string name="empfaenger_neu_geb_dat">Geb.Dat.:</string>
+    <string name="dialog_first_choice">Haben sie die richtige Wahl getroffen?</string>
+
+
+</resources>
