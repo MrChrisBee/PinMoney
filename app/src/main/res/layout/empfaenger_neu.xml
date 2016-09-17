@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:weightSum="1">
+        android:background="@mipmap/background"
 
         <TextView
             android:id="@+id/empfaenger_neu"
@@ -37,7 +37,7 @@
                 android:id="@+id/title_name"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
-                android:text="@string/empfaenger_vorname"
+                android:textColor="#000000"
                 android:textSize="16sp" />
 
             <EditText
@@ -60,7 +60,7 @@
                 android:layout_width="100dp"
                 android:layout_height="40dp"
                 android:text="@string/empfaenger_neu_geb_dat"
-                android:textSize="16sp" />
+                android:textColor="#000000"
 
             <EditText
                 android:id="@+id/input_birthday"
@@ -68,8 +68,6 @@
                 android:layout_height="40dp"
                 android:layout_marginEnd="10dp"
                 android:inputType="date" />
-            <!--android:layout_weight="1" />-->
-
         </LinearLayout>
 
         <LinearLayout
@@ -91,7 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:text="@string/title_dayli"
+                android:textColor="#000000"
                 android:textSize="14sp" />
 
             <RadioButton
@@ -106,9 +104,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:text="@string/title_weekly"
-                android:textSize="14sp" />
-
+                android:textColor="#000000"
             <RadioButton
                 android:id="@+id/radioButton_monthly"
                 android:layout_width="wrap_content"
@@ -121,7 +117,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:text="@string/title_monthly"
+                android:textColor="#000000"
                 android:textSize="14sp" />
         </LinearLayout>
 
@@ -136,7 +132,7 @@
                 android:id="@+id/title_count"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
-                android:text="@string/tg_betrag"
+                android:textColor="#000000"
                 android:textSize="16sp" />
 
             <EditText
@@ -152,7 +148,7 @@
                 android:id="@+id/euro"
                 android:layout_width="50dp"
                 android:layout_height="40dp"
-                android:text="@string/euro"
+                android:textColor="#000000"
                 android:textSize="16sp" />
         </LinearLayout>
 
@@ -167,7 +163,7 @@
                 android:id="@+id/title_money_start"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
-                android:text="@string/start_count"
+                android:textColor="#000000"
                 android:textSize="16sp" />
 
             <EditText
@@ -183,7 +179,7 @@
                 android:id="@+id/euro1"
                 android:layout_width="50dp"
                 android:layout_height="40dp"
-                android:text="@string/euro"
+                android:textColor="#000000"
                 android:textSize="16sp" />
         </LinearLayout>
 
@@ -198,7 +194,7 @@
                 android:id="@+id/title_startDate"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
-                android:text="@string/start_date"
+                android:textColor="#000000"
                 android:textSize="16sp" />
 
             <EditText
@@ -223,7 +219,7 @@
                 android:id="@+id/title_mobile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/title_mobile"
+                android:textColor="#000000"
                 android:textSize="16sp" />
 
             <RadioButton
@@ -238,7 +234,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10px"
-                android:text="@string/mobile_yes"
+                android:textColor="#000000"
                 android:textSize="16sp" />
 
             <RadioButton
@@ -253,7 +249,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:text="@string/mobile_no"
+                android:textColor="#000000"
                 android:textSize="16sp" />
         </LinearLayout>
 

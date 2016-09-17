@@ -13,11 +13,12 @@ public class Buchung {
     private double balance;
 
 
-    public Buchung () {
+
+    public Buchung(){
 
     }
 
-    public Buchung (Date date, double value, String text, Long verifi_id, Integer veritype, double balance) {
+    public Buchung(Date date, double value, String text, Long verifi_id, Integer veritype, double balance) {
         this.date = date;
         this.value = value;
         this.text = text;
@@ -28,7 +29,7 @@ public class Buchung {
 
 
     @Override
-    public String toString () {
-        return date + " " + value + " € " + text + " " + veri_type + " " + veri_id + " " + balance + " €";
+   public String toString() {
+        return  date + " " + value + " € " + text + " " + veri_type + " " + veri_id + " " + balance + " €";
     }
 }
