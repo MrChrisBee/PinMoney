@@ -13,8 +13,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:background="@mipmap/background"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -36,76 +36,76 @@
                 android:layout_width="100dp"
                 android:layout_height="40dp"
                 android:textAlignment="textEnd"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/euro_kind"
                 android:layout_width="50dp"
                 android:layout_height="40dp"
                 android:text="@string/euro"
-                android:textStyle="bold"
-                android:textSize="16dp" />
+                android:textSize="16dp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_weight="0.12"
 
-            android:layout_weight="0.12">
+            android:orientation="horizontal">
 
             <RadioButton
+                android:id="@+id/radioButton_10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
                 android:layout_marginLeft="25dp"
-                android:id="@+id/radioButton_10" />
+                android:text="" />
 
             <TextView
+                android:id="@+id/title_10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:text="@string/days_10"
-                android:layout_marginLeft="5dp"
-                android:textSize="14dp"
-                android:id="@+id/title_10" />
+                android:textSize="14dp" />
 
             <RadioButton
+                android:id="@+id/radioButton_30"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
                 android:layout_marginLeft="10dp"
-                android:id="@+id/radioButton_30" />
+                android:text="" />
 
             <TextView
+                android:id="@+id/title_30"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:text="@string/days_30"
-                android:layout_marginLeft="5dp"
-                android:textSize="14dp"
-                android:id="@+id/title_30" />
+                android:textSize="14dp" />
 
             <RadioButton
+                android:id="@+id/radioButton_60"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
                 android:layout_marginLeft="10dp"
-                android:id="@+id/radioButton_60" />
+                android:text="" />
 
             <TextView
+                android:id="@+id/title_60"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/days_60"
                 android:layout_marginLeft="5dp"
-                android:textSize="14dp"
-                android:id="@+id/title_60" />
+                android:text="@string/days_60"
+                android:textSize="14dp" />
         </LinearLayout>
 
         <ListView
-                android:id="@+id/listView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="50px"
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="50px"
             android:layout_weight="0.40" />
 
     </LinearLayout>
