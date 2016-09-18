@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             setContentView(R.layout.first_start);
             registerFirstStart();
         }
-        spHelper = new SPHelper("AppData", "Kein Wert hinterlegt");
+        SPHelper.loadString(this ,"AppData", "Kein Wert hinterlegt");
     }
 
     private void registerFirstStart() {
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 // fuer Bundle festhalten wo wir sind
                 // elternversion setzen ? Dialog mit OK und zurück Button
                 viewInfo = "empfaenger_neu";
-                spHelper.safeString("AppVersion", "Zahler");
+                SPHelper.safeString(getApplicationContext(),"AppVersion", "pay");
                 setContentView(R.layout.empfaenger_neu);
             }
         });
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                 // fuer Bundle festhalten wo wir sind
                 // kinderversion setzen ? Dialog mit OK und zurück Button
                 viewInfo = "main_kinder";
-                spHelper.safeString("AppVersion", "empfaenger");
+                SPHelper.safeString(getApplicationContext(), "AppVersion", "get");
                 setContentView(R.layout.main_kinder);
             }
         });
@@ -82,28 +82,6 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    class SPHelper {
-        SharedPreferences preferences;
-        String noValue;
 
-        public SPHelper(String prefName, String noValue) {
-            if (prefName == null | noValue == null) {
-                Toast.makeText(getApplicationContext(), "Interner Fehler! SPHelper", Toast.LENGTH_LONG).show();
-                finish();
-            }
-            this.noValue = noValue;
-            preferences = getSharedPreferences(prefName, MODE_PRIVATE);
-        }
-
-        public boolean safeString(String key, String value) {
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putString(key, value);
-            return editor.commit();
-        }
-
-        public String loadString(String key) {
-            return preferences.getString(key, noValue);
-        }
-    }
 
 }
