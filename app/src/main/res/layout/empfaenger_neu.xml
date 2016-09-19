@@ -91,41 +91,42 @@
                 android:id="@+id/title_dayli"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="0dp"
                 android:text="@string/title_dayli"
                 android:textColor="#000000"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <RadioButton
                 android:id="@+id/radioButton_weekly"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="5dp"
                 android:text="" />
 
             <TextView
                 android:id="@+id/title_weekly"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="0dp"
                 android:text="@string/title_weekly"
-                android:textColor="#000000" />
+                android:textColor="#000000"
+                android:textSize="12sp"/>
 
             <RadioButton
                 android:id="@+id/radioButton_monthly"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="5dp"
                 android:text="" />
 
             <TextView
                 android:id="@+id/title_monthly"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="0dp"
                 android:text="@string/title_monthly"
                 android:textColor="#000000"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
