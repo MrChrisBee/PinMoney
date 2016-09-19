@@ -1,12 +1,10 @@
 package de.cokuss.chhe.pinmoney;
 
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     String viewInfo = "first_start";
@@ -35,14 +33,14 @@ public class MainActivity extends AppCompatActivity {
             //gesicherte view aus dem Bundle holen
             viewInfo = (String) savedInstanceState.get("inView");
             switch (viewInfo) {
-                case "main_eltern":
-                    setContentView(R.layout.main_eltern);
+                case "main_parents":
+                    setContentView(R.layout.main_parents);
                     break;
-                case "empfaenger_neu":
-                    setContentView(R.layout.empfaenger_neu);
+                case "receiver_new":
+                    setContentView(R.layout.receiver_new);
                     break;
-                case "main_kinder":
-                    setContentView(R.layout.main_kinder);
+                case "main_kids":
+                    setContentView(R.layout.main_kids);
                     break;
                 case "first_start":
                     setContentView(R.layout.first_start);
@@ -64,11 +62,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // fuer Bundle festhalten wo wir sind
                 // elternversion setzen ? Dialog mit OK und zurück Button
-                viewInfo = "empfaenger_neu";
+                viewInfo = "receiver_new";
                 //sind sie sicher?
 
                 SPHelper.safeString(getApplicationContext(), "AppVersion", "out");
-                setContentView(R.layout.empfaenger_neu);
+                setContentView(R.layout.receiver_new);
             }
         });
 
@@ -78,9 +76,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // fuer Bundle festhalten wo wir sind
                 // kinderversion setzen ? Dialog mit OK und zurück Button
-                viewInfo = "main_kinder";
+                viewInfo = "main_kids";
                 SPHelper.safeString(getApplicationContext(), "AppVersion", "in");
-                setContentView(R.layout.main_kinder);
+                setContentView(R.layout.main_kids);
             }
         });
     }
