@@ -26,26 +26,34 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         // welche Version der App nutzen wir
         if (savedInstanceState != null) {
-            //gesicherte view aus dem Bundle holen
-            viewInfo = (String) savedInstanceState.get("inView");
-            switch (viewInfo) {
-                case "main_eltern":
-                    setContentView(R.layout.main_eltern);
-                    break;
-                case "empfaenger_neu":
-                    setContentView(R.layout.empfaenger_neu);
-                    break;
-                case "main_kinder":
-                    setContentView(R.layout.main_kinder);
-                    break;
-                case "first_start":
-                    setContentView(R.layout.first_start);
-                    registerFirstStart();
-                    break;
+            //habe ich schon einen Eintrag in den SharedPreferences
+            if (spHelper != null) {
+                if(spHelper.loadString("AppVersion") == "in" ) {
+
+                } else if(spHelper.loadString("AppVersion") == "out" ) {
+
+                }
+                //gesicherte view aus dem Bundle holen
+                viewInfo = (String) savedInstanceState.get("inView");
+                switch (viewInfo) {
+                    case "main_eltern":
+                        setContentView(R.layout.main_eltern);
+                        break;
+                    case "empfaenger_neu":
+                        setContentView(R.layout.empfaenger_neu);
+                        break;
+                    case "main_kinder":
+                        setContentView(R.layout.main_kinder);
+                        break;
+                    case "first_start":
+                        setContentView(R.layout.first_start);
+                        registerFirstStart();
+                        break;
+                }
+            } else {
+                setContentView(R.layout.first_start);
+                registerFirstStart();
             }
-        } else {
-            setContentView(R.layout.first_start);
-            registerFirstStart();
         }
         spHelper = new SPHelper("AppData", "Kein Wert hinterlegt");
     }
@@ -58,7 +66,9 @@ public class MainActivity extends AppCompatActivity {
                 // fuer Bundle festhalten wo wir sind
                 // elternversion setzen ? Dialog mit OK und zurück Button
                 viewInfo = "empfaenger_neu";
-                spHelper.safeString("AppVersion", "Zahler");
+                //sind sie sicher?
+
+                spHelper.safeString("AppVersion", "out");
                 setContentView(R.layout.empfaenger_neu);
             }
         });
@@ -70,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 // fuer Bundle festhalten wo wir sind
                 // kinderversion setzen ? Dialog mit OK und zurück Button
                 viewInfo = "main_kinder";
-                spHelper.safeString("AppVersion", "empfaenger");
+                spHelper.safeString("AppVersion", "in");
                 setContentView(R.layout.main_kinder);
             }
         });

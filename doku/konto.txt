@@ -1,0 +1,25 @@
+
+        Jeden Tag 1 €
+
+        Date              Text                  Betrag              Kontostand
+        1.1.80           Initial Commit         25,-                    25
+        1.1.80           SpezialText            1,-                     26
+        10.1.80          SpezialText            9,-  (9Tage a 1 €)      35
+        10.1.80          Einzahlung Oma         20,-                    55
+        12.1.80          SpezialText             2,-  (2Tage a 1 €)     57
+        15.1.80          SpezialText             3,-                    60
+        15.1.80          Comics                  6,-                    54
+        01.2.80          SpezialText             16,-                   70
+
+        Jede Woche 10 €
+
+        Date              Text                  Betrag              Kontostand
+        01.01.80          Initial Commit         25,-                    25                 Dienstag
+        07.01.80          SpezialText            10,-                    35                 Montag  es gibt Taschengeld
+        10.01.80          Einzahlung Oma         20,-                    55
+        12.01.80          garnix                                         55
+        14.01.80          SpezialText            10,-                    65                 Montag  es gibt Taschengeld
+        15.01.80          Comics                  6,-                    59
+        21.01.80          SpezialText            10,-                    69                 Montag  es gibt Taschengeld
+        28.01.80          SpezialText            10,-                    79                 Montag  es gibt Taschengeld
+        01.02.80          garnix                                         79
