@@ -267,8 +267,8 @@
 
         <Button
             android:id="@+id/button_save_new_child"
-            android:layout_width="110dp"
-            android:layout_height="30dp"
+            android:layout_width="160dp"
+            android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="15pt"
             android:background="@drawable/button_save"
