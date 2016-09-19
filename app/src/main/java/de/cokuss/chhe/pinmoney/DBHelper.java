@@ -15,6 +15,7 @@ public class DBHelper extends SQLiteOpenHelper {
     //Spalten
     public static final String COLUMN_ID = "id";
     public static final String COLUMN_DATE = "datum";
+    public static final String COLUMN_NAME = "name";
     public static final String COLUMN_VALUE = "betrag";
     public static final String COLUMN_TEXT = "text";
     public static final String COLUMN_VERI_ID = "verifikation_id";
@@ -22,8 +23,9 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_BALANCE = "kontostand";
 
     public static final String SQL_CREATE = "CREATE TABLE " + TABLE_NAME +
-            "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "+
+            "(" + COLUMN_ID + " INTEGER PRIMARY KEY, "+
             COLUMN_DATE + " DATE NOT NULL, " +
+            COLUMN_NAME + " TEXT NOT NULL, " +
             COLUMN_VALUE + " DOUBLE NOT NULL, " +
             COLUMN_TEXT + " TEXT NOT NULL, " +
             COLUMN_VERI_ID + " LONG NOT NULL, " +

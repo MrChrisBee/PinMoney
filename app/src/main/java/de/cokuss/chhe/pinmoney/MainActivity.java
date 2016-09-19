@@ -26,28 +26,36 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         // welche Version der App nutzen wir
         if (savedInstanceState != null) {
-            //gesicherte view aus dem Bundle holen
-            viewInfo = (String) savedInstanceState.get("inView");
-            switch (viewInfo) {
-                case "main_eltern":
-                    setContentView(R.layout.main_eltern);
-                    break;
-                case "empfaenger_neu":
-                    setContentView(R.layout.empfaenger_neu);
-                    break;
-                case "main_kinder":
-                    setContentView(R.layout.main_kinder);
-                    break;
-                case "first_start":
-                    setContentView(R.layout.first_start);
-                    registerFirstStart();
-                    break;
+            //habe ich schon einen Eintrag in den SharedPreferences
+            if (spHelper != null) {
+                if(spHelper.loadString("AppVersion") == "in" ) {
+
+                } else if(spHelper.loadString("AppVersion") == "out" ) {
+
+                }
+                //gesicherte view aus dem Bundle holen
+                viewInfo = (String) savedInstanceState.get("inView");
+                switch (viewInfo) {
+                    case "main_eltern":
+                        setContentView(R.layout.main_eltern);
+                        break;
+                    case "empfaenger_neu":
+                        setContentView(R.layout.empfaenger_neu);
+                        break;
+                    case "main_kinder":
+                        setContentView(R.layout.main_kinder);
+                        break;
+                    case "first_start":
+                        setContentView(R.layout.first_start);
+                        registerFirstStart();
+                        break;
+                }
+            } else {
+                setContentView(R.layout.first_start);
+                registerFirstStart();
             }
-        } else {
-            setContentView(R.layout.first_start);
-            registerFirstStart();
         }
-        SPHelper.loadString(this ,"AppData", "Kein Wert hinterlegt");
+        spHelper = new SPHelper("AppData", "Kein Wert hinterlegt");
     }
 
     private void registerFirstStart() {
@@ -58,7 +66,9 @@ public class MainActivity extends AppCompatActivity {
                 // fuer Bundle festhalten wo wir sind
                 // elternversion setzen ? Dialog mit OK und zurück Button
                 viewInfo = "empfaenger_neu";
-                SPHelper.safeString(getApplicationContext(),"AppVersion", "pay");
+                //sind sie sicher?
+
+                spHelper.safeString("AppVersion", "out");
                 setContentView(R.layout.empfaenger_neu);
             }
         });
@@ -70,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 // fuer Bundle festhalten wo wir sind
                 // kinderversion setzen ? Dialog mit OK und zurück Button
                 viewInfo = "main_kinder";
-                SPHelper.safeString(getApplicationContext(), "AppVersion", "get");
+                spHelper.safeString("AppVersion", "in");
                 setContentView(R.layout.main_kinder);
             }
         });
@@ -82,6 +92,28 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    class SPHelper {
+        SharedPreferences preferences;
+        String noValue;
 
+        public SPHelper(String prefName, String noValue) {
+            if (prefName == null | noValue == null) {
+                Toast.makeText(getApplicationContext(), "Interner Fehler! SPHelper", Toast.LENGTH_LONG).show();
+                finish();
+            }
+            this.noValue = noValue;
+            preferences = getSharedPreferences(prefName, MODE_PRIVATE);
+        }
+
+        public boolean safeString(String key, String value) {
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString(key, value);
+            return editor.commit();
+        }
+
+        public String loadString(String key) {
+            return preferences.getString(key, noValue);
+        }
+    }
 
 }
