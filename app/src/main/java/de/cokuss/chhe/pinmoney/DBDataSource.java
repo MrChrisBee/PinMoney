@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
+//todo verwerten und löschen
 public class DBDataSource {
     private String client_name;
     private static final String LOG_TAG = DBDataSource.class.getSimpleName();

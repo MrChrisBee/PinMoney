@@ -74,7 +74,7 @@ public class DAODatabase {
         int idVeryType =cursor.getColumnIndex(DAOImplSQLight.COLUMN_VERI_TYPE);
         int idBalanve = cursor.getColumnIndex(DAOImplSQLight.COLUMN_BALANCE);
 
-// Beispiel Am Samstag dem 17.8.2016 gab es eine Einzahlung mit dem Text "Taschengeld von Oma"
+// Beispiel Am Samstag dem 17.8.2016 gab es eine Einzahlung mit dem Text "Zahlungen von Oma"
 
 //        String product = cursor.getString(idProduct);
 //        int quality = cursor.getInt(idQuantity);

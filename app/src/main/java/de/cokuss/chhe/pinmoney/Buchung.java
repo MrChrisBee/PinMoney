@@ -4,32 +4,65 @@ import java.util.Date;
 
 public class Buchung {
 
-    //private long id; AUTOINCREMENT
+    private Long id;
+    private Konto konto;
     private Date date;
-    private double value;
+    private float value;
     private String text;
     private Long veri_id;
     private Integer veri_type;
-    private double balance;
+    private float balance;
 
 
 
     public Buchung(){
-
+        //keine Ahnung ob eim Parameterloser Konstruktor hier sinn macht
     }
 
-    public Buchung(Date date, double value, String text, Long verifi_id, Integer veritype, double balance) {
+    public Buchung(Long id,Konto konto, Date date, float value, String text, Long verifi_id, Integer veri_type) {
+        this.id = id;
+        this.konto = konto;
         this.date = date;
         this.value = value;
         this.text = text;
         this.veri_id = verifi_id;
-        this.veri_type = veritype;
-        this.balance = balance;
+        this.veri_type = veri_type;
+        this.balance = konto.getKontostand();
     }
 
+    public Konto getKonto () {
+        return konto;
+    }
+
+    public float getBalance () {
+        return balance;
+    }
+
+    public Date getDate () {
+        return date;
+    }
+
+    public float getValue () {
+        return value;
+    }
+
+    public String getText () {
+        return text;
+    }
+
+    public Long getVeri_id () {
+        return veri_id;
+    }
+
+    public Integer getVeri_type () {
+        return veri_type;
+    }
 
     @Override
    public String toString() {
-        return  date + " " + value + " € " + text + " " + veri_type + " " + veri_id + " " + balance + " €";
+        return  konto.getInhaber() + " " + date + " " + value + " € " +
+                text + " " + veri_type + " " + veri_id + " " +
+                konto.getKontostand() + " €";
     }
+
 }
