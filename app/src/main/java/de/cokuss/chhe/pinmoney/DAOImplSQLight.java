@@ -11,7 +11,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO {
+public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO {
     private static final String LOG_TAG = DAOImplSQLight.class.getSimpleName();
 
     private SQLiteDatabase db;
@@ -125,6 +125,8 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO {
     @Override
     public void setPinMoney (String inhaber, Zahlungen zahlungen) {
         open();
+        //was ich noch unterbringen muss:
+            //zahlung.betrag zahlung.turnus
         //Todo setze die Werte passend in die erste Zeile
     }
 

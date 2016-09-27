@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_new_receiver"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    tools:context="de.cokuss.chhe.pinmoney.NewRecipientActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,7 +45,8 @@
                 android:id="@+id/input_name"
                 android:layout_width="200dp"
                 android:layout_height="40dp"
-                android:layout_marginEnd="10dp" />
+                android:layout_marginEnd="10dp"
+                android:hint="@string/insertReciver" />
 
         </LinearLayout>
 
@@ -66,64 +69,39 @@
                 android:layout_width="120dp"
                 android:layout_height="40dp"
                 android:layout_marginEnd="10dp"
-                android:inputType="date" />
+                android:hint="@string/sampleDate"
+                android:inputType="date"
+                android:labelFor="@+id/title_birthday" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal">
 
             <RadioButton
                 android:id="@+id/radioButton_dayli"
+                android:layout_gravity="left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="0dp"
-                android:text="" />
-
-            <TextView
-                android:id="@+id/title_dayli"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="0dp"
-                android:text="@string/title_dayli"
-                android:textColor="#000000"
-                android:textSize="12sp" />
+                android:checked="true"
+                android:text="@string/daily" />
 
             <RadioButton
                 android:id="@+id/radioButton_weekly"
+                android:layout_gravity="left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="" />
-
-            <TextView
-                android:id="@+id/title_weekly"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="0dp"
-                android:text="@string/title_weekly"
-                android:textColor="#000000"
-                android:textSize="12sp"/>
+                android:text="@string/weekly" />
 
             <RadioButton
                 android:id="@+id/radioButton_monthly"
                 android:layout_width="wrap_content"
+                android:layout_gravity="left"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="" />
+                android:text="@string/monthly" />
 
-            <TextView
-                android:id="@+id/title_monthly"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="0dp"
-                android:text="@string/title_monthly"
-                android:textColor="#000000"
-                android:textSize="12sp" />
-        </LinearLayout>
+        </RadioGroup>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -144,10 +122,9 @@
                 android:id="@+id/input_count"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
-                android:layout_marginEnd="15px"
+                android:layout_marginEnd="15dp"
                 android:inputType="numberDecimal"
                 android:textAlignment="textEnd" />
-            <!--android:layout_weight="1" />-->
 
             <TextView
                 android:id="@+id/euro"
@@ -177,7 +154,7 @@
                 android:id="@+id/input_money_start"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
-                android:layout_marginEnd="15px"
+                android:layout_marginEnd="15dp"
                 android:inputType="numberDecimal"
                 android:textAlignment="textEnd" />
             <!--android:layout_weight="1" />-->
@@ -210,60 +187,12 @@
                 android:id="@+id/input_startDate"
                 android:layout_width="120dp"
                 android:layout_height="40dp"
-                android:layout_marginRight="15px"
+                android:layout_marginEnd="15dp"
+                android:hint="@string/abNun"
                 android:inputType="date" />
-            <!--android:layout_weight="1" />-->
 
         </LinearLayout>
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30px"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/title_mobile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/title_mobile"
-                android:textColor="#000000"
-                android:textSize="16sp" />
-
-            <RadioButton
-                android:id="@+id/radioButton_yes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="50px"
-                android:text="" />
-
-            <TextView
-                android:id="@+id/title_mobile_yes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10px"
-                android:text="@string/mobile_yes"
-                android:textColor="#000000"
-                android:textSize="16sp" />
-
-            <RadioButton
-                android:id="@+id/radioButton_no"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="50px"
-                android:text="" />
-
-            <TextView
-                android:id="@+id/title_mobile_no"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="@string/mobile_no"
-                android:textColor="#000000"
-                android:textSize="16sp" />
-        </LinearLayout>
 
         <Button
             android:id="@+id/button_save_new_child"
@@ -273,6 +202,7 @@
             android:layout_marginTop="15pt"
             android:background="@drawable/button_save"
             android:enabled="true" />
+
 
     </LinearLayout>
 </ScrollView>

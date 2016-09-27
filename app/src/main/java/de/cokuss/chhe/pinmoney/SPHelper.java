@@ -3,6 +3,8 @@ package de.cokuss.chhe.pinmoney;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+//HelperKlasse für den Umgang mit Shared Preferenzes
+
 
 public class SPHelper {
 

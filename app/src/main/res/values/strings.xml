@@ -7,24 +7,16 @@
     <string name="menu_empfaenger_neu">Neuer Empfänger</string>
     <string name="menu_empfaenger_change">Empfänger bearbeiten</string>
     <string name="menu_empfaenger_delete">Empfänger löschen</string>
-
-    <string name="first_start_welcome">Bitte wählen sie ihren Status:</string>
     <string name="empfaenger_neu">Neuer Taschengeldempfänger:</string>
     <string name="main_title_name">Vorname:</string>
-
     <string name="days_10">10 Tage</string>
     <string name="days_30">30 Tage</string>
     <string name="days_60">60 Tage</string>
-
     <string name="button_konto">Kontoauszug</string>
     <string name="button_auszahlung">Auszahlung</string>
     <string name="button_einzahlung">Einzahlung</string>
     <string name="button_parents">Eltern</string>
     <string name="button_child">Kind</string>
-
-    <string name="title_mobile">Handy:</string>
-    <string name="mobile_no">Nein</string>
-    <string name="mobile_yes">Ja</string>
     <string name="euro">€</string>
     <string name="title_actual_count">Aktuell:</string>
     <string name="start_date">Startdatum:</string>
@@ -35,7 +27,18 @@
     <string name="title_dayli">täglich</string>
     <string name="empfaenger_vorname">Vorname:</string>
     <string name="empfaenger_neu_geb_dat">Geb.Dat.:</string>
-    <string name="dialog_first_choice">Haben sie die richtige Wahl getroffen?</string>
-
-
+    <string name="abNun">zahlung ab</string>
+    <string name="sampleDate">01.01.2000</string>
+    <string name="insertReciver">Empfänger Eintragen</string>
+    <string name="bitte_empf_nger_ausw_hlen">Bitte Empfänger auswählen!</string>
+    <string name="daily">täglich</string>
+    <string name="weekly">wöchentlich</string>
+    <string name="monthly">monatlich</string>
+    <string-array name="array_name">
+        <item>Keine Empfänger eingetragen!</item>
+        <item>Bitte Legen Sie in den Settings</item>
+        <item>also über das 3 Punkte Icon</item>
+        <item>Taschengeldempfänger an</item>
+        <item>dann können Sie hier auswählen!</item>
+    </string-array>
 </resources>

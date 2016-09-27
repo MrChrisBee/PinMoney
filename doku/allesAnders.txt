@@ -1,0 +1,3 @@
+Aufgrund von Zuständen für die ich nichts kann muss ich dieses Projekt an die extrem reduzierten zeitlichen Verhältnisse anpassen.
+Es wird ersteinmal eine App entstehen die nur auf einem Gerät läuft, es wird vorerst nur die Eltern Version entwickelt.
+Verifizierungen werden, wenn überhaupt, vorerst nur duch Audio hinterlegt.
