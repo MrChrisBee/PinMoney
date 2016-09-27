@@ -13,7 +13,7 @@ public interface KontoDAO {
 
     void deleteKonto(Konto konto);
 
-    boolean kontoExists(Konto konto);
+    boolean kontoExists(String string);
 
     float getKontostand(String inhaber);
 

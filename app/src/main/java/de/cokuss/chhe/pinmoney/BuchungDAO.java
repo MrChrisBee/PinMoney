@@ -10,10 +10,10 @@ public interface BuchungDAO extends KontoDAO {
 
     public void createBuchung (Konto konto, Buchung buchung);
 
-    public void setPinMoney (String inhaber, Zahlungen zahlungen);
+    //StartDatum Inhaber StartBetrag Betrag Turnus
+    public void setPinMoney (Konto konto, Zahlungen zahlungen);
 
     public Zahlungen getPinMoney (String inhaber);
-
 
 }
 

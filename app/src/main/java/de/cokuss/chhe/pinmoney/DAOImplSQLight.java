@@ -17,35 +17,35 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
     private SQLiteDatabase db;
 
     //Datenbank
-    public static final String DB_NAME = "taschengeldkonto.db";
-    public static final int DB_VERSION = 2;
-    public static final String TABLE_NAME = "history";
+    private static final String DB_NAME = "taschengeldkonto.db";
+    private static final int DB_VERSION = 2;
+    private static final String TABLE_NAME = "history";
 
     //Spalten für Konto
-    public static final String COLUMN_ID = "id";
-    public static final String COLUMN_DATE = "datum";
-    public static final String COLUMN_VALUE = "betrag";
-    public static final String COLUMN_TEXT = "text";
-    public static final String COLUMN_VERI_ID = "verifikation_id";
-    public static final String COLUMN_VERI_TYPE = "verifikation_typ";
-    public static final String COLUMN_BALANCE = "kontostand";
+    private static final String COLUMN_ID = "id";
+    private static final String COLUMN_DATE = "datum";
+    private static final String COLUMN_VALUE = "betrag";
+    private static final String COLUMN_TEXT = "text";
+    private static final String COLUMN_VERI_ID = "verifikation_id";
+    private static final String COLUMN_VERI_TYPE = "verifikation_typ";
+    private static final String COLUMN_BALANCE = "kontostand";
 
     //Spalten für History
     //Wann (Datum) wurde was (erstellen|löschen) mit welchen Konto (Kontoname) gemacht
-    public static final String COLUMN_HIST_ID = "id";
-    public static final String COLUMN_HIST_TABLE = "kontoname";
-    public static final String COLUMN_HIST_AKTION = "aktion";
-    public static final String COLUMN_HIST_DATE = "datum";
+    private static final String COLUMN_HIST_ID = "id";
+    private static final String COLUMN_HIST_TABLE = "kontoname";
+    private static final String COLUMN_HIST_AKTION = "aktion";
+    private static final String COLUMN_HIST_DATE = "datum";
 
-    public static final String SQL_DROP_TABLE = "DROP TABLE IF EXIST " + TABLE_NAME + ";";
+    private static final String SQL_DROP_TABLE = "DROP TABLE IF EXIST " + TABLE_NAME + ";";
 
-    public static final String SQL_CREATE_HISTORY = "CREATE TABLE " + TABLE_NAME + "(" +
+    private static final String SQL_CREATE_HISTORY = "CREATE TABLE " + TABLE_NAME + "(" +
             COLUMN_HIST_ID + " PRIMARY KEY AUTOINCREMENT, " +
             COLUMN_HIST_TABLE + " NOT NULL, " +
             COLUMN_HIST_AKTION + " NOT NULL, " +
             COLUMN_HIST_DATE + "  NOT NULL);";
 
-    public DAOImplSQLight (Context con) {
+    DAOImplSQLight (Context con) {
         super(con, DB_NAME, null, DB_VERSION);
         Log.d(LOG_TAG, "Helper hat die DB " + getDatabaseName() + " erzeugt");
     }
@@ -69,7 +69,7 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
                 COLUMN_VERI_ID + " NOT NULL, " +
                 COLUMN_VERI_TYPE + " NOT NULL, " +
                 COLUMN_BALANCE + " NOT NULL, ";
-        Log.d(LOG_TAG,"Neues Konto erstellen mit: " + sql);
+        Log.d(LOG_TAG, "Neues Konto erstellen mit: " + sql);
         db.execSQL(sql);
     }
 
@@ -77,14 +77,14 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
     public void createBuchung (Konto konto, Buchung buchung) {
         open();
         String sql = "Insert into " + konto.getInhaber() + " ( "
-                + COLUMN_DATE +","+COLUMN_VALUE+","+COLUMN_TEXT+ ","
-                + COLUMN_VERI_ID+","+COLUMN_VERI_TYPE+","+COLUMN_BALANCE+")"
-                + "values (" + "datetime('now')," +buchung.getValue()
-                +","+buchung.getText()+","+buchung.getVeri_id()
-                +buchung.getVeri_type()+(buchung.getBalance()+buchung.getValue());
-        Log.d(LOG_TAG,"Buchung erstellen mit: " + sql);
+                + COLUMN_DATE + "," + COLUMN_VALUE + "," + COLUMN_TEXT + ","
+                + COLUMN_VERI_ID + "," + COLUMN_VERI_TYPE + "," + COLUMN_BALANCE + ")"
+                + "values (" + "datetime('now')," + buchung.getValue()
+                + "," + buchung.getText() + "," + buchung.getVeri_id()
+                + buchung.getVeri_type() + (buchung.getBalance() + buchung.getValue());
+        Log.d(LOG_TAG, "Buchung erstellen mit: " + sql);
         db.execSQL(sql);
-        }
+    }
 
     @Override
     public ArrayList<Buchung> getAllBuchungen (String name) {
@@ -114,27 +114,59 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
             veri_type = c.getInt(c.getColumnIndex(COLUMN_VERI_TYPE));
             balance = c.getFloat(c.getColumnIndex(COLUMN_BALANCE));
             date = new Date(c.getColumnIndex(COLUMN_DATE));
-            konto = new Konto(name,balance);
-            buchung = new Buchung(id,konto,date,value,text,veri_id,veri_type);
+            konto = new Konto(name, balance);
+            buchung = new Buchung(id, konto, date, value, text, veri_id, veri_type);
             buchungen.add(buchung);
             c.moveToNext();
         }
+        c.close();
         return buchungen;
     }
 
     @Override
-    public void setPinMoney (String inhaber, Zahlungen zahlungen) {
+    public void setPinMoney (Konto konto, Zahlungen zahlungen) {
         open();
-        //was ich noch unterbringen muss:
-            //zahlung.betrag zahlung.turnus
-        //Todo setze die Werte passend in die erste Zeile
+        //Datum zahlung.betrag zahlung.turnus startbetrag
+        String sql = "insert into " + konto.getInhaber() + "(" + COLUMN_DATE + "," + COLUMN_VALUE + "," + COLUMN_VERI_TYPE + "," + COLUMN_BALANCE + ")" +
+                " values ( " + zahlungen.getDate() + "," + zahlungen.getBetrag() + "," + zahlungen.getTurnusStr() + "," + konto.getKontostand() + ")";
+        db.execSQL(sql);
     }
 
     @Override
     public Zahlungen getPinMoney (String inhaber) {
         open();
-        //Todo hole die passenden werte aus der ersten Zeile
-        return null;
+        Zahlungen zahlungen;
+        Date date;
+        float value;
+        float balance;
+        Turnus turnus;
+        String string;
+        String sql = "select " + COLUMN_DATE + "," + COLUMN_VALUE + "," + COLUMN_VERI_TYPE + "," + COLUMN_BALANCE + " from " + inhaber + " where id = 1";
+        Cursor c = db.rawQuery(sql, null);
+        c.moveToFirst();
+        Log.d(LOG_TAG, "PinMoney Kontoinfo eingelesen!");
+
+        date = new Date(c.getColumnIndex(COLUMN_DATE));
+        value = c.getFloat(c.getColumnIndex(COLUMN_VALUE));
+        switch (c.getString(c.getColumnIndex(COLUMN_VERI_TYPE))) {
+            case "taeglich":
+                turnus = Turnus.TAEGLICH;
+                break;
+            case "woechentlich":
+                turnus = Turnus.WOECHENTLICH;
+                break;
+            case "monatlich":
+                turnus = Turnus.MONATLICH;
+                break;
+            default:
+                turnus = Turnus.TAEGLICH;
+        }
+
+        balance = c.getFloat(c.getColumnIndex(COLUMN_BALANCE));
+        c.close();
+        zahlungen = new Zahlungen(date,turnus,value);
+
+        return zahlungen;
     }
 
     @Override
@@ -145,14 +177,14 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
         String inhaber;
         float kontostand;
 
-            StringBuilder sb = new StringBuilder();
-            sb.append("SELECT tbl_name FROM sqlite_master ");
-            sb.append("WHERE type IN ('table','view') AND tbl_name NOT LIKE 'sqlite_%' ");
-            sb.append("AND tbl_name NOT LIKE 'android_metadata'");
-            sb.append("UNION ALL ");
-            sb.append("SELECT tbl_name FROM sqlite_temp_master ");
-            sb.append("WHERE type IN ('table','view') ");
-            sb.append("ORDER BY tbl_name");
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT tbl_name FROM sqlite_master ");
+        sb.append("WHERE type IN ('table','view') AND tbl_name NOT LIKE 'sqlite_%' ");
+        sb.append("AND tbl_name NOT LIKE 'android_metadata'");
+        sb.append("UNION ALL ");
+        sb.append("SELECT tbl_name FROM sqlite_temp_master ");
+        sb.append("WHERE type IN ('table','view') ");
+        sb.append("ORDER BY tbl_name");
         try {
             Cursor c = db.rawQuery(sb.toString(), null);
             c.moveToFirst();
@@ -165,7 +197,6 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
                 result.add(konto);
                 c.moveToNext();
             }
-
             Log.d(LOG_TAG, "Result enthält  " + result.size() + " Einträge");
             c.close();
         } catch (SQLiteException e) {
@@ -183,17 +214,18 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
     }
 
     @Override
-    public boolean kontoExists (Konto konto) {
+    public boolean kontoExists (String string) {
         open();
         boolean schon_existent = true;
-        String string = "SELECT name FROM sqlite_master where name LIKE '" + konto.getInhaber() + "';";
-        Cursor c = db.rawQuery(string, null);
-        if (c != null && c.getCount() > 0) {
+        String sql = "SELECT name FROM sqlite_master where name LIKE '" + string + "';";
+        Cursor c = db.rawQuery(sql, null);
+        if (c.getCount() > 0) {
             schon_existent = true;
-            Log.d(LOG_TAG, "Das Konto " + konto.getInhaber() + " existiert bereits.");
+            Log.d(LOG_TAG, "Das Konto " + string + " existiert bereits.");
+            c.close();
         } else {
             schon_existent = false;
-            Log.d(LOG_TAG, "Das Konto " + konto.getInhaber() + " wurde nicht gefunden.");
+            Log.d(LOG_TAG, "Das Konto " + string + " wurde nicht gefunden.");
         }
         return schon_existent;
     }
@@ -206,8 +238,9 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
         Cursor c = db.rawQuery(sql, null);
         c.moveToFirst();
         if (c.getCount() > 1)
-            Log.e(LOG_TAG, "Fahler! Ich habe " + c.getCount() + " letzte Einträge gefunden!");
+            Log.e(LOG_TAG, "Fehler! Ich habe " + c.getCount() + " letzte Einträge gefunden!");
         kontostand = c.getInt(c.getColumnIndex(COLUMN_BALANCE));
+        c.close();
         return kontostand;
     }
 
