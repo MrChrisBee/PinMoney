@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     //DAO
     DAOImplSQLight daoImplSQLight;
     //Konto
-    private Konto konto;
+    private Konto selectedKonto;
 
     //hier wird das Bundle (savedInstanceState) beim
     // verlassen der View aktualisiert
@@ -79,8 +79,13 @@ public class MainActivity extends AppCompatActivity {
         einzahlung.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ShowAuszugActivity.class);
-                intent.putStringArrayListExtra("apapterArray", array4Adapter);
+                //Intent myintent=new Intent(Info.this, GraphDiag.class).putExtra("<StringName>", value);
+                //startActivity(myintent);
+
+                Intent intent = new Intent(v.getContext(), EinzahlenActivity.class);
+
+                //Todo selectedKonto setzen
+                intent.putExtra("KontoName", selectedKonto);
                 startActivity(intent);
             }
         });

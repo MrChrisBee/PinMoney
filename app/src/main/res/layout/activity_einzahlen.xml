@@ -10,4 +10,19 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="de.cokuss.chhe.pinmoney.EinzahlenActivity">
 
+    <TextView
+        android:text="@string/einzahlung_auf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/textView" />
+
+    <TextView
+        android:text="Empfänger"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/empfaenger" />
 </RelativeLayout>
+<!-- Todo mach mich fertig -->
