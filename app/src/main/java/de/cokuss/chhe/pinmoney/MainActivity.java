@@ -3,24 +3,29 @@ package de.cokuss.chhe.pinmoney;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
     //Buttons bekannt machen
     private  Button kontoauszug;
     private  Button auszahlung;
     private  Button einzahlung;
-    //Array
-    private ArrayList<Konto> kontenListe;
-    private ArrayList<String> array4Adapter;
+    Spinner accountName;
+    ArrayList<Konto> kontenListe;
+    private ArrayList<String> array4Adapter = new ArrayList<>();
+    private ArrayAdapter<String> arrayAdapter;
     //DAO
-    DAOImplSQLight daoImplSQLight = new DAOImplSQLight(this);
+    DAOImplSQLight daoImplSQLight;
     //Konto
     private Konto konto;
 
@@ -40,18 +45,38 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init() {
-        kontenListe = daoImplSQLight.getAllKonten();
-        for(Konto konto:kontenListe) {
-            array4Adapter.add(konto.getInhaber());
-        }
+        daoImplSQLight = DAOImplSQLight.getInstance(getApplicationContext());
+        accountName = (Spinner) findViewById(R.id.spinner4Child);
         kontoauszug = (Button) findViewById(R.id.button_konto);
         auszahlung = (Button) findViewById(R.id.button_auszahlung);
         einzahlung = (Button) findViewById(R.id.button_einzahlung);
         setListeners();
+        fillKontoSpinner();
+    }
+
+    private void fillKontoSpinner(){
+        kontenListe = daoImplSQLight.getAllKonten();
+        for(Konto konto: kontenListe) {
+            array4Adapter.add(konto.getInhaber());
+        }
+        if (array4Adapter != null) {
+            arrayAdapter.clear();
+            arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, array4Adapter);
+            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            accountName.setAdapter(arrayAdapter);
+        }
     }
 
     private void setListeners() {
         kontoauszug.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), ShowAuszugActivity.class);
+                intent.putStringArrayListExtra("apapterArray", array4Adapter);
+                startActivity(intent);
+            }
+        });
+        einzahlung.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), ShowAuszugActivity.class);
@@ -86,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             case R.id.action_change:
-                //Todo Check auf Auswahl und Dialog (Fragment) zur Änderung von Zahlungen
+                //  Todo Check auf Auswahl und Dialog (Fragment) zur Änderung von Zahlungen
                 return true;
             case R.id.action_delete:
                 //Todo Check auf Auswahl und delete
@@ -106,6 +131,43 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
+    private void log(String string) {
+        Log.d(LOG_TAG, string);
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        log("Quelle wird via onStart geoffnet.");
+        daoImplSQLight.open();
+    }
 
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        log("Quelle wird via onStop geschlossen.");
+//        daoImplSQLight.close();
+//    } wird bei jedem Intend in andere App gerufen, möchte ich dann die DB schliessen, sicher nicht
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        log("Quelle wird via onDestroy geschlossen.");
+        daoImplSQLight.close();
+    }
+
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        log("Quelle wird via onPause geschlossen.");
+//        daoImplSQLight.close();
+//    }  wird bei jedem Intend in andere App gerufen, möchte ich dann die DB schliessen, sicher nicht
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        log("Quelle wird via onResume geoffnet.");
+        daoImplSQLight.open();
+        fillKontoSpinner();
+    }
 }
+// ArrayAdapter https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView

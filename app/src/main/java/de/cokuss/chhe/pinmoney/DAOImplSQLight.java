@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,12 +16,12 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
     private static final String LOG_TAG = DAOImplSQLight.class.getSimpleName();
 
     private SQLiteDatabase db;
+    public static DAOImplSQLight daoImplSQLight;
 
     //Datenbank
     private static final String DB_NAME = "taschengeldkonto.db";
     private static final int DB_VERSION = 2;
     private static final String TABLE_NAME = "history";
-
     //Spalten für Konto
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_DATE = "datum";
@@ -40,55 +41,52 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
     private static final String SQL_DROP_TABLE = "DROP TABLE IF EXIST " + TABLE_NAME + ";";
 
     private static final String SQL_CREATE_HISTORY = "CREATE TABLE " + TABLE_NAME + "(" +
-            COLUMN_HIST_ID + " PRIMARY KEY AUTOINCREMENT, " +
+            COLUMN_HIST_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COLUMN_HIST_TABLE + " NOT NULL, " +
             COLUMN_HIST_AKTION + " NOT NULL, " +
-            COLUMN_HIST_DATE + "  NOT NULL);";
+            COLUMN_HIST_DATE + "  NOT NULL)";
 
-    DAOImplSQLight (Context con) {
+    private DAOImplSQLight(Context con) {
         super(con, DB_NAME, null, DB_VERSION);
-        Log.d(LOG_TAG, "Helper hat die DB " + getDatabaseName() + " erzeugt");
+        log("Helper hat die DB " + getDatabaseName() + " erzeugt");
     }
 
-    public void open () {
-        if (db == null) {
-            Log.d(LOG_TAG, "Öffne die Datenbank im RW Mode.");
-            db = getWritableDatabase();
-            Log.d(LOG_TAG, "Pfad zur DB " + db.getPath());
+    public static DAOImplSQLight getInstance(Context c) {
+        if(daoImplSQLight == null) {
+            daoImplSQLight = new DAOImplSQLight(c);
         }
+        return daoImplSQLight;
     }
-
     @Override
-    public void createKonto (Konto konto) {
-        open();
+    public void createKonto(Konto konto) {
         String sql = "Create table " + konto.getInhaber() + "(" +
-                COLUMN_ID + " PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_DATE + " NOT NULL, " +
-                COLUMN_VALUE + " NOT NULL, " +
-                COLUMN_TEXT + " NOT NULL, " +
-                COLUMN_VERI_ID + " NOT NULL, " +
-                COLUMN_VERI_TYPE + " NOT NULL, " +
-                COLUMN_BALANCE + " NOT NULL, ";
-        Log.d(LOG_TAG, "Neues Konto erstellen mit: " + sql);
+                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_DATE + "," +
+                COLUMN_VALUE + "," +
+                COLUMN_TEXT + "," +
+                COLUMN_VERI_ID + "," +
+                COLUMN_VERI_TYPE + "," +
+                COLUMN_BALANCE + " )";
+        log("Neues Konto erstellen mit: " + sql);
         db.execSQL(sql);
     }
 
     @Override
-    public void createBuchung (Konto konto, Buchung buchung) {
-        open();
+    public void createBuchung(Konto konto, Buchung buchung) {
+        db = getWritableDatabase();
         String sql = "Insert into " + konto.getInhaber() + " ( "
                 + COLUMN_DATE + "," + COLUMN_VALUE + "," + COLUMN_TEXT + ","
                 + COLUMN_VERI_ID + "," + COLUMN_VERI_TYPE + "," + COLUMN_BALANCE + ")"
                 + "values (" + "datetime('now')," + buchung.getValue()
                 + "," + buchung.getText() + "," + buchung.getVeri_id()
-                + buchung.getVeri_type() + (buchung.getBalance() + buchung.getValue());
-        Log.d(LOG_TAG, "Buchung erstellen mit: " + sql);
+                + buchung.getVeri_type() + (buchung.getBalance() + buchung.getValue() + ")");
+        log("Buchung erstellen mit: " + sql);
         db.execSQL(sql);
     }
 
     @Override
-    public ArrayList<Buchung> getAllBuchungen (String name) {
-        open();
+    public ArrayList<Buchung> getAllBuchungen(String name) {
+        db = getWritableDatabase();
         ArrayList<Buchung> buchungen = new ArrayList<>();
         Buchung buchung;
         Konto konto;
@@ -104,7 +102,7 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
         String sql = "Select * from " + name + " where id > 1";
         Cursor c = db.rawQuery(sql, null);
         c.moveToFirst();
-        Log.d(LOG_TAG, c.getCount() + " Buchungssätze eingelesen!");
+        log(c.getCount() + " Buchungssätze eingelesen!");
 
         while (!c.isAfterLast()) {
             text = c.getString(c.getColumnIndex(COLUMN_TEXT));
@@ -124,17 +122,20 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
     }
 
     @Override
-    public void setPinMoney (Konto konto, Zahlungen zahlungen) {
-        open();
+    public void setPinMoney(Konto konto, Zahlungen zahlungen) {
+
+        db = getWritableDatabase();
         //Datum zahlung.betrag zahlung.turnus startbetrag
         String sql = "insert into " + konto.getInhaber() + "(" + COLUMN_DATE + "," + COLUMN_VALUE + "," + COLUMN_VERI_TYPE + "," + COLUMN_BALANCE + ")" +
-                " values ( " + zahlungen.getDate() + "," + zahlungen.getBetrag() + "," + zahlungen.getTurnusStr() + "," + konto.getKontostand() + ")";
+                " values ( '" + zahlungen.getDate() + "' , " + zahlungen.getBetrag() + " ,'" + zahlungen.getTurnusStr() + "', " + konto.getKontostand() + ")";
+        log("setPinMoney start " + sql);
         db.execSQL(sql);
+        log("SetPinMoney ausgeführt für Konto " + konto.getInhaber());
     }
 
     @Override
-    public Zahlungen getPinMoney (String inhaber) {
-        open();
+    public Zahlungen getPinMoney(String inhaber) {
+        db = getWritableDatabase();
         Zahlungen zahlungen;
         Date date;
         float value;
@@ -144,8 +145,7 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
         String sql = "select " + COLUMN_DATE + "," + COLUMN_VALUE + "," + COLUMN_VERI_TYPE + "," + COLUMN_BALANCE + " from " + inhaber + " where id = 1";
         Cursor c = db.rawQuery(sql, null);
         c.moveToFirst();
-        Log.d(LOG_TAG, "PinMoney Kontoinfo eingelesen!");
-
+        log("PinMoney Kontoinfo eingelesen!");
         date = new Date(c.getColumnIndex(COLUMN_DATE));
         value = c.getFloat(c.getColumnIndex(COLUMN_VALUE));
         switch (c.getString(c.getColumnIndex(COLUMN_VERI_TYPE))) {
@@ -164,14 +164,14 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
 
         balance = c.getFloat(c.getColumnIndex(COLUMN_BALANCE));
         c.close();
-        zahlungen = new Zahlungen(date,turnus,value);
-
+        zahlungen = new Zahlungen(date, turnus, value);
+        log("getPinMoney ausgeführt für Konto " + inhaber);
         return zahlungen;
     }
 
     @Override
-    public ArrayList<Konto> getAllKonten () {
-        open();
+    public ArrayList<Konto> getAllKonten() {
+        db = getWritableDatabase();
         ArrayList<Konto> result = new ArrayList<>();
         Konto konto;
         String inhaber;
@@ -188,90 +188,113 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
         try {
             Cursor c = db.rawQuery(sb.toString(), null);
             c.moveToFirst();
-            Log.d(LOG_TAG, "Erfolgreich " + c.getCount() + " Tabellen erkannt!");
+            log("getAllKonten: Erfolgreich " + c.getCount() + " Tabellen erkannt!");
 
             while (!c.isAfterLast()) {
                 inhaber = c.getString(c.getColumnIndex("tbl_name"));
-                kontostand = getKontostand(inhaber);
-                konto = new Konto(inhaber, kontostand);
-                result.add(konto);
+                if (!inhaber.equals(TABLE_NAME)) {
+                    kontostand = getKontostand(inhaber);
+                    konto = new Konto(inhaber, kontostand);
+                    result.add(konto);
+                }
                 c.moveToNext();
             }
-            Log.d(LOG_TAG, "Result enthält  " + result.size() + " Einträge");
+            log("getAllKonten: Result enthält  " + result.size() + " Einträge");
             c.close();
         } catch (SQLiteException e) {
-            Log.e(LOG_TAG, e.toString());
+            log("getAllKonten : " + e.toString());
             e.getStackTrace();
         }
         return result;
     }
 
     @Override
-    public void deleteKonto (Konto konto) {
-        open();
+    public void deleteKonto(Konto konto) {
+        db = getWritableDatabase();
         String sql = "DROP TABLE IF EXIST " + konto.getInhaber();
         db.execSQL(sql);
     }
 
     @Override
-    public boolean kontoExists (String string) {
-        open();
+    public boolean kontoExists(String string) {
+        db = getWritableDatabase();
         boolean schon_existent = true;
         String sql = "SELECT name FROM sqlite_master where name LIKE '" + string + "';";
         Cursor c = db.rawQuery(sql, null);
         if (c.getCount() > 0) {
             schon_existent = true;
-            Log.d(LOG_TAG, "Das Konto " + string + " existiert bereits.");
+            log("kontoExists: Das Konto " + string + " existiert bereits.");
             c.close();
         } else {
             schon_existent = false;
-            Log.d(LOG_TAG, "Das Konto " + string + " wurde nicht gefunden.");
+            log("kontoExists: Das Konto " + string + " wurde nicht gefunden.");
         }
         return schon_existent;
     }
 
     @Override
-    public float getKontostand (String inhaber) {
-        open();
+    public float getKontostand(String inhaber) {
+        db = getWritableDatabase();
+        log("getKontostand: Ermittle den Kontostand für " + inhaber);
         float kontostand = 0;
-        String sql = "SELECT " + COLUMN_BALANCE + " FROM " + inhaber + "WHERE   ID = (SELECT MAX(ID)  FROM" + inhaber + ");";
+        String sql = "SELECT " + COLUMN_BALANCE + " FROM " + inhaber + " WHERE   ID = (SELECT MAX(ID)  FROM  " + inhaber + " )";
         Cursor c = db.rawQuery(sql, null);
+        log("getKontostand: habe Treffer : " + c.getCount());
         c.moveToFirst();
-        if (c.getCount() > 1)
-            Log.e(LOG_TAG, "Fehler! Ich habe " + c.getCount() + " letzte Einträge gefunden!");
-        kontostand = c.getInt(c.getColumnIndex(COLUMN_BALANCE));
+        switch(c.getCount()){
+            case 0:
+                log("getKontostand: Keine Datensätze gefunden ");
+                break;
+            case 1:
+                kontostand = c.getFloat(c.getColumnIndex(COLUMN_BALANCE));
+                break;
+            default:
+                log("getKontostand: Ich habe " + c.getCount() + " 'letzte' Einträge gefunden!?");
+                break;
+
+        }
         c.close();
         return kontostand;
     }
 
     @Override
-    public boolean isValidKontoName (String string) {
+    public boolean isValidKontoName(String string) {
+        db = getWritableDatabase();
         return string.matches("\\w+");
     }
 
     @Override
-    public void onCreate (SQLiteDatabase db) {
-        Log.d(LOG_TAG, "Versuch die Tabelle zu erstellen !");
+    public void onCreate(SQLiteDatabase db) {
+        log("Versuch die Tabelle zu erstellen !");
         try {
             db.execSQL(SQL_CREATE_HISTORY);
         } catch (SQLException e) {
-            Log.e(LOG_TAG, "Fehler beim Anlegen " + e.getMessage());
+            log("Fehler beim Anlegen " + e.getMessage());
             e.printStackTrace();
         } finally {
-            Log.d(LOG_TAG, "Tabelle erstellt !");
+            log("Tabelle erstellt !");
         }
     }
 
     @Override
-    public void onUpgrade (SQLiteDatabase db, int oldVersion, int newVersion) {
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(SQL_DROP_TABLE);
         onCreate(db);
     }
 
     @Override
-    public synchronized void close () {
+    public synchronized void close() {
         super.close();
+        db = getWritableDatabase();
         db.close();
+    }
+
+    private void log(String string) {
+        Log.d(LOG_TAG, string);
+    }
+
+    public void open() {
+        db = getWritableDatabase();
     }
 }
 

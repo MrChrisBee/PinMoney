@@ -23,30 +23,33 @@
             <item
 
                 android:id="@+id/action_new"
-                android:orderInCategory="120"
+                android:orderInCategory="121"
                 android:title="@string/menu_empfaenger_neu"
                 app:showAsAction="never" />
 
             <item
 
                 android:id="@+id/action_change"
-                android:orderInCategory="140"
+                android:orderInCategory="123"
                 android:title="@string/menu_empfaenger_change"
                 app:showAsAction="never" />
 
             <item
 
                 android:id="@+id/action_delete"
-                android:orderInCategory="160"
+                android:orderInCategory="125"
                 android:title="@string/menu_empfaenger_delete"
                 app:showAsAction="never" />
 
         </menu>
 
     </item>
-
     <item
-
+        android:id="@+id/action_show_history"
+        android:orderInCategory="130"
+        android:title="@string/history_zeigen"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_close_app"
         android:orderInCategory="140"
         android:title="@string/close_app"

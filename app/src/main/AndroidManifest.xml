@@ -17,6 +17,7 @@
         </activity>
         <activity android:name=".ShowAuszugActivity" />
         <activity android:name=".NewRecipientActivity" />
+        <activity android:name=".EinzahlenActivity"></activity>
     </application>
 
 </manifest>
