@@ -46,19 +46,20 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
             COLUMN_HIST_AKTION + " NOT NULL, " +
             COLUMN_HIST_DATE + "  NOT NULL)";
 
-    private DAOImplSQLight(Context con) {
+    private DAOImplSQLight (Context con) {
         super(con, DB_NAME, null, DB_VERSION);
         log("Helper hat die DB " + getDatabaseName() + " erzeugt");
     }
 
-    public static DAOImplSQLight getInstance(Context c) {
-        if(daoImplSQLight == null) {
+    public static DAOImplSQLight getInstance (Context c) {
+        if (daoImplSQLight == null) {
             daoImplSQLight = new DAOImplSQLight(c);
         }
         return daoImplSQLight;
     }
+
     @Override
-    public void createKonto(Konto konto) {
+    public void createKonto (Konto konto) {
         String sql = "Create table " + konto.getInhaber() + "(" +
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_DATE + "," +
@@ -72,7 +73,7 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
     }
 
     @Override
-    public void createBuchung(Konto konto, Buchung buchung) {
+    public void createBuchung (Konto konto, Buchung buchung) {
         db = getWritableDatabase();
         String sql = "Insert into " + konto.getInhaber() + " ( "
                 + COLUMN_DATE + "," + COLUMN_VALUE + "," + COLUMN_TEXT + ","
@@ -85,7 +86,7 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
     }
 
     @Override
-    public ArrayList<Buchung> getAllBuchungen(String name) {
+    public ArrayList<Buchung> getAllBuchungen (String name) {
         db = getWritableDatabase();
         ArrayList<Buchung> buchungen = new ArrayList<>();
         Buchung buchung;
@@ -122,7 +123,7 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
     }
 
     @Override
-    public void setPinMoney(Konto konto, Zahlungen zahlungen) {
+    public void setPinMoney (Konto konto, Zahlungen zahlungen) {
 
         db = getWritableDatabase();
         //Datum zahlung.betrag zahlung.turnus startbetrag
@@ -134,7 +135,7 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
     }
 
     @Override
-    public Zahlungen getPinMoney(String inhaber) {
+    public Zahlungen getPinMoney (String inhaber) {
         db = getWritableDatabase();
         Zahlungen zahlungen;
         Date date;
@@ -170,7 +171,7 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
     }
 
     @Override
-    public ArrayList<Konto> getAllKonten() {
+    public ArrayList<Konto> getAllKonten () {
         db = getWritableDatabase();
         ArrayList<Konto> result = new ArrayList<>();
         Konto konto;
@@ -209,14 +210,14 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
     }
 
     @Override
-    public void deleteKonto(Konto konto) {
+    public void deleteKonto (Konto konto) {
         db = getWritableDatabase();
         String sql = "DROP TABLE IF EXIST " + konto.getInhaber();
         db.execSQL(sql);
     }
 
     @Override
-    public boolean kontoExists(String string) {
+    public boolean kontoExists (String string) {
         db = getWritableDatabase();
         boolean schon_existent = true;
         String sql = "SELECT name FROM sqlite_master where name LIKE '" + string + "';";
@@ -224,47 +225,53 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
         if (c.getCount() > 0) {
             schon_existent = true;
             log("kontoExists: Das Konto " + string + " existiert bereits.");
-            c.close();
+
         } else {
             schon_existent = false;
             log("kontoExists: Das Konto " + string + " wurde nicht gefunden.");
         }
+        if (c != null)
+            c.close();
         return schon_existent;
     }
 
     @Override
-    public float getKontostand(String inhaber) {
+    public float getKontostand (String inhaber) {
         db = getWritableDatabase();
-        log("getKontostand: Ermittle den Kontostand für " + inhaber);
-        float kontostand = 0;
-        String sql = "SELECT " + COLUMN_BALANCE + " FROM " + inhaber + " WHERE   ID = (SELECT MAX(ID)  FROM  " + inhaber + " )";
-        Cursor c = db.rawQuery(sql, null);
-        log("getKontostand: habe Treffer : " + c.getCount());
-        c.moveToFirst();
-        switch(c.getCount()){
-            case 0:
-                log("getKontostand: Keine Datensätze gefunden ");
-                break;
-            case 1:
-                kontostand = c.getFloat(c.getColumnIndex(COLUMN_BALANCE));
-                break;
-            default:
-                log("getKontostand: Ich habe " + c.getCount() + " 'letzte' Einträge gefunden!?");
-                break;
+        if (daoImplSQLight.isValidKontoName(inhaber)) {
+            log("getKontostand: Ermittle den Kontostand für " + inhaber);
+            float kontostand = 0;
+            String sql = "SELECT " + COLUMN_BALANCE + " FROM " + inhaber + " WHERE   ID = (SELECT MAX(ID)  FROM  " + inhaber + " )";
+            Cursor c = db.rawQuery(sql, null);
+            log("getKontostand: habe Treffer : " + c.getCount());
+            c.moveToFirst();
+            switch (c.getCount()) {
+                case 0:
+                    log("getKontostand: Keine Datensätze gefunden ");
+                    break;
+                case 1:
+                    kontostand = c.getFloat(c.getColumnIndex(COLUMN_BALANCE));
+                    break;
+                default:
+                    log("getKontostand: Ich habe " + c.getCount() + " 'letzte' Einträge gefunden!?");
+                    break;
 
+            }
+            if (c != null)
+                c.close();
+            return kontostand;
         }
-        c.close();
-        return kontostand;
+        return 0f;
     }
 
     @Override
-    public boolean isValidKontoName(String string) {
+    public boolean isValidKontoName (String string) {
         db = getWritableDatabase();
         return string.matches("\\w+");
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db) {
+    public void onCreate (SQLiteDatabase db) {
         log("Versuch die Tabelle zu erstellen !");
         try {
             db.execSQL(SQL_CREATE_HISTORY);
@@ -277,23 +284,23 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    public void onUpgrade (SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(SQL_DROP_TABLE);
         onCreate(db);
     }
 
     @Override
-    public synchronized void close() {
+    public synchronized void close () {
         super.close();
         db = getWritableDatabase();
         db.close();
     }
 
-    private void log(String string) {
+    private void log (String string) {
         Log.d(LOG_TAG, string);
     }
 
-    public void open() {
+    public void open () {
         db = getWritableDatabase();
     }
 }
