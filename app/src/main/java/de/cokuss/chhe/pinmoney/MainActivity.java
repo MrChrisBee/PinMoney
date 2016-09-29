@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), ShowAuszugActivity.class);
-                intent.putStringArrayListExtra("apapterArray", array4Adapter);
+                intent.putExtra("KontoName", selectedKonto.getInhaber());
                 startActivity(intent);
             }
         });
@@ -112,9 +112,7 @@ public class MainActivity extends AppCompatActivity {
         accountName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                log("onItemSelected vorher: " + accountName.getSelectedItem());
                 parent.setSelection(position);
-                log("onItemSelected nachher: " + accountName.getSelectedItem());
                 setSelectedKonto();
             }
 

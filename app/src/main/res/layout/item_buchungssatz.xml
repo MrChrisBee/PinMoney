@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <TextView
+        android:text="Datum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/idate"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:text="Buchungstext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ibuchungstext"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:text="Verifikation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/iveryfikation"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:text="Betrag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ibetrag"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:text="Summe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/isumme"
+        android:layout_weight="1"/>
+</LinearLayout>

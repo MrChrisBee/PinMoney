@@ -47,6 +47,7 @@
     <string name="helpText">Über diese App: Die App ist aufgrund diveres Schwirigkeiten leider nich nicht fertig.
         Derzeit ist Sie nur als Demo zu betrachten. Eine Navigation zurück zum Hauptscreen ist (noch) nicht anders als über Bordmittel vorgesehen.
         Drücken Sie dazu bitte auf den Zurück Button Ihres Smartphones. Viel Vergnügen!</string>
+    <string name="konto_kind">Konto/Kind</string>
     <string-array name="array_name">
         <item>Eintag nicht gültig</item>
     </string-array>

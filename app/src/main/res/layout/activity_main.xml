@@ -23,7 +23,7 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Konto/Kind"
+            android:text="@string/konto_kind"
             android:textAlignment="center"
             android:textSize="18sp"
             android:textStyle="bold" />
