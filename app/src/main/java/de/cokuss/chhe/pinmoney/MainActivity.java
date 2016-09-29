@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -18,9 +19,9 @@ public class MainActivity extends AppCompatActivity {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
     //Buttons bekannt machen
-    private  Button kontoauszug;
-    private  Button auszahlung;
-    private  Button einzahlung;
+    private Button kontoauszug;
+    private Button auszahlung;
+    private Button einzahlung;
     private Spinner accountName;
     ArrayList<Konto> kontenListe;
     private ArrayList<String> array4Adapter = new ArrayList<>();
@@ -51,35 +52,32 @@ public class MainActivity extends AppCompatActivity {
         kontoauszug = (Button) findViewById(R.id.button_konto);
         auszahlung = (Button) findViewById(R.id.button_auszahlung);
         einzahlung = (Button) findViewById(R.id.button_einzahlung);
-        setListeners();
         fillKontoSpinner();
+        setListeners();
     }
 
-    private void fillKontoSpinner(){
+    private void fillKontoSpinner() {
+        if (arrayAdapter != null) arrayAdapter.clear();
         kontenListe = daoImplSQLight.getAllKonten();
-        for(Konto konto: kontenListe) {
+        for (Konto konto : kontenListe) {
             array4Adapter.add(konto.getInhaber());
         }
-        if (arrayAdapter != null) {
-            arrayAdapter.clear();
-            arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, array4Adapter);
-            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            accountName.setAdapter(arrayAdapter);
-        }
-        accountName.setSelection(0);
-        log("fillKonto: " + accountName.getSelectedItem());
-        setSelectedKonto();
+        log("fillArray4Adapter array 4 adapter size: " + array4Adapter.size());
+        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, array4Adapter);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        accountName.setAdapter(arrayAdapter);
     }
 
-    private void setSelectedKonto () {
+
+    private void setSelectedKonto() {
         String tmpString;
         tmpString = accountName.getSelectedItem().toString();
-        if(daoImplSQLight.isValidKontoName(tmpString)){
-            if(daoImplSQLight.kontoExists(tmpString)) {
+        if (daoImplSQLight.isValidKontoName(tmpString)) {
+            if (daoImplSQLight.kontoExists(tmpString)) {
                 selectedName = tmpString;
                 kontostand = daoImplSQLight.getKontostand(tmpString);
-                selectedKonto = new Konto(selectedName,kontostand);
-                log("setSelectedKonto: " + selectedKonto.getInhaber() + " " +selectedKonto.getKontostand());
+                selectedKonto = new Konto(selectedName, kontostand);
+                log("setSelectedKonto: " + selectedKonto.getInhaber() + " " + selectedKonto.getKontostand());
             }
         }
     }
@@ -96,25 +94,32 @@ public class MainActivity extends AppCompatActivity {
         einzahlung.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent myintent=new Intent(Info.this, GraphDiag.class).putExtra("<StringName>", value);
-                //startActivity(myintent);
-                Intent intent = new Intent(v.getContext(), EinzahlenActivity.class);
-                //Todo selectedKonto setzen
+                Intent intent = new Intent(v.getContext(), BuchenActivity.class);
                 intent.putExtra("KontoName", selectedKonto.getInhaber());
+                intent.putExtra("InOut", "In");
+                startActivity(intent);
+            }
+        });
+        auszahlung.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), BuchenActivity.class);
+                intent.putExtra("KontoName", selectedKonto.getInhaber());
+                intent.putExtra("InOut", "Out");
                 startActivity(intent);
             }
         });
         accountName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected (AdapterView<?> parent, View view, int position, long id) {
-                log("onItemSelected vorher: " +accountName.getSelectedItem());
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                log("onItemSelected vorher: " + accountName.getSelectedItem());
                 parent.setSelection(position);
-                log("onItemSelected nachher: " +accountName.getSelectedItem());
+                log("onItemSelected nachher: " + accountName.getSelectedItem());
                 setSelectedKonto();
             }
 
             @Override
-            public void onNothingSelected (AdapterView<?> parent) {
+            public void onNothingSelected(AdapterView<?> parent) {
                 parent.setSelection(0);
                 setSelectedKonto();
             }
@@ -123,25 +128,40 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
+            case R.id.action_help:
+                Intent intent1 = new Intent(this, HelpActivity.class);
+                startActivity(intent1);
+                return true;
             case R.id.action_new:
                 //Intend für NewReciverActivity
-                Intent intent = new Intent(this, NewRecipientActivity.class);
-                startActivity(intent);
+                Intent intent2 = new Intent(this, NewRecipientActivity.class);
+                startActivity(intent2);
                 return true;
             case R.id.action_change:
                 //Todo Check auf Auswahl und Dialog (Fragment) zur Änderung von Zahlungen
+                //Taschengeld erhöhung fällt erstmal aus - leider keine Zeit für Extras
                 return true;
             case R.id.action_delete:
-                //Todo Check auf Auswahl und delete
+                //Wurde etwas ausgewählt?
+                accountName.getSelectedItem();
+                if (accountName.getSelectedItem() == null) {
+                    Toast.makeText(this, R.string.kontoWaehlen, Toast.LENGTH_LONG).show();
+                    return false;
+                }
+                String loescheMich = accountName.getSelectedItem().toString();
+                //in loescheMich sollte ein gültiger Eintrag sein
+                daoImplSQLight.deleteKonto(loescheMich);
+                fillKontoSpinner();
+                daoImplSQLight.addEntryToHistory(loescheMich,"deleted");
                 return true;
             case R.id.action_settings:
                 //leider keine Zeit für Extras
                 return true;
             case R.id.action_close_app:
+                finish();
                 return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -150,9 +170,11 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
+
     private void log(String string) {
         Log.d(LOG_TAG, string);
     }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -160,12 +182,12 @@ public class MainActivity extends AppCompatActivity {
         daoImplSQLight.open();
     }
 
-//    @Override
-//    protected void onStop() {
-//        super.onStop();
-//        log("Quelle wird via onStop geschlossen.");
-//        daoImplSQLight.close();
-//    } wird bei jedem Intend in andere App gerufen, möchte ich dann die DB schliessen, sicher nicht
+    @Override
+    protected void onStop() {
+        super.onStop();
+        log("MainActivity wird via onStop geschlossen.");
+        daoImplSQLight.close();
+    }
 
     @Override
     protected void onDestroy() {
@@ -174,12 +196,12 @@ public class MainActivity extends AppCompatActivity {
         daoImplSQLight.close();
     }
 
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        log("Quelle wird via onPause geschlossen.");
-//        daoImplSQLight.close();
-//    }  wird bei jedem Intend in andere App gerufen, möchte ich dann die DB schliessen, sicher nicht
+    @Override
+    protected void onPause() {
+        super.onPause();
+        log("Quelle wird via onPause geschlossen.");
+        daoImplSQLight.close();
+    }
 
     @Override
     protected void onResume() {
@@ -189,4 +211,5 @@ public class MainActivity extends AppCompatActivity {
         fillKontoSpinner();
     }
 }
-// ArrayAdapter https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView
+// gut ArrayAdapter https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView
+// später: Scool Bluetooth https://github.com/SoftdeveloperNeumann/Bluetooth.git funzt nicht sicher

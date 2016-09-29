@@ -11,7 +11,7 @@ public interface KontoDAO {
 
     void createKonto(Konto konto);
 
-    void deleteKonto(Konto konto);
+    void deleteKonto(String konto);
 
     boolean kontoExists(String string);
 
