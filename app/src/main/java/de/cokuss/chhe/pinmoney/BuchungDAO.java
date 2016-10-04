@@ -2,18 +2,10 @@ package de.cokuss.chhe.pinmoney;
 
 import java.util.ArrayList;
 
+interface BuchungDAO extends KontoDAO {
+    ArrayList<Buchung> getAllBuchungen (String name);
 
-//im using Denglish v1.0 :-)
-
-public interface BuchungDAO extends KontoDAO {
-    public ArrayList<Buchung> getAllBuchungen (String name);
-
-    public void createBuchung (Konto konto, Buchung buchung);
-
-    //StartDatum Inhaber StartBetrag Betrag Turnus
-    public void setPinMoney (Konto konto, Zahlungen zahlungen);
-
-    public Zahlungen getPinMoney (String inhaber);
+    void createBuchung (Konto konto, Buchung buchung);
 
 }
 

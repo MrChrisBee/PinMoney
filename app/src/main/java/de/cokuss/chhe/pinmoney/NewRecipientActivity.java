@@ -119,7 +119,7 @@ public class NewRecipientActivity extends AppCompatActivity {
                 log("createnew Konto erstellt");
                 daoImplSQLight.setPinMoney(konto, zahlungen);
                 log("createnew setPinmoney erstellt");
-                daoImplSQLight.addEntryToHistory(kontoname,"created");
+                daoImplSQLight.addEntryToHPinMoney(kontoname,"created");
                 this.finish();
             } else nameFeld.setError("Das Konto Existiert bereits!");
         } else nameFeld.setError("Der Kontoname ist ungültig!");

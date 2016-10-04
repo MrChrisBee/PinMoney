@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
                 //in loescheMich sollte ein gültiger Eintrag sein
                 daoImplSQLight.deleteKonto(loescheMich);
                 fillKontoSpinner();
-                daoImplSQLight.addEntryToHistory(loescheMich,"deleted");
+                daoImplSQLight.addEntryToHPinMoney(loescheMich,"deleted");
                 return true;
             case R.id.action_settings:
                 //leider keine Zeit für Extras

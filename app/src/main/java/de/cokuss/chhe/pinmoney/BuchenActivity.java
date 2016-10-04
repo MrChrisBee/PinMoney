@@ -65,7 +65,8 @@ public class BuchenActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(v.getContext(),"Das währe ja noch schöner Du willst "+ wievielTxt + " €. Keine Chance ich bin Pleite",Toast.LENGTH_LONG).show();
                 }
-
+                //sammel alle Daten für eine Buchung
+                //public Buchung(Long id,Konto konto, Date date, float value, String text, Long verifi_id, Integer veri_type) {
             }
         });
     }
