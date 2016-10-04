@@ -8,14 +8,19 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
-public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO {
+class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO {
     private static final String LOG_TAG = DAOImplSQLight.class.getSimpleName();
+    private SimpleDateFormat shortDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault());
 
     private SQLiteDatabase db;
-    public static DAOImplSQLight daoImplSQLight;
+    private static DAOImplSQLight daoImplSQLight;
 
     //Datenbank
     private static final String DB_NAME = "taschengeldkonto.db";
@@ -50,7 +55,7 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
         log("Helper hat die DB " + getDatabaseName() + " erzeugt");
     }
 
-    public static DAOImplSQLight getInstance(Context c) {
+    static DAOImplSQLight getInstance(Context c) {
         if (daoImplSQLight == null) {
             daoImplSQLight = new DAOImplSQLight(c);
         }
@@ -72,34 +77,36 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
     }
 
     @Override
-    public void createBuchung(Konto konto, Buchung buchung) {
+    public void createBuchung(Buchung buchung) {
         db = getWritableDatabase();
-        String sql = "Insert into " + konto.getInhaber() + " ( "
+        String dateStr = shortDateFormat.format(Calendar.getInstance().getTime());
+
+        String sql = "Insert into " + buchung.getKonto().getInhaber() + " ( "
                 + COLUMN_DATE + "," + COLUMN_VALUE + "," + COLUMN_TEXT + ","
-                + COLUMN_VERI_ID + "," + COLUMN_VERI_TYPE + "," + COLUMN_BALANCE + ")"
-                + "values (" + "datetime('now')," + buchung.getValue()
-                + ",'" + buchung.getText() + "'," + buchung.getVeri_id()+",'"
-                + buchung.getVeri_type()+"'," + (buchung.getBalance() + buchung.getValue() + ")");
+                + COLUMN_VERI_ID + "," + COLUMN_VERI_TYPE + "," + COLUMN_BALANCE + ") "
+                + "values ('" + dateStr + "'," + buchung.getValue()
+                + ",'" + buchung.getText() + "'," + buchung.getVeri_id() + ",'"
+                + buchung.getVeri_type() + "'," + buchung.getBalance() + ")";
         log("Buchung erstellen mit: " + sql);
         db.execSQL(sql);
     }
 
-    public void addEntryToHistory(String konto, String aktion) {
+
+    void addEntryToHistory(String konto, String aktion) {
         db = getWritableDatabase();
         String sql = "insert into " + TABLE_NAME + "(" + COLUMN_HIST_TABLE + "," + COLUMN_HIST_AKTION + "," + COLUMN_DATE + ")" +
                 " values ( '" + konto + "','" + aktion + "'," + "date('now')" + ")";
         db.execSQL(sql);
     }
 
-    public Konto getKonto(String kontoname) {
+    Konto getKonto(String kontoname) {
         Konto konto = null;
-        if(kontoExists(kontoname)) {
+        if (kontoExists(kontoname)) {
             float kontostand = getKontostand(kontoname);
-            konto = new Konto(kontoname,kontostand);
+            konto = new Konto(kontoname, kontostand);
         }
         return konto;
     }
-
 
     @Override
     public ArrayList<Buchung> getAllBuchungen(String name) {
@@ -117,9 +124,10 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
 
         //die erste Zeile ist für Zahlungen und mögliche andere Kontodaten reserviert
         String sql = "Select * from " + name + " where id > 1";
+
         Cursor c = db.rawQuery(sql, null);
         c.moveToFirst();
-        log(c.getCount() + " Buchungssätze eingelesen!");
+        log("Von Konto " + name + c.getCount() + " Buchungssätze eingelesen!");
 
         while (!c.isAfterLast()) {
             text = c.getString(c.getColumnIndex(COLUMN_TEXT));
@@ -128,7 +136,16 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
             veri_id = c.getLong(c.getColumnIndex(COLUMN_VERI_ID));
             veri_type = c.getInt(c.getColumnIndex(COLUMN_VERI_TYPE));
             balance = c.getFloat(c.getColumnIndex(COLUMN_BALANCE));
-            date = new Date(c.getColumnIndex(COLUMN_DATE));
+            try {
+                date = shortDateFormat.parse(c.getString(c.getColumnIndex(COLUMN_DATE)));
+            } catch (ParseException e) {
+                Log.e(LOG_TAG, e.getMessage());
+                e.printStackTrace();
+            }
+            finally {
+                date = new Date();
+                log("Falsch");
+            }
             konto = new Konto(name, balance);
             buchung = new Buchung(id, konto, date, value, text, veri_id, veri_type);
             buchungen.add(buchung);
@@ -140,7 +157,6 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
 
     @Override
     public void setPinMoney(Konto konto, Zahlungen zahlungen) {
-
         db = getWritableDatabase();
         //Datum zahlung.betrag zahlung.turnus startbetrag
         String sql = "insert into " + konto.getInhaber() + "(" + COLUMN_DATE + "," + COLUMN_VALUE + "," + COLUMN_VERI_TYPE + "," + COLUMN_BALANCE + ")" +
@@ -241,13 +257,11 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
         if (c.getCount() > 0) {
             schon_existent = true;
             log("kontoExists: Das Konto " + string + " existiert bereits.");
-
         } else {
             schon_existent = false;
             log("kontoExists: Das Konto " + string + " wurde nicht gefunden.");
         }
-        if (c != null)
-            c.close();
+        c.close();
         return schon_existent;
     }
 
@@ -272,10 +286,8 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
                 default:
                     log("getKontostand: Ich habe " + c.getCount() + " 'letzte' Einträge gefunden!?");
                     break;
-
             }
-            if (c != null)
-                c.close();
+            c.close();
             return kontostand;
         }
         return 0f;

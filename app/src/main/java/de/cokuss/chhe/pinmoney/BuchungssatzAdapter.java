@@ -8,18 +8,21 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class BuchungssatzAdapter extends ArrayAdapter<Buchung> {
-    public BuchungssatzAdapter (Context context, ArrayList<Buchung> buchungen) {
-        super(context, 0, (List<Buchung>) buchungen);
+    private SimpleDateFormat shortDateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+    public BuchungssatzAdapter(Context context, ArrayList<Buchung> buchungen) {
+        super(context, 0, buchungen);
     }
 
     @NonNull
     @Override
-    public View getView (int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
         Buchung buchung = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
 
@@ -33,14 +36,24 @@ public class BuchungssatzAdapter extends ArrayAdapter<Buchung> {
         TextView tvBetrag = (TextView) convertView.findViewById(R.id.ibetrag);
         TextView tvSumme = (TextView) convertView.findViewById(R.id.isumme);
         // Populate the data into the template view using the data object
+        if (buchung.getDate() == null) {
+            tvDate.setText(R.string.noDate);
+        } else {
+            tvDate.setText(shortDateFormat.format(buchung.getDate()));
 
-        tvDate.setText(buchung.getDate().toString());
+        }
         tvbuchungstext.setText(buchung.getText());
-        tvVeryfikation.setText(buchung.getVeri_type());
-        tvBetrag.setText(String.format(Locale.getDefault(),"%.2f", buchung.getValue()));
-        tvSumme.setText(String.format(Locale.getDefault(),"%.2f", buchung.getValue()));
+        if (buchung.getVeri_type() == null) {
+            tvVeryfikation.setText(R.string.nichtig);
+        } else {
+            tvVeryfikation.setText(buchung.getVeri_type().toString());
+        }
+        tvBetrag.setText(String.format(Locale.getDefault(), "%.2f", buchung.getValue()));
+        tvSumme.setText(String.format(Locale.getDefault(), "%.2f", buchung.getBalance()));
 
         // Return the completed view to render on screen
         return convertView;
     }
 }
+
+

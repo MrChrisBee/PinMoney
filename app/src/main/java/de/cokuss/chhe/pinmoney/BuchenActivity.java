@@ -9,20 +9,25 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.Date;
+import java.util.Calendar;
+
 import java.util.Locale;
 
 
 public class BuchenActivity extends AppCompatActivity {
     private static final String LOG_TAG = BuchenActivity.class.getSimpleName();
+
     private void log(String string) {Log.d(LOG_TAG, string);}
 
     Konto empfaenger;
-    String empfaengerStr;
+    Buchung buchung;
+    String empfaengerStr, buchungstext;
     Boolean isEinzahlung;
     DAOImplSQLight daoImplSQLight;
 
     TextView header, kontoname, kontostand;
-    EditText betrag;
+    EditText betrag, text;
     Button button;
 
     @Override
@@ -32,7 +37,10 @@ public class BuchenActivity extends AppCompatActivity {
         header = (TextView) findViewById(R.id.textView);
         kontoname = (TextView) findViewById(R.id.empfaenger);
         kontostand = (TextView) findViewById(R.id.kontostand);
+        DecimalKeyListener decimalKeyListener = new DecimalKeyListener();
         betrag = (EditText) findViewById(R.id.betragBuchen);
+        //betrag.setKeyListener(decimalKeyListener);
+        text = (EditText) findViewById(R.id.eTextBuchen);
         button = (Button) findViewById(R.id.button);
 
         daoImplSQLight = DAOImplSQLight.getInstance(getApplicationContext());
@@ -66,6 +74,18 @@ public class BuchenActivity extends AppCompatActivity {
                     Toast.makeText(v.getContext(),"Das währe ja noch schöner Du willst "+ wievielTxt + " €. Keine Chance ich bin Pleite",Toast.LENGTH_LONG).show();
                 }
 
+                //Buchung erzeugen ich brauche Buchung(Long id,Konto konto, Date date, float value, String text, Long verifi_id, Integer veri_type)
+                //Fehlen noch : Text, aktueller Kontostand(alter + wieviel),
+                //verify_typ und verify_id werden erstmal getürkt
+                if((text.getText() == null) || (buchungstext = text.getText().toString()).length() <1){
+                    if(isEinzahlung) {
+                        buchungstext = "Einzahlung";
+                    } else {
+                        buchungstext = "Auszahlung";
+                    }
+                }
+                buchung = new Buchung(null,empfaenger,Calendar.getInstance().getTime(),wieviel,buchungstext,null,0);
+                daoImplSQLight.createBuchung(buchung);
             }
         });
     }

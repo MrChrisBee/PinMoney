@@ -73,14 +73,34 @@
         android:ems="4"
         android:inputType="numberDecimal" />
 
-    <Button
-        android:text="@string/buchen"
+    <TextView
+        android:id="@+id/vTextBuchen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/betragBuchen"
         android:layout_centerHorizontal="true"
+        android:labelFor="@+id/eTextBuchen"
+        android:text="@string/grund_optional" />
+
+    <EditText
+        android:id="@+id/eTextBuchen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/vTextBuchen"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:inputType="text" />
+
+    <Button
+        android:text="@string/buchen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/eTextBuchen"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:id="@+id/button" />
+
+
 
 
 </RelativeLayout>

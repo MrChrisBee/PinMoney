@@ -86,27 +86,39 @@ public class MainActivity extends AppCompatActivity {
         kontoauszug.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ShowAuszugActivity.class);
-                intent.putExtra("KontoName", selectedKonto.getInhaber());
-                startActivity(intent);
+                if (selectedKonto != null) {
+                    Intent intent = new Intent(v.getContext(), ShowAuszugActivity.class);
+                    intent.putExtra("KontoName", selectedKonto.getInhaber());
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(MainActivity.this, "Bitte erst einen \nTaschengeldempfänger anlegen! \nÜber Settings \n  -> Empfänger \n  -> Neuer Empfänger", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         einzahlung.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), BuchenActivity.class);
-                intent.putExtra("KontoName", selectedKonto.getInhaber());
-                intent.putExtra("InOut", "In");
-                startActivity(intent);
+                if (selectedKonto != null) {
+                    Intent intent = new Intent(v.getContext(), BuchenActivity.class);
+                    intent.putExtra("KontoName", selectedKonto.getInhaber());
+                    intent.putExtra("InOut", "In");
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(MainActivity.this, "Bitte erst einen \nTaschengeldempfänger anlegen! \nÜber Settings \n  -> Empfänger \n  -> Neuer Empfänger", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         auszahlung.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), BuchenActivity.class);
-                intent.putExtra("KontoName", selectedKonto.getInhaber());
-                intent.putExtra("InOut", "Out");
-                startActivity(intent);
+                if (selectedKonto != null) {
+                    Intent intent = new Intent(v.getContext(), BuchenActivity.class);
+                    intent.putExtra("KontoName", selectedKonto.getInhaber());
+                    intent.putExtra("InOut", "Out");
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(MainActivity.this, "Bitte erst einen \nTaschengeldempfänger anlegen! \nÜber Settings \n  -> Empfänger \n  -> Neuer Empfänger", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         accountName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -118,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+                //ohne Auswahl sollte immer der erste Eintag gewählt sein
                 parent.setSelection(0);
                 setSelectedKonto();
             }
@@ -151,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
                 //in loescheMich sollte ein gültiger Eintrag sein
                 daoImplSQLight.deleteKonto(loescheMich);
                 fillKontoSpinner();
-                daoImplSQLight.addEntryToHistory(loescheMich,"deleted");
+                daoImplSQLight.addEntryToHistory(loescheMich, "deleted");
                 return true;
             case R.id.action_settings:
                 //leider keine Zeit für Extras
@@ -211,3 +224,5 @@ public class MainActivity extends AppCompatActivity {
 }
 // gut ArrayAdapter https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView
 // später: Scool Bluetooth https://github.com/SoftdeveloperNeumann/Bluetooth.git funzt nicht sicher
+
+// einige Versuche zum Komma unter https://github.com/SoftdeveloperNeumann/NumberFormat.git

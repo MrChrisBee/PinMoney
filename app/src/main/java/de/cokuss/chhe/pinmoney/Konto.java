@@ -9,11 +9,11 @@ public class Konto {
         this.inhaber = inhaber;
     }
 
-    public String getInhaber () {
+    String getInhaber() {
         return inhaber;
     }
 
-    public float getKontostand () {
+    float getKontostand() {
         return kontostand;
     }
 }

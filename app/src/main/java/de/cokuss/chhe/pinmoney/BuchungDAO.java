@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public interface BuchungDAO extends KontoDAO {
     public ArrayList<Buchung> getAllBuchungen (String name);
 
-    public void createBuchung (Konto konto, Buchung buchung);
+    public void createBuchung(Buchung buchung);
 
     //StartDatum Inhaber StartBetrag Betrag Turnus
     public void setPinMoney (Konto konto, Zahlungen zahlungen);
