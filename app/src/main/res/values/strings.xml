@@ -48,6 +48,11 @@
         Derzeit ist Sie nur als Demo zu betrachten. Eine Navigation zurück zum Hauptscreen ist (noch) nicht anders als über Bordmittel vorgesehen.
         Drücken Sie dazu bitte auf den Zurück Button Ihres Smartphones. Viel Vergnügen!</string>
     <string name="konto_kind">Konto/Kind</string>
+    <string name="optional">Optional</string>
+    <string name="buchungstext">Buchungstext</string>
+    <string name="datum">Datum</string>
+    <string name="verifikation">Verifikation</string>
+    <string name="summe">Summe</string>
     <string-array name="array_name">
         <item>Eintag nicht gültig</item>
     </string-array>

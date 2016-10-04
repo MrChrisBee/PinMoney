@@ -71,7 +71,7 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
     }
 
     @Override
-    public void addEntryToHPinMoney (String name, Zahlungen zahlungen, String aktion) {
+    public void addEntryToPinMoney (String name, Zahlungen zahlungen, String aktion) {
         db = getWritableDatabase();
         String sql = INSERT_INTO_PIN
                 + " values ( null, date('now'), '" + name + "', '" + zahlungen.getTurnusStr()
@@ -80,7 +80,7 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
     }
 
     @Override
-    public void addEntryToHPinMoney (String name, String aktion) {
+    public void addEntryToPinMoney (String name, String aktion) {
         db = getWritableDatabase();
         String sql = INSERT_INTO_PIN
                 + " values ( null, date('now'), " + name + ", null, null, " + aktion + ")";

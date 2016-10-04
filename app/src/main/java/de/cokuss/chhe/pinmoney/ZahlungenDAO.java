@@ -4,8 +4,8 @@ package de.cokuss.chhe.pinmoney;
 import java.util.Date;
 
 interface ZahlungenDAO {
-    void addEntryToHPinMoney (String name, Zahlungen zahlungen, String aktion);
-    void addEntryToHPinMoney (String name, String aktion);
+    void addEntryToPinMoney (String name, Zahlungen zahlungen, String aktion);
+    void addEntryToPinMoney (String name, String aktion);
     Zahlungen getZahlungenFromPinMoney (String name);
     PinMoneyEnrty getEntryFromPinMoney(String name);
 }

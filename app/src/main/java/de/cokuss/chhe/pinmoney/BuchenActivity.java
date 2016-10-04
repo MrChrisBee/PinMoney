@@ -9,24 +9,28 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Calendar;
 import java.util.Locale;
 
 
 public class BuchenActivity extends AppCompatActivity {
     private static final String LOG_TAG = BuchenActivity.class.getSimpleName();
-    private void log(String string) {Log.d(LOG_TAG, string);}
+
+    private void log (String string) {
+        Log.d(LOG_TAG, string);
+    }
 
     Konto empfaenger;
-    String empfaengerStr;
+    String empfaengerStr, buchungstext;
     Boolean isEinzahlung;
     DAOImplSQLight daoImplSQLight;
-
+    Buchung buchung;
     TextView header, kontoname, kontostand;
-    EditText betrag;
+    EditText betrag, text;
     Button button;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buchen);
         header = (TextView) findViewById(R.id.textView);
@@ -34,12 +38,13 @@ public class BuchenActivity extends AppCompatActivity {
         kontostand = (TextView) findViewById(R.id.kontostand);
         betrag = (EditText) findViewById(R.id.betragBuchen);
         button = (Button) findViewById(R.id.button);
+        text = (EditText) findViewById(R.id.eTextBuchen);
 
         daoImplSQLight = DAOImplSQLight.getInstance(getApplicationContext());
         empfaengerStr = getIntent().getStringExtra("KontoName");
         isEinzahlung = (getIntent().getStringExtra("InOut").equals("In"));
         if ((empfaenger = daoImplSQLight.getKonto(empfaengerStr)) == null) {
-            Log.e(LOG_TAG,"onCreate: Das konto Existiert nicht!!!");
+            Log.e(LOG_TAG, "onCreate: Das konto Existiert nicht!!!");
             finish();
         }
         if (isEinzahlung) {
@@ -49,24 +54,36 @@ public class BuchenActivity extends AppCompatActivity {
         }
         kontoname.setText(empfaengerStr);
         //einen Kontostand eintragen
-        kontostand.setText(String.format(Locale.getDefault(),"%.2f", empfaenger.getKontostand()));
-        betrag.setText(String.format(Locale.ENGLISH,"%.2f", 0f));
+        kontostand.setText(String.format(Locale.getDefault(), "%.2f", empfaenger.getKontostand()));
+        betrag.setText(String.format(Locale.ENGLISH, "%.2f", 0f));
         button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                if(betrag.getTextSize() < 1) {
-                    Toast.makeText(v.getContext(),"Bitte einen gültigen Wert eingeben. Das Format ist €.Cent (7.50)",Toast.LENGTH_LONG).show();
+            public void onClick (View v) {
+                if (betrag.getTextSize() < 1) {
+                    Toast.makeText(v.getContext(), "Bitte einen gültigen Wert eingeben. \nDas Format ist €.Cent (7.50)", Toast.LENGTH_LONG).show();
                     return;
                 }
                 float wieviel = Float.valueOf(betrag.getText().toString());
-                String wievielTxt = String.format(Locale.getDefault(),"%.2f", wieviel);
+                String wievielTxt = String.format(Locale.getDefault(), "%.2f", wieviel);
                 if (isEinzahlung) {
-                    Toast.makeText(v.getContext(),"Das ist ja Super "+ wievielTxt + " € die siehst Du nie wieder !",Toast.LENGTH_LONG).show();
+                    Toast.makeText(v.getContext(), "Einzahlung " + wievielTxt + " €", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(v.getContext(),"Das währe ja noch schöner Du willst "+ wievielTxt + " €. Keine Chance ich bin Pleite",Toast.LENGTH_LONG).show();
+                    Toast.makeText(v.getContext(), "Auszahlung " + wievielTxt + " €", Toast.LENGTH_SHORT).show();
                 }
-                //sammel alle Daten für eine Buchung
-                //public Buchung(Long id,Konto konto, Date date, float value, String text, Long verifi_id, Integer veri_type) {
+                //Buchung erzeugen ich brauche Buchung(Long id,Konto konto, Date date, float value, String text, Long verifi_id, Integer veri_type)
+                //Fehlen noch : Text, aktueller Kontostand(alter + wieviel),
+                //verify_typ und verify_id werden erstmal getürkt
+                if ((text.getText() == null) || (buchungstext = text.getText().toString()).length() < 1) {
+                    if (isEinzahlung) {
+                        buchungstext = "Einzahlung";
+                    } else {
+                        buchungstext = "Auszahlung";
+                        wieviel = wieviel * -1;
+                    }
+                }
+
+                buchung = new Buchung(null, Calendar.getInstance().getTime(), wieviel, buchungstext, null, null, empfaenger.getKontostand() + wieviel);
+                daoImplSQLight.createBuchung(empfaenger, buchung);
             }
         });
     }

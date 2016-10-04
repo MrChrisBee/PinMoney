@@ -37,7 +37,11 @@ public class BuchungssatzAdapter extends ArrayAdapter<Buchung> {
         if (buchung != null) {
             tvDate.setText(buchung.getDate().toString());
             tvBuchungstext.setText(buchung.getText());
-            tvVeryfikation.setText(buchung.getVeri_type());
+            if (buchung.getVeri_type() != null) {
+                tvVeryfikation.setText(buchung.getVeri_type().toString());
+            } else {
+                tvVeryfikation.setText("unbestätigt");
+            }
             tvBetrag.setText(String.format(Locale.getDefault(), "%.2f", buchung.getValue()));
             tvSumme.setText(String.format(Locale.getDefault(), "%.2f", buchung.getValue()));
         }

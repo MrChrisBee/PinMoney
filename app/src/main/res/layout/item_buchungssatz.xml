@@ -5,35 +5,35 @@
               android:layout_height="match_parent">
 
     <TextView
-        android:text="Datum"
+        android:text="@string/datum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/idate"
         android:layout_weight="1"/>
 
     <TextView
-        android:text="Buchungstext"
+        android:text="@string/buchungstext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ibuchungstext"
         android:layout_weight="1"/>
 
     <TextView
-        android:text="Verifikation"
+        android:text="@string/verifikation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/iveryfikation"
         android:layout_weight="1"/>
 
     <TextView
-        android:text="Betrag"
+        android:text="@string/betrag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ibetrag"
         android:layout_weight="1"/>
 
     <TextView
-        android:text="Summe"
+        android:text="@string/summe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/isumme"
