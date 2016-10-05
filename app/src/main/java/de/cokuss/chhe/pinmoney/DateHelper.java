@@ -1,17 +1,31 @@
 package de.cokuss.chhe.pinmoney;
 
-import java.util.Date;
+import android.util.Log;
 
-/**
- * Created by Master on 27.09.2016.
- */
-public class DateHelper {
-    private final static String LOG = DateHelper.class.getSimpleName();
-    public float calcAnsparung(Date seit, Zahlungen zahlungen){
-        Date heute = new Date();
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
+class DateHelper {
+    private final static String LOG_TAG = DateHelper.class.getSimpleName();
+    private void log(String string) {
+        Log.d(LOG_TAG, string);
+    }
+
+    Date today = new Date();
+    final DateFormat sdfShort = new SimpleDateFormat("dd.MM.yy", Locale.getDefault());
+    final DateFormat sdfLong = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault());
+
+    float calcAnsparung(Date seit, Zahlungen zahlungen){
+        Date heute = today;
 
         return 0.0f;
     }
 
+    String setNowDate() {
+        return sdfLong.format(today);
+    }
 
 }

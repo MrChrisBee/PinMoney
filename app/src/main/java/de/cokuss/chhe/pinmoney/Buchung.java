@@ -12,6 +12,15 @@ public class Buchung {
     private Integer veri_type;
     private float balance;
 
+    @Override
+    public String toString() {
+        return "Buchung{" +
+                "balance=" + balance +
+                ", date=" + date +
+                ", value=" + value +
+                '}';
+    }
+
     public Buchung (Long id, Date date, float value, String text, Long veri_id, Integer veri_type, float balance) {
         this.id = id;
         this.date = date;

@@ -55,7 +55,7 @@ public class BuchenActivity extends AppCompatActivity {
         kontoname.setText(empfaengerStr);
         //einen Kontostand eintragen
         kontostand.setText(String.format(Locale.getDefault(), "%.2f", empfaenger.getKontostand()));
-        betrag.setText(String.format(Locale.ENGLISH, "%.2f", 0f));
+        //betrag.setText(String.format(Locale.ENGLISH, "%.2f", 0f));
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v) {
@@ -69,20 +69,17 @@ public class BuchenActivity extends AppCompatActivity {
                     Toast.makeText(v.getContext(), "Einzahlung " + wievielTxt + " €", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(v.getContext(), "Auszahlung " + wievielTxt + " €", Toast.LENGTH_SHORT).show();
+                    wieviel = wieviel * -1;
                 }
-                //Buchung erzeugen ich brauche Buchung(Long id,Konto konto, Date date, float value, String text, Long verifi_id, Integer veri_type)
-                //Fehlen noch : Text, aktueller Kontostand(alter + wieviel),
-                //verify_typ und verify_id werden erstmal getürkt
                 if ((text.getText() == null) || (buchungstext = text.getText().toString()).length() < 1) {
                     if (isEinzahlung) {
                         buchungstext = "Einzahlung";
                     } else {
                         buchungstext = "Auszahlung";
-                        wieviel = wieviel * -1;
                     }
                 }
-
-                buchung = new Buchung(null, Calendar.getInstance().getTime(), wieviel, buchungstext, null, null, empfaenger.getKontostand() + wieviel);
+                //Achtung aktualisierung des Kontostandes findet nur hier statt, stelle sicher das dass Vorzeichen Stimmt
+                buchung = new Buchung(null, null , wieviel, buchungstext, null, null, empfaenger.getKontostand() + wieviel);
                 daoImplSQLight.createBuchung(empfaenger, buchung);
             }
         });

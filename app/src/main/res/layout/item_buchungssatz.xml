@@ -1,41 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:weightSum="100">
 
     <TextView
-        android:text="@string/datum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/idate"
-        android:layout_weight="1"/>
-
-    <TextView
-        android:text="@string/buchungstext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="6"
+        android:textAlignment="textStart"
+        android:text="@string/datum" />
+
+    <TextView
         android:id="@+id/ibuchungstext"
-        android:layout_weight="1"/>
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="39"
+        android:maxLines="1"
+        android:paddingLeft="@dimen/buchungssatz_padding"
+        android:text="@string/buchungstext" />
 
     <TextView
-        android:text="@string/verifikation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/iveryfikation"
-        android:layout_weight="1"/>
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="5"
+        android:textAlignment="textEnd"
+        android:paddingLeft="@dimen/buchungssatz_padding"
+        android:text="@string/verifikation" />
 
     <TextView
-        android:text="@string/betrag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/ibetrag"
-        android:layout_weight="1"/>
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="20"
+        android:paddingLeft="@dimen/buchungssatz_padding"
+        android:textAlignment="textEnd"
+        android:text="@string/betrag" />
 
     <TextView
-        android:text="@string/summe"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/isumme"
-        android:layout_weight="1"/>
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="30"
+        android:paddingLeft="@dimen/buchungssatz_padding"
+        android:textAlignment="textEnd"
+        android:text="@string/summe" />
 </LinearLayout>

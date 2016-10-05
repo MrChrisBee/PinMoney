@@ -13,13 +13,15 @@ import java.util.List;
 import java.util.Locale;
 
 public class BuchungssatzAdapter extends ArrayAdapter<Buchung> {
-    public BuchungssatzAdapter (Context context, ArrayList<Buchung> buchungen) {
+    public BuchungssatzAdapter(Context context, ArrayList<Buchung> buchungen) {
         super(context, 0, (List<Buchung>) buchungen);
     }
 
+    DateHelper dateHelper = new DateHelper();
+
     @NonNull
     @Override
-    public View getView (int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
         Buchung buchung = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
 
@@ -35,15 +37,19 @@ public class BuchungssatzAdapter extends ArrayAdapter<Buchung> {
         // Populate the data into the template view using the data object
 
         if (buchung != null) {
-            tvDate.setText(buchung.getDate().toString());
+            if (buchung.getDate() != null) {
+                tvDate.setText(dateHelper.sdfShort.format(buchung.getDate()));
+            } else {
+                tvDate.setText("null");
+            }
             tvBuchungstext.setText(buchung.getText());
             if (buchung.getVeri_type() != null) {
                 tvVeryfikation.setText(buchung.getVeri_type().toString());
             } else {
-                tvVeryfikation.setText("unbestätigt");
+                tvVeryfikation.setText(R.string.unbestaetigt);
             }
             tvBetrag.setText(String.format(Locale.getDefault(), "%.2f", buchung.getValue()));
-            tvSumme.setText(String.format(Locale.getDefault(), "%.2f", buchung.getValue()));
+            tvSumme.setText(String.format(Locale.getDefault(), "%.2f", buchung.getBalance()));
         }
         // Return the completed view to render on screen
         return convertView;

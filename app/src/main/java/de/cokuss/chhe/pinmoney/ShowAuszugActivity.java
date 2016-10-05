@@ -6,9 +6,11 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class ShowAuszugActivity extends AppCompatActivity {
@@ -20,6 +22,7 @@ public class ShowAuszugActivity extends AppCompatActivity {
     ArrayList<Konto> kontoList;
     ArrayList<String> nameList;
     ArrayList<Buchung> buchungsListe;
+    TextView aktuell;
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
@@ -36,6 +39,7 @@ public class ShowAuszugActivity extends AppCompatActivity {
         }
         spinner = (Spinner) findViewById(R.id.spinnerEmpfaenger);
         kontoList = daoImplSQLight.getAllKonten();
+        aktuell = (TextView) findViewById(R.id.show_actual_count);
         nameList = new ArrayList<>();
         for (Konto konto : kontoList) {
             nameList.add(konto.getInhaber());
@@ -43,8 +47,10 @@ public class ShowAuszugActivity extends AppCompatActivity {
         makeSpinnerAdapter();
         spinner.setSelection(nameList.indexOf(empfaengerStr));
         buchungsListe = daoImplSQLight.getAllBuchungen(empfaengerStr);
+        aktuell.setText(String.format(Locale.getDefault(), "%.2f", daoImplSQLight.getKontostand(empfaengerStr)));
         makeListViewAdapter();
     }
+    
 
     private void makeSpinnerAdapter () {
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,

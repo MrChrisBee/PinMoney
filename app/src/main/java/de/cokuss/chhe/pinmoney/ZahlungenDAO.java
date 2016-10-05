@@ -15,26 +15,26 @@ class PinMoneyEnrty {
     Date entryDate;
     String kontoName, action;
 
-    public PinMoneyEnrty (Zahlungen zahlungen, Date entryDate, String kontoName, String action) {
+    PinMoneyEnrty (Zahlungen zahlungen, Date entryDate, String kontoName, String action) {
         this.zahlungen = zahlungen;
         this.entryDate = entryDate;
         this.kontoName = kontoName;
         this.action = action;
     }
 
-    public Zahlungen getZahlungen () {
+    Zahlungen getZahlungen () {
         return zahlungen;
     }
 
-    public Date getEntryDate () {
+    Date getEntryDate () {
         return entryDate;
     }
 
-    public String getKontoName () {
+    String getKontoName () {
         return kontoName;
     }
 
-    public String getAction () {
+    String getAction () {
         return action;
     }
 }

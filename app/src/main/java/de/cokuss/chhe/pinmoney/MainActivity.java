@@ -223,3 +223,9 @@ public class MainActivity extends AppCompatActivity {
 }
 // gut ArrayAdapter https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView
 // später: Scool Bluetooth https://github.com/SoftdeveloperNeumann/Bluetooth.git funzt nicht sicher
+//http://www.journaldev.com/9976/android-date-time-picker-dialog
+
+//Links zu JUnit
+//http://www.torsten-horn.de/techdocs/java-junit.htm
+//http://www.tutego.de/blog/javainsel/2010/04/junit-4-tutorial-java-tests-mit-junit
+

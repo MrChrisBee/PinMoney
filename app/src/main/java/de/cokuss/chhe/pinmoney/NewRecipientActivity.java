@@ -16,7 +16,7 @@ import java.util.Locale;
 
 public class NewRecipientActivity extends AppCompatActivity {
     private static final String LOG_TAG = NewRecipientActivity.class.getSimpleName();
-
+    DateHelper dateHelper = new DateHelper();
     DAOImplSQLight daoImplSQLight;
     Boolean isValid = true;
     Konto konto;
@@ -141,14 +141,13 @@ public class NewRecipientActivity extends AppCompatActivity {
 
     public Date string2Date(Check4EditText c4Thing) {
         Date date = null;
-        DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", new Locale("de"));
         if (c4Thing.isValid()) {
             try {
-                date = formatter.parse(c4Thing.getString());
-                log("klappte aus string2Date" + date.toString());
+                date = dateHelper.sdfShort.parse(c4Thing.getString());
+                log("string2Date Datum: " + date.toString());
             } catch (ParseException e) {
                 c4Thing.getEditText().setError("Datum ist ungültig!");
-                log("ungültig aus string2Date");
+                log("string2Date Ungültig");
             }
         }
         return date;

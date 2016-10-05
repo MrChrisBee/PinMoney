@@ -8,7 +8,9 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -16,7 +18,8 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
     private static final String LOG_TAG = DAOImplSQLight.class.getSimpleName();
 
     private SQLiteDatabase db;
-    public static DAOImplSQLight daoImplSQLight;
+    DateHelper dateHelper = new DateHelper();
+    static DAOImplSQLight daoImplSQLight;
 
     //Datenbank
     private static final String DB_NAME = "taschengeldkonto.db";
@@ -42,7 +45,7 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
 
     private static final String SQL_DROP_TABLE = "DROP TABLE IF EXIST " + TABLE_PM_INFO + ";";
     private static final String SQL_SELECT_FROM_PIN_MONEY = "select " + COLUMN_PM_STARTDATE + ", " + COLUMN_PM_CYCLE + ", " + COLUMN_PM_VALUE
-    + " from " + TABLE_PM_INFO + " where "  + COLUMN_PM_ID + " = (SELECT MAX( " + COLUMN_PM_ID + " )  FROM  "
+            + " from " + TABLE_PM_INFO + " where " + COLUMN_PM_ID + " = (SELECT MAX( " + COLUMN_PM_ID + " )  FROM  "
             + TABLE_PM_INFO + " where " + COLUMN_PM_NAME + " like ";
 
     private static final String INSERT_INTO_PIN = "insert into " + TABLE_PM_INFO + "( " + COLUMN_PM_ID
@@ -63,7 +66,7 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
         log("Helper hat die DB " + getDatabaseName() + " erzeugt");
     }
 
-    public static DAOImplSQLight getInstance(Context c) {
+    static DAOImplSQLight getInstance(Context c) {
         if (daoImplSQLight == null) {
             daoImplSQLight = new DAOImplSQLight(c);
         }
@@ -71,16 +74,16 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
     }
 
     @Override
-    public void addEntryToPinMoney (String name, Zahlungen zahlungen, String aktion) {
+    public void addEntryToPinMoney(String name, Zahlungen zahlungen, String aktion) {
         db = getWritableDatabase();
         String sql = INSERT_INTO_PIN
                 + " values ( null, date('now'), '" + name + "', '" + zahlungen.getTurnusStr()
-                +  "', " + zahlungen.getBetrag() + ", '" + aktion + "')";
+                + "', " + zahlungen.getBetrag() + ", '" + aktion + "')";
         db.execSQL(sql);
     }
 
     @Override
-    public void addEntryToPinMoney (String name, String aktion) {
+    public void addEntryToPinMoney(String name, String aktion) {
         db = getWritableDatabase();
         String sql = INSERT_INTO_PIN
                 + " values ( null, date('now'), " + name + ", null, null, " + aktion + ")";
@@ -90,7 +93,7 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
     //Lies den letzten eintrag zu dem Konto
     //Zahlungsinfo zum Inhaber auslesen
     @Override
-    public Zahlungen getZahlungenFromPinMoney (String inhaber) {
+    public Zahlungen getZahlungenFromPinMoney(String inhaber) {
         db = getWritableDatabase();
         Zahlungen zahlungen;
         Date date;
@@ -116,12 +119,12 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
         }
         c.close();
         zahlungen = new Zahlungen(date, turnus, value);
-        log("getZahlungenFromPinMoney ausgeführt für Konto " + inhaber+ "\n" +sql);
+        log("getZahlungenFromPinMoney ausgeführt für Konto " + inhaber + "\n" + sql);
         return zahlungen;
     }
 
     @Override
-    public PinMoneyEnrty getEntryFromPinMoney (String inhaber) {
+    public PinMoneyEnrty getEntryFromPinMoney(String inhaber) {
         db = getWritableDatabase();
         Zahlungen zahlungen;
         Date date;
@@ -167,22 +170,25 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
     @Override
     public void createBuchung(Konto konto, Buchung buchung) {
         db = getWritableDatabase();
+        DateHelper dateHelper = new DateHelper();
+        String datum = dateHelper.setNowDate();
+        //Achtung Hier wird direkt Buchung geschrieben : Balance ist vorher korrekt zu setzen!
         String sql = "Insert into " + konto.getInhaber() + " ( "
                 + COLUMN_DATE + "," + COLUMN_VALUE + "," + COLUMN_TEXT + ","
                 + COLUMN_VERI_ID + "," + COLUMN_VERI_TYPE + "," + COLUMN_BALANCE + ")"
-                + "values (" + "datetime('now')," + buchung.getValue()
-                + ",'" + buchung.getText() + "'," + buchung.getVeri_id()+",'"
-                + buchung.getVeri_type()+"'," + (buchung.getBalance() + buchung.getValue() + ")");
+                + "values ('" + datum + "', "
+                + buchung.getValue() + ",'" + buchung.getText() + "'," + buchung.getVeri_id() + ",'"
+                + buchung.getVeri_type() + "'," + buchung.getBalance() + ")";
         log("Buchung erstellen mit: " + sql);
         db.execSQL(sql);
     }
 
 
-    public Konto getKonto(String kontoname) {
+    Konto getKonto(String kontoname) {
         Konto konto = null;
-        if(kontoExists(kontoname)) {
+        if (kontoExists(kontoname)) {
             float kontostand = getKontostand(kontoname);
-            konto = new Konto(kontoname,kontostand);
+            konto = new Konto(kontoname, kontostand);
         }
         return konto;
     }
@@ -200,8 +206,7 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
         Integer veri_type;
         float balance;
 
-        //die erste Zeile ist für Zahlungen und mögliche andere Kontodaten reserviert
-        String sql = "Select * from " + name + " where id > 1";
+        String sql = "Select * from " + name;
         Cursor c = db.rawQuery(sql, null);
         c.moveToFirst();
         log(c.getCount() + " Buchungssätze eingelesen!");
@@ -213,9 +218,16 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
             veri_id = c.getLong(c.getColumnIndex(COLUMN_VERI_ID));
             veri_type = c.getInt(c.getColumnIndex(COLUMN_VERI_TYPE));
             balance = c.getFloat(c.getColumnIndex(COLUMN_BALANCE));
-            date = new Date(c.getColumnIndex(COLUMN_DATE));
-            buchung = new Buchung(id, date, value, text, veri_id, veri_type, balance);
+            try {
+                date = dateHelper.sdfLong.parse(c.getString(c.getColumnIndex(COLUMN_DATE)));
+                buchung = new Buchung(id, date, value, text, veri_id, veri_type, balance);
+            } catch (ParseException e) {
+                buchung = new Buchung(id, null, value, text, veri_id, veri_type, balance);
+                Log.e(LOG_TAG, e.getMessage());
+                e.printStackTrace();
+            }
             buchungen.add(buchung);
+            log("getAllBuchungen : " +buchung.toString());
             c.moveToNext();
         }
         c.close();
@@ -282,7 +294,7 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
             schon_existent = false;
             log("kontoExists: Das Konto " + string + " wurde nicht gefunden.");
         }
-            c.close();
+        c.close();
         return schon_existent;
     }
 
@@ -308,13 +320,11 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
                     log("getKontostand: Ich habe " + c.getCount() + " 'letzte' Einträge gefunden!?");
                     break;
             }
-                c.close();
+            c.close();
             return kontostand;
         }
         return 0f;
     }
-
-
 
 
     @Override
