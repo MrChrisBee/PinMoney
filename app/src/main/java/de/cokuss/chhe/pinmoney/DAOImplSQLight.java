@@ -14,12 +14,12 @@ import java.util.Calendar;
 import java.util.Date;
 
 
-public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, ZahlungenDAO {
+class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, ZahlungenDAO {
     private static final String LOG_TAG = DAOImplSQLight.class.getSimpleName();
 
     private SQLiteDatabase db;
-    DateHelper dateHelper = new DateHelper();
-    static DAOImplSQLight daoImplSQLight;
+    private DateHelper dateHelper = new DateHelper();
+    private static DAOImplSQLight daoImplSQLight;
 
     //Datenbank
     private static final String DB_NAME = "taschengeldkonto.db";
@@ -130,7 +130,7 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
         Date date;
         float value;
         Turnus turnus;
-        //// TODO: 04.10.16
+        // TODO: 04.10.16
         String sql = SQL_SELECT_FROM_PIN_MONEY + inhaber + " )";
         Cursor c = db.rawQuery(sql, null);
         c.moveToFirst();
@@ -149,6 +149,7 @@ public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, Kont
             default:
                 turnus = Turnus.TAEGLICH;
         }
+        c.close();
         return null;
     }
 

@@ -12,12 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class BuchungssatzAdapter extends ArrayAdapter<Buchung> {
-    public BuchungssatzAdapter(Context context, ArrayList<Buchung> buchungen) {
+class BuchungssatzAdapter extends ArrayAdapter<Buchung> {
+    BuchungssatzAdapter(Context context, ArrayList<Buchung> buchungen) {
         super(context, 0, (List<Buchung>) buchungen);
     }
 
-    DateHelper dateHelper = new DateHelper();
+    private DateHelper dateHelper = new DateHelper();
 
     @NonNull
     @Override
@@ -40,7 +40,7 @@ public class BuchungssatzAdapter extends ArrayAdapter<Buchung> {
             if (buchung.getDate() != null) {
                 tvDate.setText(dateHelper.sdfShort.format(buchung.getDate()));
             } else {
-                tvDate.setText("null");
+                tvDate.setText(R.string.impossible);
             }
             tvBuchungstext.setText(buchung.getText());
             if (buchung.getVeri_type() != null) {

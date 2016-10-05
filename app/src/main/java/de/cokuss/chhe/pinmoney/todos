@@ -1,0 +1,8 @@
+Was ist noch zu tun.
+Die Hauptfunktionalität der App ->
+    Ich habe eine Konto das z.B. Wöchentlich seit dem 1.1.2016  5€ bekommt
+    Heute ist der 5.10.2016
+        Wieviele Wochen sind seit dem vergangen?
+        Wie komme ich an den ersten Tag der Woche? Die Woche startet am 1.1. (Was auch immer das für ein Tag ist)
+        Jede Woche hat 7 Tage also kann ich vielleicht auch (anzahl der tage) / 7 für die Anzahl der Wochen
+        und (anzahl der Tage) mod 7 für die restlichen Tage verwenden.

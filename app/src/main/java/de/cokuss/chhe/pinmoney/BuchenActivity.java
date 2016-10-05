@@ -81,6 +81,7 @@ public class BuchenActivity extends AppCompatActivity {
                 //Achtung aktualisierung des Kontostandes findet nur hier statt, stelle sicher das dass Vorzeichen Stimmt
                 buchung = new Buchung(null, null , wieviel, buchungstext, null, null, empfaenger.getKontostand() + wieviel);
                 daoImplSQLight.createBuchung(empfaenger, buchung);
+                finish();
             }
         });
     }
