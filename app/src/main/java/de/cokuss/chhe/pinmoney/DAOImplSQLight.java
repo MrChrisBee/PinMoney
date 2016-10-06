@@ -49,7 +49,7 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
             + TABLE_PM_INFO + " where " + COLUMN_PM_NAME + " like ";
 
     private static final String INSERT_INTO_PIN = "insert into " + TABLE_PM_INFO + "( " + COLUMN_PM_ID
-            + ", " + COLUMN_PM_ENTRYDATE + ", " + COLUMN_PM_NAME + ", " + COLUMN_PM_CYCLE
+            + ", " + COLUMN_PM_ENTRYDATE + ", " + COLUMN_PM_NAME + ", " + COLUMN_PM_STARTDATE + ", " + COLUMN_PM_CYCLE
             + ", " + COLUMN_PM_VALUE + ", " + COLUMN_PM_AKTION + " )";
 
     private static final String SQL_CREATE_PINMONEY = "CREATE TABLE " + TABLE_PM_INFO + "(" +
@@ -72,13 +72,15 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
         }
         return daoImplSQLight;
     }
-
+    //CREATE TABLE PinInfo(id INTEGER PRIMARY KEY AUTOINCREMENT, e_date NOT NULL, name NOT NULL, s_date , cycle , value , action )
+    //
     @Override
     public void addEntryToPinMoney(String name, Zahlungen zahlungen, String aktion) {
         db = getWritableDatabase();
         String sql = INSERT_INTO_PIN
-                + " values ( null, date('now'), '" + name + "', '" + zahlungen.getTurnusStr()
+                + " values ( null, date('now'), '" + name + "', '" +zahlungen.getDate()+ "', '" + zahlungen.getTurnusStr()
                 + "', " + zahlungen.getBetrag() + ", '" + aktion + "')";
+        log("addEntryToPinMoney : " + sql);
         db.execSQL(sql);
     }
 
@@ -88,39 +90,6 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
         String sql = INSERT_INTO_PIN
                 + " values ( null, date('now'), " + name + ", null, null, " + aktion + ")";
         db.execSQL(sql);
-    }
-
-    //Lies den letzten eintrag zu dem Konto
-    //Zahlungsinfo zum Inhaber auslesen
-    @Override
-    public Zahlungen getZahlungenFromPinMoney(String inhaber) {
-        db = getWritableDatabase();
-        Zahlungen zahlungen;
-        Date date;
-        float value;
-        Turnus turnus;
-        String sql = SQL_SELECT_FROM_PIN_MONEY + inhaber + " )";
-        Cursor c = db.rawQuery(sql, null);
-        c.moveToFirst();
-        date = new Date(c.getColumnIndex(COLUMN_PM_STARTDATE));
-        value = c.getFloat(c.getColumnIndex(COLUMN_PM_VALUE));
-        switch (c.getString(c.getColumnIndex(COLUMN_PM_CYCLE))) {
-            case "taeglich":
-                turnus = Turnus.TAEGLICH;
-                break;
-            case "woechentlich":
-                turnus = Turnus.WOECHENTLICH;
-                break;
-            case "monatlich":
-                turnus = Turnus.MONATLICH;
-                break;
-            default:
-                turnus = Turnus.TAEGLICH;
-        }
-        c.close();
-        zahlungen = new Zahlungen(date, turnus, value);
-        log("getZahlungenFromPinMoney ausgeführt für Konto " + inhaber + "\n" + sql);
-        return zahlungen;
     }
 
     @Override
@@ -150,6 +119,9 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
                 turnus = Turnus.TAEGLICH;
         }
         c.close();
+        zahlungen = new Zahlungen(date, turnus, value);
+        log("getZahlungenFromPinMoney ausgeführt für Konto " + inhaber + "\n" + sql);
+
         return null;
     }
 
@@ -158,11 +130,11 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
     public void createKonto(Konto konto) {
         String sql = "Create table " + konto.getInhaber() + "(" +
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_DATE + "," +
-                COLUMN_VALUE + "," +
-                COLUMN_TEXT + "," +
-                COLUMN_VERI_ID + "," +
-                COLUMN_VERI_TYPE + "," +
+                COLUMN_DATE + ", " +
+                COLUMN_VALUE + ", " +
+                COLUMN_TEXT + ", " +
+                COLUMN_VERI_ID + ", " +
+                COLUMN_VERI_TYPE + ", " +
                 COLUMN_BALANCE + " )";
         log("Neues Konto '" + konto + "' erstellen mit: " + sql);
         db.execSQL(sql);
@@ -324,6 +296,7 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
             c.close();
             return kontostand;
         }
+        //Todo Nicht gut gelöst, was soll in diesem Fall passieren?
         return 0f;
     }
 
@@ -343,7 +316,7 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
             log("Fehler beim Anlegen " + e.getMessage());
             e.printStackTrace();
         } finally {
-            log("Tabelle erstellt !");
+            log("Tabelle erstellt mit folgender SQL erstellt:\n " + SQL_CREATE_PINMONEY);
         }
     }
 

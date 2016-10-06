@@ -1,5 +1,7 @@
 package de.cokuss.chhe.pinmoney;
 
+import java.util.Date;
+
 class PinMoneyEnrty {
     Zahlungen zahlungen; //includes StartDate Cycle and Value
     Date entryDate;

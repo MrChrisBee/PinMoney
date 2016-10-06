@@ -78,5 +78,3 @@ public class ShowAuszugActivity extends AppCompatActivity {
     }
 }
 
-
-//Todo http://guides.codepath.com/android/Using-an-ArrayAdapter-with-ListView
