@@ -44,8 +44,8 @@
     <string name="kontostand">Kontostand</string>
     <string name="buchen">buchen</string>
     <string name="help">Hilfe</string>
-    <string name="helpText">Über diese App: Die App ist aufgrund diveres Schwirigkeiten leider nich nicht fertig.
-        Derzeit ist Sie nur als Demo zu betrachten. Eine Navigation zurück zum Hauptscreen ist (noch) nicht anders als über Bordmittel vorgesehen.
+    <string name="helpText">Über diese App: Die App ist aufgrund diveres Schwierigkeiten leider noch nicht fertig.
+        Derzeit ist sie nur als Demo zu betrachten. Eine Navigation, zurück zum Hauptscreen, ist (noch) nicht anders, als über Bordmittel vorgesehen.
         Drücken Sie dazu bitte auf den Zurück Button Ihres Smartphones. Viel Vergnügen!</string>
     <string name="konto_kind">Konto/Kind</string>
     <string name="optional">Optional</string>
