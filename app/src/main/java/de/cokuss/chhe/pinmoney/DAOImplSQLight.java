@@ -44,12 +44,15 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
     private static final String COLUMN_PM_AKTION = "action";
 
     private static final String SQL_DROP_TABLE = "DROP TABLE IF EXIST " + TABLE_PM_INFO + ";";
-    private static final String SQL_SELECT_FROM_PIN_MONEY = "select " + COLUMN_PM_STARTDATE + ", " + COLUMN_PM_CYCLE + ", " + COLUMN_PM_VALUE
-            + " from " + TABLE_PM_INFO + " where " + COLUMN_PM_ID + " = (SELECT MAX( " + COLUMN_PM_ID + " )  FROM  "
-            + TABLE_PM_INFO + " where " + COLUMN_PM_NAME + " like ";
+//    private static final String SQL_SELECT_FROM_PIN_MONEY = "select * from " + TABLE_PM_INFO
+//            + " where " + COLUMN_PM_ID + " = (SELECT MAX( " + COLUMN_PM_ID + " )  FROM  "
+//            + TABLE_PM_INFO + " where " + COLUMN_PM_NAME + " like ";
+
+    private static final String SQL_SELECT_FROM_PIN_MONEY = "select * from " + TABLE_PM_INFO
+            + " where " + COLUMN_PM_NAME + " like ";
 
     private static final String INSERT_INTO_PIN = "insert into " + TABLE_PM_INFO + "( " + COLUMN_PM_ID
-            + ", " + COLUMN_PM_ENTRYDATE + ", " + COLUMN_PM_NAME + ", " + COLUMN_PM_CYCLE
+            + ", " + COLUMN_PM_ENTRYDATE + ", " + COLUMN_PM_NAME + ", " + COLUMN_PM_STARTDATE + ", " + COLUMN_PM_CYCLE
             + ", " + COLUMN_PM_VALUE + ", " + COLUMN_PM_AKTION + " )";
 
     private static final String SQL_CREATE_PINMONEY = "CREATE TABLE " + TABLE_PM_INFO + "(" +
@@ -92,49 +95,23 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
 
     //Lies den letzten eintrag zu dem Konto
     //Zahlungsinfo zum Inhaber auslesen
-    @Override
-    public Zahlungen getZahlungenFromPinMoney(String inhaber) {
-        db = getWritableDatabase();
-        Zahlungen zahlungen;
-        Date date;
-        float value;
-        Turnus turnus;
-        String sql = SQL_SELECT_FROM_PIN_MONEY + inhaber + " )";
-        Cursor c = db.rawQuery(sql, null);
-        c.moveToFirst();
-        date = new Date(c.getColumnIndex(COLUMN_PM_STARTDATE));
-        value = c.getFloat(c.getColumnIndex(COLUMN_PM_VALUE));
-        switch (c.getString(c.getColumnIndex(COLUMN_PM_CYCLE))) {
-            case "taeglich":
-                turnus = Turnus.TAEGLICH;
-                break;
-            case "woechentlich":
-                turnus = Turnus.WOECHENTLICH;
-                break;
-            case "monatlich":
-                turnus = Turnus.MONATLICH;
-                break;
-            default:
-                turnus = Turnus.TAEGLICH;
-        }
-        c.close();
-        zahlungen = new Zahlungen(date, turnus, value);
-        log("getZahlungenFromPinMoney ausgeführt für Konto " + inhaber + "\n" + sql);
-        return zahlungen;
-    }
 
     @Override
     public PinMoneyEnrty getEntryFromPinMoney(String inhaber) {
         db = getWritableDatabase();
+        PinMoneyEnrty result;
         Zahlungen zahlungen;
-        Date date;
+        Date startDate, entryDate;
+        String action;
         float value;
         Turnus turnus;
         // TODO: 04.10.16
-        String sql = SQL_SELECT_FROM_PIN_MONEY + inhaber + " )";
+        String sql = SQL_SELECT_FROM_PIN_MONEY + inhaber + " order by " + COLUMN_PM_ID + " desc limit 1";
         Cursor c = db.rawQuery(sql, null);
         c.moveToFirst();
-        date = new Date(c.getColumnIndex(COLUMN_PM_STARTDATE));
+        action = c.getString(c.getColumnIndex(COLUMN_PM_AKTION));
+        startDate = new Date(c.getColumnIndex(COLUMN_PM_STARTDATE));
+        entryDate = new Date(c.getColumnIndex(COLUMN_PM_ENTRYDATE));
         value = c.getFloat(c.getColumnIndex(COLUMN_PM_VALUE));
         switch (c.getString(c.getColumnIndex(COLUMN_PM_CYCLE))) {
             case "taeglich":
@@ -149,8 +126,10 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
             default:
                 turnus = Turnus.TAEGLICH;
         }
+        zahlungen = new Zahlungen(startDate, turnus, value);
+        result = new PinMoneyEnrty(zahlungen,entryDate,inhaber,action);
         c.close();
-        return null;
+        return result;
     }
 
 

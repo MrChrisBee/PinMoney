@@ -6,14 +6,13 @@ import java.util.Date;
 interface ZahlungenDAO {
     void addEntryToPinMoney (String name, Zahlungen zahlungen, String aktion);
     void addEntryToPinMoney (String name, String aktion);
-    Zahlungen getZahlungenFromPinMoney (String name);
     PinMoneyEnrty getEntryFromPinMoney(String name);
 }
 
 class PinMoneyEnrty {
-    Zahlungen zahlungen; //includes StartDate Cycle and Value
-    Date entryDate;
-    String kontoName, action;
+    private Zahlungen zahlungen; //includes StartDate Cycle and Value
+    private Date entryDate;
+    private String kontoName, action;
 
     PinMoneyEnrty (Zahlungen zahlungen, Date entryDate, String kontoName, String action) {
         this.zahlungen = zahlungen;

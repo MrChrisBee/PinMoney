@@ -6,3 +6,36 @@ Die Hauptfunktionalität der App ->
         Wie komme ich an den ersten Tag der Woche? Die Woche startet am 1.1. (Was auch immer das für ein Tag ist)
         Jede Woche hat 7 Tage also kann ich vielleicht auch (anzahl der tage) / 7 für die Anzahl der Wochen
         und (anzahl der Tage) mod 7 für die restlichen Tage verwenden.
+
+
+Wenn die Tests nicht klappen sollte ich mich mal um folgendes Kümmern: nutze http://www.sqlitetutorial.net/tryit/
+
+  PinMoney anlegen:
+
+        CREATE TABLE PinInfo(id INTEGER PRIMARY KEY AUTOINCREMENT, e_date NOT NULL, name NOT NULL, s_date , cycle , value , action )
+        insert into PinInfo( id, e_date, name, s_date, cycle, value, action ) values ( null, date('now'), 'Leo', 'Fri Jan 01 00:00:00 GMT+01:00 2016','taeglich', 0.5, 'neu')
+        insert into PinInfo( id, e_date, name, s_date, cycle, value, action ) values ( null, date('now'), 'Tony', 'Fri Jan 01 00:00:00 GMT+01:00 2016', 'monatlich', 50.0, 'neu')
+        insert into PinInfo( id, e_date, name, s_date, cycle, value, action ) values ( null, date('now'), 'Tony', 'Fri Jan 01 00:00:00 GMT+01:00 2016', 'monatlich', 55.0, 'update')
+        insert into PinInfo( id, e_date, name, s_date, cycle, value, action ) values ( null, date('now'), 'Tony', 'Fri Jan 01 00:00:00 GMT+01:00 2016', 'taeglich', 1.5, 'update')
+        insert into PinInfo( id, e_date, name, s_date, cycle, value, action ) values ( null, date('now'), 'Leo', 'Fri Jan 01 00:00:00 GMT+01:00 2016','woechentlich', 0.5, 'update')
+        select * from pininfo
+        select * from pininfo order by id desc limit 1,1 //bringt mir den letzten eintrag
+
+
+
+        Create table Leo(id INTEGER PRIMARY KEY AUTOINCREMENT, datum,betrag,text,verifikation_id,verifikation_typ,kontostand )
+        Create table Tony(id INTEGER PRIMARY KEY AUTOINCREMENT, datum,betrag,text,verifikation_id,verifikation_typ,kontostand )
+
+
+
+zum basteln als anregung
+    alles von https://www.teialehrbuch.de/Kostenlose-Kurse/SQL/14762-Verschachtelte-SELECT-Klauseln-in-der-WHERE-Klausel.html
+    SELECT name FROM mitarbeiter WHERE mid IN (SELECT mid FROM preise);
+    SELECT name, nummer FROM mitarbeiter, telefone WHERE mitarbeiter.mid=telefone.mid AND name IN ('Caprioli','Wolf','Bablo');
+    SELECT name FROM mitarbeiter WHERE mid IN (SELECT DISTINCT mid FROM preise WHERE mid IN(SELECT DISTINCT mid FROM telefone ));
+    SELECT name FROM mitarbeiter WHERE mid IN (SELECT mid FROM telefone) AND mid IN (SELECT mid FROM preise);
+
+
+
+    today DatePicker mit grafik
+    erstellung von Testdatenbeständen via Menu
