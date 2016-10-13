@@ -79,8 +79,10 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
     @Override
     public void addEntryToPinMoney(String name, Zahlungen zahlungen, String aktion) {
         db = getWritableDatabase();
+        DateHelper dateHelper = new DateHelper();
+        String startDate = dateHelper.sdfLong.format(zahlungen.getDate());
         String sql = INSERT_INTO_PIN
-                + " values ( null, date('now'), '" + name + "'," + zahlungen.getDate() + " ,'" + zahlungen.getTurnusStr()
+                + " values ( null, date('now'), '" + name + "', '" + startDate + "', '" + zahlungen.getTurnusStr()
                 + "', " + zahlungen.getBetrag() + ", '" + aktion + "')";
         db.execSQL(sql);
     }

@@ -18,6 +18,8 @@ class HistoryAdapter extends ArrayAdapter<Buchung> {
     }
 
     private DateHelper dateHelper = new DateHelper();
+    //getView wird vom System zum Inflaten eimer View (hier ListView für die History Einträge) aufgerufen
+    //Hier wird also jeweils eine Zeile der History ListView (Entspricht einer Zeile in PinInfo) befüllt
 
     @NonNull
     @Override
