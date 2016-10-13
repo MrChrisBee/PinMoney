@@ -55,7 +55,7 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
             + ", " + COLUMN_PM_ENTRYDATE + ", " + COLUMN_PM_NAME + ", " + COLUMN_PM_STARTDATE + ", " + COLUMN_PM_CYCLE
             + ", " + COLUMN_PM_VALUE + ", " + COLUMN_PM_AKTION + " )";
 
-    private static final String SQL_CREATE_PINMONEY = "CREATE TABLE " + TABLE_PM_INFO + "(" +
+    private static final String SQL_CREATE_PINMONEY = "CREATE TABLE " + TABLE_PM_INFO + " ( " +
             COLUMN_PM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COLUMN_PM_ENTRYDATE + " NOT NULL, " +
             COLUMN_PM_NAME + " NOT NULL, " +
@@ -80,7 +80,7 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
     public void addEntryToPinMoney(String name, Zahlungen zahlungen, String aktion) {
         db = getWritableDatabase();
         String sql = INSERT_INTO_PIN
-                + " values ( null, date('now'), '" + name + "', '" + zahlungen.getTurnusStr()
+                + " values ( null, date('now'), '" + name + "'," + zahlungen.getDate() + " ,'" + zahlungen.getTurnusStr()
                 + "', " + zahlungen.getBetrag() + ", '" + aktion + "')";
         db.execSQL(sql);
     }
@@ -89,13 +89,12 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
     public void addEntryToPinMoney(String name, String aktion) {
         db = getWritableDatabase();
         String sql = INSERT_INTO_PIN
-                + " values ( null, date('now'), " + name + ", null, null, " + aktion + ")";
+                + " values ( null, date('now'), " + name + ", null, null, null,'" + aktion + "')";
+        // id eintragsdatum kontoinhaber startdatum turnus betrag aktion
         db.execSQL(sql);
     }
 
-    //Lies den letzten eintrag zu dem Konto
-    //Zahlungsinfo zum Inhaber auslesen
-
+    //Lies den letzten Eintrag passend zu dem Inhaber
     @Override
     public PinMoneyEnrty getEntryFromPinMoney(String inhaber) {
         db = getWritableDatabase();

@@ -58,6 +58,7 @@
     <string name="unbestaetigt">unbestätigt</string>
     <string name="verifikation">Verifikation</string>
     <string name="weekly">wöchentlich</string>
+    <string name="pick">Pick</string>
     <string name="wertEingeben">Bitte Betrag eingeben!</string>
     <string-array name="array_name">
         <item>Eintag nicht gültig</item>

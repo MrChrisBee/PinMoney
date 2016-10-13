@@ -1,5 +1,7 @@
 package de.cokuss.chhe.pinmoney;
 
+import android.widget.EditText;
+
 class Check4EditText {
     private String string;
     private boolean valid;
@@ -11,7 +13,8 @@ class Check4EditText {
         this.valid = aBoolean;
     }
 
-    //Check4Edit enthält deswegen ein EditText um in string2Date möglicherweise darauf einen Fehlertext zu legen
+    //Check4Edit enthält deswegen ein EditText um in string2Date
+    //und checkEditText möglicherweise darauf einen Fehlertext zu legen
     EditText getEditText() {
         return editText;
     }
