@@ -4,6 +4,7 @@
                 android:id="@+id/activity_einzahlen"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@mipmap/background"
                 android:paddingBottom="@dimen/activity_vertical_margin"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:paddingRight="@dimen/activity_horizontal_margin"
@@ -15,6 +16,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#000000"
         android:text="@string/einzahlung_auf" />
 
     <TextView
@@ -23,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:text="@string/empfaenger"
         android:textAppearance="@style/TextAppearance.AppCompat.Button"
         android:textStyle="normal|bold" />
@@ -42,14 +46,18 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:text="@string/kontostand"
-            android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:text="@string/kontostand" />
 
         <TextView
             android:id="@+id/kontostand"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/kontostandTxt"
+            android:layout_marginTop="40dp"
+            android:textColor="#000000"
+            android:textAlignment="center"
             android:layout_centerHorizontal="true"
             android:ems="5" />
 
@@ -61,6 +69,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/stand"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="#000000"
         android:labelFor="@+id/betrag"
         android:text="@string/betrag" />
 
@@ -79,6 +91,10 @@
         android:id="@+id/vTextBuchen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="#000000"
         android:layout_below="@+id/betragBuchen"
         android:layout_centerHorizontal="true"
         android:labelFor="@+id/eTextBuchen"
@@ -88,18 +104,18 @@
         android:id="@+id/eTextBuchen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/vTextBuchen"
+        android:layout_marginTop="250dp"
         android:layout_centerHorizontal="true"
         android:ems="10"
         android:inputType="text" />
 
     <Button
-        android:text="@string/buchen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="160dp"
+        android:layout_height="40dp"
+        android:background="@drawable/button_booking"
         android:layout_below="@+id/eTextBuchen"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="50dp"
         android:id="@+id/button" />
 
 

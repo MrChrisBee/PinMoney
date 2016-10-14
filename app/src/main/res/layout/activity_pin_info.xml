@@ -20,7 +20,7 @@
         android:layout_marginTop="40dp"
         android:id="@+id/PinMoneyHeader"
         android:textStyle="normal|bold"
-        android:textSize="14sp"
+        android:textSize="18sp"
         android:textColor="@color/colorAccent"/>
     <TextView
         android:id="@+id/inhaber"
@@ -29,7 +29,8 @@
         android:text="Wird noch festgelegt"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/PinMoneyHeader"
-        android:textSize="14sp"
+        android:textSize="16sp"
+        android:textStyle="normal|bold"
         android:layout_marginTop="15dp"
         android:textColor="@color/colorAccent"/>
 
@@ -82,12 +83,16 @@
             android:layout_gravity="center"
             android:id="@+id/betragTextEdit"
             android:labelFor="@+id/betragEdit"
-            android:textColor="@color/colorAccent"/>
+            android:textColor="@color/colorAccent"
+            android:textStyle="normal|bold"
+            android:textSize="16sp" />
         <EditText
             android:id="@+id/betragEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/betrag"/>
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:hint="0.00"/>
     </LinearLayout>
 
     <Button
@@ -96,7 +101,7 @@
         android:background="@drawable/button_change"
         android:layout_below="@+id/linearLayout"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/view_vertical_margin"
+        android:layout_marginTop="40dp"
         android:id="@+id/variButton"/>
 
 
