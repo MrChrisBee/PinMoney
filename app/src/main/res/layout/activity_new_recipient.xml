@@ -73,11 +73,10 @@
                 android:inputType="date"
                 android:labelFor="@+id/title_birthday" />
             <Button
-                android:layout_width="50dp"
-                android:text="@string/pick"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
                 android:id="@+id/birthdayButton"
-                android:textSize="8sp"
-                android:layout_height="30dp" />
+                android:background="@drawable/button_calendar"/>
         </LinearLayout>
 
         <RadioGroup
@@ -199,12 +198,10 @@
                 android:inputType="date" />
 
             <Button
-                android:layout_width="50dp"
-                android:text="@string/pick"
-                android:id="@+id/startButton"
-                android:textSize="8sp"
+                android:layout_width="100dp"
                 android:layout_height="30dp"
-                android:layout_weight="1"/>
+                android:id="@+id/startButton"
+                android:background="@drawable/button_calendar"/>
 
         </LinearLayout>
 
@@ -214,7 +211,7 @@
             android:layout_width="160dp"
             android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="15pt"
+            android:layout_marginTop="25pt"
             android:background="@drawable/button_save"
             android:enabled="true" />
 

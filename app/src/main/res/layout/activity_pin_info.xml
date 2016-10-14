@@ -9,6 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@mipmap/background"
     tools:context="de.cokuss.chhe.pinmoney.PinInfoActivity">
     <TextView
         android:text="@string/PinMoney4"
@@ -16,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="51dp"
+        android:layout_marginTop="40dp"
         android:id="@+id/PinMoneyHeader"
         android:textStyle="normal|bold"
         android:textSize="14sp"
@@ -29,7 +30,9 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/PinMoneyHeader"
         android:textSize="14sp"
+        android:layout_marginTop="15dp"
         android:textColor="@color/colorAccent"/>
+
 
 
 
@@ -88,9 +91,9 @@
     </LinearLayout>
 
     <Button
-        android:text="@string/change"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="160dp"
+        android:layout_height="40dp"
+        android:background="@drawable/button_change"
         android:layout_below="@+id/linearLayout"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/view_vertical_margin"
