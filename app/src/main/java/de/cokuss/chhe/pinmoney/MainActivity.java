@@ -30,8 +30,6 @@ public class MainActivity extends AppCompatActivity {
     DAOImplSQLight daoImplSQLight;
     //Konto
     private Konto selectedKonto;
-    private String selectedName;
-    private float kontostand;
 
     //savedInstanceState verlassen der View aktualisiert
     @Override
@@ -63,19 +61,17 @@ public class MainActivity extends AppCompatActivity {
             array4Adapter.add(konto.getInhaber());
         }
         log("fillArray4Adapter array 4 adapter size: " + array4Adapter.size());
-        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, array4Adapter);
+        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, array4Adapter);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         accountName.setAdapter(arrayAdapter);
     }
 
 
     private void setSelectedKonto() {
-        String tmpString;
-        tmpString = accountName.getSelectedItem().toString();
-        if (daoImplSQLight.isValidKontoName(tmpString)) {
-            if (daoImplSQLight.kontoExists(tmpString)) {
-                selectedName = tmpString;
-                kontostand = daoImplSQLight.getKontostand(tmpString);
+        String selectedName = accountName.getSelectedItem().toString();
+        if (daoImplSQLight.isValidKontoName(selectedName)) {
+            if (daoImplSQLight.kontoExists(selectedName)) {
+                float kontostand = daoImplSQLight.getKontostand(selectedName);
                 selectedKonto = new Konto(selectedName, kontostand);
                 log("setSelectedKonto: " + selectedKonto.getInhaber() + " " + selectedKonto.getKontostand());
             }
@@ -149,8 +145,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent2);
                 return true;
             case R.id.action_change:
-                //Todo Check auf Auswahl und Dialog (Fragment) zur Änderung von Zahlungen
-                //Taschengeld erhöhung fällt erstmal aus - leider keine Zeit für Extras
+                Intent intent3 = new Intent(this, PinInfoActivity.class);
+                intent3.putExtra("inhaber", selectedKonto.getInhaber());
+                startActivity(intent3);
                 return true;
             case R.id.action_delete:
                 //Wurde etwas ausgewählt?
@@ -222,10 +219,10 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 // gut ArrayAdapter https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView
-// später: Scool Bluetooth https://github.com/SoftdeveloperNeumann/Bluetooth.git funzt nicht sicher
-//http://www.journaldev.com/9976/android-date-time-picker-dialog
+// später: Bluetooth https://github.com/SoftdeveloperNeumann/Bluetooth.git funzt nicht sicher
 
 //Links zu JUnit
 //http://www.torsten-horn.de/techdocs/java-junit.htm
 //http://www.tutego.de/blog/javainsel/2010/04/junit-4-tutorial-java-tests-mit-junit
 
+// NewR\w+|Check\w+|DAO\w+|Pin\w+|MyDate\w+|MainActivity|Show\w+|Konto\w+

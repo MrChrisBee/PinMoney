@@ -42,6 +42,7 @@ public class BuchenActivity extends AppCompatActivity {
 
         daoImplSQLight = DAOImplSQLight.getInstance(getApplicationContext());
         empfaengerStr = getIntent().getStringExtra("KontoName");
+        //über den Intend Parameter InOut wird entschieden ob hier ein oder ausgezahlt wird
         isEinzahlung = (getIntent().getStringExtra("InOut").equals("In"));
         if ((empfaenger = daoImplSQLight.getKonto(empfaengerStr)) == null) {
             Log.e(LOG_TAG, "onCreate: Das konto Existiert nicht!!!");
@@ -81,6 +82,7 @@ public class BuchenActivity extends AppCompatActivity {
                 //Achtung aktualisierung des Kontostandes findet nur hier statt, stelle sicher das dass Vorzeichen Stimmt
                 buchung = new Buchung(null, null , wieviel, buchungstext, null, null, empfaenger.getKontostand() + wieviel);
                 daoImplSQLight.createBuchung(empfaenger, buchung);
+                //Todo mit finish springe ich immer weider auf den ersten Kunden der Liste ->  machs besser (Intend)
                 finish();
             }
         });

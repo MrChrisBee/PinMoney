@@ -1,42 +1,46 @@
 package de.cokuss.chhe.pinmoney;
 
+import android.app.DatePickerDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 public class NewRecipientActivity extends AppCompatActivity {
     private static final String LOG_TAG = NewRecipientActivity.class.getSimpleName();
-    DateHelper dateHelper = new DateHelper();
-    DAOImplSQLight daoImplSQLight;
-    Boolean isValid = true;
-    Konto konto;
-    Zahlungen zahlungen;
+    private DateHelper dateHelper = new DateHelper();
+    private DAOImplSQLight daoImplSQLight;
+    private Boolean isValid = true;
+    private Konto konto;
+    private Zahlungen zahlungen;
     //alle Felder
-    String kontoname;
-    Date gebDatum;
-    Turnus turnus;
-    float betrag;
-    float startBetrag;
-    Date startDatum;
+    private String kontoname;
+    private Date gebDatum;
+    private Turnus turnus;
+    private float betrag;
+    private float startBetrag;
+    private Date startDatum;
     // die Views
-    EditText nameFeld;
-    EditText gebDatFeld;
-    RadioGroup turnusChecker;
-    EditText betragFeld;
-    EditText startBetragFeld;
-    EditText startDateFeld;
-    Button button;
-    String tmpText;
+    private EditText nameFeld;
+    private EditText gebDatFeld;
+    private RadioGroup turnusChecker;
+    private EditText betragFeld;
+    private EditText startBetragFeld;
+    private EditText startDateFeld;
+    private Button button, pickerGeb, pickerStart;
+    private String tmpText;
+    private final Calendar c = Calendar.getInstance();
+    private int mYear = c.get(Calendar.YEAR);
+    private int mMonth = c.get(Calendar.MONTH);
+    private int mDay = c.get(Calendar.DAY_OF_MONTH);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,16 +52,48 @@ public class NewRecipientActivity extends AppCompatActivity {
     private void init() {
         daoImplSQLight = DAOImplSQLight.getInstance(getApplicationContext());
         setViewVars();
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 createNewKonto();
             }
         });
+        pickerGeb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(),
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+                                gebDatFeld.setText(dayOfMonth + "." + (monthOfYear + 1) + "." + year);
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.show();
+            }
+        });
+        pickerStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(),
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+                                startDateFeld.setText(dayOfMonth + "." + (monthOfYear + 1) + "." + year);
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.show();
+            }
+        });
+
     }
 
     private void setViewVars() {
         button = (Button) findViewById(R.id.button_save_new_child);
+        pickerGeb = (Button) findViewById(R.id.birthdayButton);
+        pickerStart = (Button) findViewById(R.id.startButton);
         nameFeld = (EditText) findViewById(R.id.input_name);
         gebDatFeld = (EditText) findViewById(R.id.input_birthday);
         turnusChecker = (RadioGroup) findViewById(R.id.turnus);
@@ -69,13 +105,13 @@ public class NewRecipientActivity extends AppCompatActivity {
     private void createNewKonto() {
         Check4EditText tmpC4;
         //kontoname
-        tmpC4 = checkEditText(nameFeld);
+        tmpC4 = checkEditText(nameFeld, "name");
         if (tmpC4.isValid()) {
             kontoname = tmpC4.getString();
             log("Kontoname gesetzt aus CreateNewKonto: " + kontoname);
         } else return;
         //gebDatum
-        tmpC4 = checkEditText(gebDatFeld);
+        tmpC4 = checkEditText(gebDatFeld, "date");
         if (tmpC4.isValid()) {
             gebDatum = string2Date(tmpC4);
             log("gebDatum gesetzt aus CreateNewKonto: " + gebDatum.toString());
@@ -92,19 +128,19 @@ public class NewRecipientActivity extends AppCompatActivity {
                 break;
         }
         //betrag
-        tmpC4 = checkEditText(betragFeld);
+        tmpC4 = checkEditText(betragFeld, "currency");
         if (tmpC4.isValid()) {
             betrag = Float.parseFloat(tmpC4.getString());
             log("betrag gesetzt aus CreateNewKonto: " + betrag);
         } else return;
         //startBetrag
-        tmpC4 = checkEditText(startBetragFeld);
+        tmpC4 = checkEditText(startBetragFeld, "currency");
         if (tmpC4.isValid()) {
             startBetrag = Float.parseFloat(tmpC4.getString());
             log("startBetrag gesetzt aus CreateNewKonto: " + startBetrag);
         } else return;
         //startDatum
-        tmpC4 = checkEditText(startDateFeld);
+        tmpC4 = checkEditText(startDateFeld, "date");
         if (tmpC4.isValid()) {
             startDatum = string2Date(tmpC4);
             log("startDatum gesetzt aus CreateNewKonto: " + startDatum.toString());
@@ -124,17 +160,43 @@ public class NewRecipientActivity extends AppCompatActivity {
         } else nameFeld.setError("Der Kontoname ist ungültig!");
     }
 
-    private Check4EditText checkEditText(EditText nameFeld) {
+    private Check4EditText checkEditText (EditText nameFeld, String kind) {
         String string = nameFeld.getText().toString();
-        Check4EditText c4;
-        if (string.length() == 0) {
-            nameFeld.setError("Bitte einen Wert eingeben!");
-            c4 = new Check4EditText(nameFeld, "", false);
-            log("Feld leer aus C4ET für " + nameFeld.toString());
-        } else {
-            //erster Test bestanden
-            c4 = new Check4EditText(nameFeld, string, true);
-            log("Test Bestanden aus C4ET " + nameFeld + " enthält " + c4.getString());
+        Check4EditText c4 = new Check4EditText(nameFeld,"",false);
+        switch (kind.toLowerCase()){
+            case "name":
+                if (string.length() == 0 || !string.matches("\\w+")) {
+                    nameFeld.setError("Bitte einen Namen eingeben! Für Namen nur (A-Za-z0-9_) nuzten!");
+                    c4 = new Check4EditText(nameFeld, "", false);
+                    log("Feld leer aus C4ET für " + nameFeld.getId());
+                } else {
+                    //erster Test bestanden
+                    c4 = new Check4EditText(nameFeld, string, true);
+                    log("Test Bestanden aus C4ET " + nameFeld.getId() + " enthält " + c4.getString());
+                }
+                break;
+            case "date":
+                if (string.length() == 0 || !string.matches("^(0[1-9]|[12][0-9]|3[01])\\.(0[1-9]|1[012])\\.(19|20)\\d\\d$")) {
+                    nameFeld.setError("Bitte ein gültiges Datum eingeben! Z.B. 31.12.1999");
+                    c4 = new Check4EditText(nameFeld, "", false);
+                    log("Feld leer aus C4ET für " + nameFeld.getId());
+                } else {
+                    //erster Test bestanden
+                    c4 = new Check4EditText(nameFeld, string, true);
+                    log("Test Bestanden aus C4ET " + nameFeld.getId() + " enthält " + c4.getString());
+                }
+                break;
+            case "currency":
+                if (string.length() == 0 || !string.matches("^\\d+\\.?(\\d[2])?$")) {
+                    nameFeld.setError("Bitte einen gültigen Betrag eingeben! 17.50 (Max. 2 Nachkommastellen und mit . getrennt!)");
+                    c4 = new Check4EditText(nameFeld, "", false);
+                    log("Feld leer aus C4ET für " + nameFeld.getId());
+                } else {
+                    //erster Test bestanden
+                    c4 = new Check4EditText(nameFeld, string, true);
+                    log("Test Bestanden aus C4ET " + nameFeld.getId() + " enthält " + c4.getString());
+                }
+                break;
         }
         return c4;
     }
@@ -157,27 +219,3 @@ public class NewRecipientActivity extends AppCompatActivity {
     }
 }
 
-class Check4EditText {
-    private String string;
-    private boolean valid;
-    private EditText editText;
-
-    Check4EditText(EditText editText, String string, boolean aBoolean) {
-        this.editText = editText;
-        this.string = string;
-        this.valid = aBoolean;
-    }
-
-    //Check4Edit enthält deswegen ein EditText um in string2Date möglicherweise darauf einen Fehlertext zu legen
-    EditText getEditText() {
-        return editText;
-    }
-
-    boolean isValid() {
-        return valid;
-    }
-
-    public String getString() {
-        return string;
-    }
-}

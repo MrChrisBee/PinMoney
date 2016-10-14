@@ -10,5 +10,91 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="de.cokuss.chhe.pinmoney.PinInfoActivity">
+    <TextView
+        android:text="@string/PinMoney4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="51dp"
+        android:id="@+id/PinMoneyHeader"
+        android:textStyle="normal|bold"
+        android:textSize="14sp"
+        android:textColor="@color/colorAccent"/>
+    <TextView
+        android:id="@+id/inhaber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Wird noch festgelegt"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/PinMoneyHeader"
+        android:textSize="14sp"
+        android:textColor="@color/colorAccent"/>
+
+
+
+
+    <RadioGroup
+        android:id="@+id/cycle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inhaber"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/view_vertical_margin">
+
+        <RadioButton
+            android:id="@+id/rbDay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/daily"/>
+
+        <RadioButton
+            android:text="@string/weekly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rbWeek"
+            android:layout_weight="1"/>
+
+        <RadioButton
+            android:text="@string/monthly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rbMonth"
+            android:layout_weight="1"/>
+    </RadioGroup>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cycle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/view_vertical_margin"
+        android:id="@+id/linearLayout">
+
+        <TextView
+            android:text="@string/betrag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/betragTextEdit"
+            android:labelFor="@+id/betragEdit"
+            android:textColor="@color/colorAccent"/>
+        <EditText
+            android:id="@+id/betragEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/betrag"/>
+    </LinearLayout>
+
+    <Button
+        android:text="@string/change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/view_vertical_margin"
+        android:id="@+id/variButton"/>
+
 
 </RelativeLayout>
