@@ -187,7 +187,7 @@ public class NewRecipientActivity extends AppCompatActivity {
                 }
                 break;
             case "currency":
-                if (string.length() == 0 || !string.matches("^\\d+\\.?(\\d[2])?$")) {
+                if (string.length() == 0 || !string.matches("^[+-]?[0-9]{1,3}(?:[0-9]*(?:[.,][0-9]{2})?|(?:,[0-9]{3})*(?:\\.[0-9]{2})?|(?:\\.[0-9]{3})*(?:,[0-9]{2})?)$")) {
                     nameFeld.setError("Bitte einen gültigen Betrag eingeben! 17.50 (Max. 2 Nachkommastellen und mit . getrennt!)");
                     c4 = new Check4EditText(nameFeld, "", false);
                     log("Feld leer aus C4ET für " + nameFeld.getId());
