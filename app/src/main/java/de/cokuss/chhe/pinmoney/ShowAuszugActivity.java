@@ -51,7 +51,7 @@ public class ShowAuszugActivity extends AppCompatActivity {
         makeListViewAdapter();
     }
     
-
+//todo do This 4 HistoryEntrys    höermal 409
     private void makeSpinnerAdapter () {
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, nameList);

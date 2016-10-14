@@ -171,6 +171,12 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_close_app:
                 finish();
                 return true;
+            case R.id.action_show_history:
+                //Zeige alle History Einträge an -> Auswahlmöglichkeit
+                //todo
+                Intent intent3 = new Intent(this, NewRecipientActivity.class);
+                startActivity(intent3);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

@@ -10,9 +10,7 @@ import android.util.Log;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-
 
 class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, ZahlungenDAO {
     private static final String LOG_TAG = DAOImplSQLight.class.getSimpleName();
@@ -93,16 +91,19 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
     //Lies den letzten eintrag zu dem Konto
     //Zahlungsinfo zum Inhaber auslesen
     @Override
-    public Zahlungen getZahlungenFromPinMoney(String inhaber) {
+    public PinMoneyEnrty getEntryFromPinMoney(String inhaber) {
         db = getWritableDatabase();
+
         Zahlungen zahlungen;
         Date date;
         float value;
         Turnus turnus;
+        // TODO: 04.10.16
         String sql = SQL_SELECT_FROM_PIN_MONEY + inhaber + " )";
         Cursor c = db.rawQuery(sql, null);
         c.moveToFirst();
         date = new Date(c.getColumnIndex(COLUMN_PM_STARTDATE));
+        String action = c.getString(c.getColumnIndex(COLUMN_PM_CYCLE));
         value = c.getFloat(c.getColumnIndex(COLUMN_PM_VALUE));
         switch (c.getString(c.getColumnIndex(COLUMN_PM_CYCLE))) {
             case "taeglich":
@@ -120,37 +121,8 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
         c.close();
         zahlungen = new Zahlungen(date, turnus, value);
         log("getZahlungenFromPinMoney ausgeführt für Konto " + inhaber + "\n" + sql);
-        return zahlungen;
-    }
 
-    @Override
-    public PinMoneyEnrty getEntryFromPinMoney(String inhaber) {
-        db = getWritableDatabase();
-        Zahlungen zahlungen;
-        Date date;
-        float value;
-        Turnus turnus;
-        // TODO: 04.10.16
-        String sql = SQL_SELECT_FROM_PIN_MONEY + inhaber + " )";
-        Cursor c = db.rawQuery(sql, null);
-        c.moveToFirst();
-        date = new Date(c.getColumnIndex(COLUMN_PM_STARTDATE));
-        value = c.getFloat(c.getColumnIndex(COLUMN_PM_VALUE));
-        switch (c.getString(c.getColumnIndex(COLUMN_PM_CYCLE))) {
-            case "taeglich":
-                turnus = Turnus.TAEGLICH;
-                break;
-            case "woechentlich":
-                turnus = Turnus.WOECHENTLICH;
-                break;
-            case "monatlich":
-                turnus = Turnus.MONATLICH;
-                break;
-            default:
-                turnus = Turnus.TAEGLICH;
-        }
-        c.close();
-        return null;
+        return new PinMoneyEnrty (zahlungen, date, inhaber, action);
     }
 
 

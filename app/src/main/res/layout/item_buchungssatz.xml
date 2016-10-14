@@ -6,7 +6,7 @@
     android:weightSum="100">
 
     <TextView
-        android:id="@+id/idate"
+        android:id="@+id/iBuDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="6"
@@ -14,7 +14,7 @@
         android:text="@string/datum" />
 
     <TextView
-        android:id="@+id/ibuchungstext"
+        android:id="@+id/iBuBuchungstext"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="39"
@@ -23,7 +23,7 @@
         android:text="@string/buchungstext" />
 
     <TextView
-        android:id="@+id/iveryfikation"
+        android:id="@+id/iBuVeryfikation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="5"
@@ -32,7 +32,7 @@
         android:text="@string/verifikation" />
 
     <TextView
-        android:id="@+id/ibetrag"
+        android:id="@+id/iBuBetrag"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="20"
@@ -41,7 +41,7 @@
         android:text="@string/betrag" />
 
     <TextView
-        android:id="@+id/isumme"
+        android:id="@+id/iBuSumme"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="30"

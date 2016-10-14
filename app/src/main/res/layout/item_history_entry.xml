@@ -1,6 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:weightSum="68">
+    //PinMoneyEnrty (Zahlungen zahlungen, Date entryDate, String kontoName, String action)
+    <TextView
+        android:id="@+id/iHiEntryDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="4"
+        android:textAlignment="textStart"
+        android:text="@string/datum" />
 
+    <TextView
+        android:id="@+id/iHiAccountName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="32"
+        android:maxLines="1"
+        android:paddingLeft="@dimen/buchungssatz_padding"
+        android:text="@string/buchungstext" />
+
+    <TextView
+        android:id="@+id/iHiAction"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="8"
+        android:textAlignment="textEnd"
+        android:paddingLeft="@dimen/buchungssatz_padding"
+        android:text="@string/verifikation" />
+
+    <TextView
+        android:id="@+id/iHiStartDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="4"
+        android:paddingLeft="@dimen/buchungssatz_padding"
+        android:textAlignment="textEnd"
+        android:text="@string/betrag" />
+
+    <TextView
+        android:id="@+id/iHiCycle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="10"
+        android:paddingLeft="@dimen/buchungssatz_padding"
+        android:textAlignment="textEnd"
+        android:text="@string/summe" />
+
+    <TextView
+        android:id="@+id/iHiValue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="10"
+        android:paddingLeft="@dimen/buchungssatz_padding"
+        android:textAlignment="textEnd"
+        android:text="@string/summe" />
 </LinearLayout>

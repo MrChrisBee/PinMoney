@@ -29,11 +29,11 @@ class BuchungssatzAdapter extends ArrayAdapter<Buchung> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_buchungssatz, parent, false);
         }
         // Lookup view for data population
-        TextView tvDate = (TextView) convertView.findViewById(R.id.idate);
-        TextView tvBuchungstext = (TextView) convertView.findViewById(R.id.ibuchungstext);
-        TextView tvVeryfikation = (TextView) convertView.findViewById(R.id.iveryfikation);
-        TextView tvBetrag = (TextView) convertView.findViewById(R.id.ibetrag);
-        TextView tvSumme = (TextView) convertView.findViewById(R.id.isumme);
+        TextView tvDate = (TextView) convertView.findViewById(R.id.iBuDate);
+        TextView tvBuchungstext = (TextView) convertView.findViewById(R.id.iBuBuchungstext);
+        TextView tvVeryfikation = (TextView) convertView.findViewById(R.id.iBuVeryfikation);
+        TextView tvBetrag = (TextView) convertView.findViewById(R.id.iBuBetrag);
+        TextView tvSumme = (TextView) convertView.findViewById(R.id.iBuSumme);
         // Populate the data into the template view using the data object
 
         if (buchung != null) {
