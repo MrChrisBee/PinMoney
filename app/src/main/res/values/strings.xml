@@ -15,6 +15,7 @@
     <string name="button_parents">Eltern</string>
     <string name="button_child">Kind</string>
     <string name="change">Ändern</string>
+    <string name="change_date">Gültig ab:</string>
     <string name="close_app">Beenden</string>
     <string name="datum">Datum</string>
     <string name="daily">täglich</string>
