@@ -21,6 +21,8 @@ class HistoryAdapter extends ArrayAdapter<PinMoneyEnrty> {
     //PinMoneyEnrty (Zahlungen zahlungen, Date entryDate, String kontoName, String action)
 
     private DateHelper dateHelper = new DateHelper();
+    //getView wird vom System zum Inflaten eimer View (hier ListView für die History Einträge) aufgerufen
+    //Hier wird also jeweils eine Zeile der History ListView (Entspricht einer Zeile in PinInfo) befüllt
 
     @NonNull
     @Override

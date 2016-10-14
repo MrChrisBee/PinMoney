@@ -6,7 +6,6 @@ import java.util.Date;
 interface ZahlungenDAO {
     void addEntryToPinMoney (String name, Zahlungen zahlungen, String aktion);
     void addEntryToPinMoney (String name, String aktion);
-    // Zahlungen getZahlungenFromPinMoney (String name);  brauche ich das noch Todo
     PinMoneyEnrty getEntryFromPinMoney(String name);
 }
 

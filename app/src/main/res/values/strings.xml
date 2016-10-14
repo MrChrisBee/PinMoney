@@ -47,6 +47,7 @@
     <string name="helpText">Über diese App: Die App ist aufgrund diveres Schwirigkeiten leider nich nicht fertig.
         Derzeit ist Sie nur als Demo zu betrachten. Eine Navigation zurück zum Hauptscreen ist (noch) nicht anders als über Bordmittel vorgesehen.
         Drücken Sie dazu bitte auf den Zurück Button Ihres Smartphones. Viel Vergnügen!</string>
+    <string name="impossible">Eigentlich unmöglich</string>
     <string name="konto_kind">Konto/Kind</string>
     <string name="optional">Optional</string>
     <string name="buchungstext">Buchungstext</string>
@@ -56,7 +57,6 @@
     <string name="select_date">SELECT DATE</string>
     <string name="select_time">SELECT TIME</string>
     <string name="unbestaetigt">unbestätigt</string>
-    <string name="impossible">Eigentlich unmöglich</string>
     <string name="no">kein</string>
     <string-array name="array_name">
         <item>Eintag nicht gültig</item>
