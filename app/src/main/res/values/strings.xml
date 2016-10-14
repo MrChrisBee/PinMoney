@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">PinMoney</string>
 
-    <string name="abNun">zahlung ab</string>
+    <string name="abNun">Zahlung ab</string>
     <string name="action_settings">Einstellungen</string>
     <string name="action_empfaenger">Empfänger</string>
     <string name="ausahlung_von">Auszahlung von Konto</string>
@@ -33,7 +33,7 @@
         Drücken Sie dazu bitte auf den Zurück Button Ihres Smartphones. Viel Vergnügen!</string>
     <string name="history_zeigen">History zeigen</string>
     <string name="impossible">Eigentlich unmöglich</string>
-    <string name="insertReciver">Empfänger Eintragen</string>
+    <string name="insertReciver">Empfänger eintragen</string>
     <string name="konto_kind">Konto/Kind</string>
     <string name="kontoWaehlen">Bitte wählen Sie ein Konto aus der Liste (Kleines Dreieck)</string>
     <string name="kontostand">Kontostand</string>

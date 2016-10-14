@@ -3,7 +3,8 @@
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/activity_new_receiver"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@mipmap/background"
             android:fillViewport="true"
             tools:context="de.cokuss.chhe.pinmoney.NewRecipientActivity">
 
@@ -73,15 +74,15 @@
                 android:inputType="date"
                 android:labelFor="@+id/title_birthday" />
             <Button
-                android:layout_width="100dp"
-                android:layout_height="30dp"
+                android:layout_width="80dp"
+                android:layout_height="20dp"
                 android:id="@+id/birthdayButton"
                 android:background="@drawable/button_calendar"/>
         </LinearLayout>
 
         <RadioGroup
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:id="@+id/turnus">
 
@@ -198,8 +199,8 @@
                 android:inputType="date" />
 
             <Button
-                android:layout_width="100dp"
-                android:layout_height="30dp"
+                android:layout_width="80dp"
+                android:layout_height="20dp"
                 android:id="@+id/startButton"
                 android:background="@drawable/button_calendar"/>
 
