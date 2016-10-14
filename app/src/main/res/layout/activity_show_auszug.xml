@@ -65,6 +65,7 @@
             android:layout_height="40dp"
             android:textAlignment="textEnd"
             android:paddingEnd="@dimen/buchungssatz_padding"
+            android:paddingStart="0dp"
             android:textStyle="bold" />
 
         <TextView
@@ -81,7 +82,7 @@
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_marginTop="30dp"
         android:layout_weight="0.40" />
 

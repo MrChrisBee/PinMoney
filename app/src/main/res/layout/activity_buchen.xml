@@ -84,7 +84,7 @@
         android:layout_centerHorizontal="true"
         android:ems="4"
         android:inputType="numberDecimal"
-        android:hint="0.00 €"
+        android:hint="@string/einzahlung_hint"
         android:textAlignment="center" />
 
     <TextView

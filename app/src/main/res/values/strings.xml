@@ -23,6 +23,7 @@
     <string name="days_30">30 Tage</string>
     <string name="days_60">60 Tage</string>
     <string name="einzahlung_auf">Einzahlung auf das Konto von:</string>
+    <string name="einzahlung_hint">0.00€</string>
     <string name="empfaenger">Empfänger</string>
     <string name="empfaenger_neu">Neuer Taschengeldempfänger:</string>
     <string name="empfaenger_neu_geb_dat">Geb.Dat.:</string>
