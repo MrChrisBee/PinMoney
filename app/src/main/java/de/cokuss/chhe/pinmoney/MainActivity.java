@@ -1,6 +1,8 @@
 package de.cokuss.chhe.pinmoney;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     DAOImplSQLight daoImplSQLight;
     //Konto
     private Konto selectedKonto;
+    //Alert 4 Delete
+    AlertDialog.Builder alertBuilder;
 
     //savedInstanceState verlassen der View aktualisiert
     @Override
@@ -52,6 +56,31 @@ public class MainActivity extends AppCompatActivity {
         einzahlung = (Button) findViewById(R.id.button_einzahlung);
         fillKontoSpinner();
         setListeners();
+    }
+
+    private void createAlertDialog (final String konto) {
+        alertBuilder = new AlertDialog.Builder(MainActivity.this);
+        alertBuilder.setMessage("Soll das Konto " + konto + " wirklich gelöscht werden ?");
+        alertBuilder.setCancelable(true);
+
+        alertBuilder.setPositiveButton(
+                "Ja",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        daoImplSQLight.deleteKonto(konto);
+                        fillKontoSpinner();
+                        daoImplSQLight.addEntryToPinMoney(konto,"deleted");
+                        dialog.cancel();
+                    }
+                });
+
+        alertBuilder.setNegativeButton(
+                "Nein",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
     }
 
     private void fillKontoSpinner() {
@@ -91,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
         einzahlung.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -157,10 +187,11 @@ public class MainActivity extends AppCompatActivity {
                     return false;
                 }
                 String loescheMich = accountName.getSelectedItem().toString();
+                createAlertDialog(loescheMich);
+                AlertDialog alertDialog = alertBuilder.create();
+                alertDialog.show();
                 //in loescheMich sollte ein gültiger Eintrag sein
-                daoImplSQLight.deleteKonto(loescheMich);
-                fillKontoSpinner();
-                daoImplSQLight.addEntryToPinMoney(loescheMich,"deleted");
+
                 return true;
             case R.id.action_settings:
                 //leider keine Zeit für Extras
