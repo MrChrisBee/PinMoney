@@ -3,7 +3,8 @@
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/activity_new_receiver"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@mipmap/background"
             android:fillViewport="true"
             tools:context="de.cokuss.chhe.pinmoney.NewRecipientActivity">
 
@@ -68,22 +69,22 @@
                 android:id="@+id/input_birthday"
                 android:layout_width="120dp"
                 android:layout_height="40dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="25dp"
                 android:hint="@string/sampleDate"
                 android:inputType="date"
                 android:labelFor="@+id/title_birthday" />
             <Button
-                android:layout_width="50dp"
-                android:text="@string/pick"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:id="@+id/birthdayButton"
-                android:textSize="8sp"
-                android:layout_height="30dp" />
+                android:background="@drawable/button_calendar"/>
         </LinearLayout>
 
         <RadioGroup
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center_horizontal"
+            android:layout_marginTop="15dp"
             android:id="@+id/turnus">
 
             <RadioButton
@@ -129,9 +130,10 @@
                 android:id="@+id/betrag"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
-                android:layout_marginEnd="15dp"
+                android:layout_marginEnd="2dp"
                 android:inputType="numberDecimal"
-                android:textAlignment="textEnd" />
+                android:textAlignment="textEnd"
+                tools:ignore="LabelFor" />
 
             <TextView
                 android:id="@+id/euro"
@@ -161,9 +163,10 @@
                 android:id="@+id/startBetrag"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
-                android:layout_marginEnd="15dp"
+                android:layout_marginEnd="2dp"
                 android:inputType="numberDecimal"
-                android:textAlignment="textEnd" />
+                android:textAlignment="textEnd"
+                tools:ignore="LabelFor" />
 
             <TextView
                 android:id="@+id/euro1"
@@ -194,17 +197,15 @@
                 android:id="@+id/input_startDate"
                 android:layout_width="120dp"
                 android:layout_height="40dp"
-                android:layout_marginEnd="15dp"
+                android:layout_marginEnd="25dp"
                 android:hint="@string/abNun"
                 android:inputType="date" />
 
             <Button
-                android:layout_width="50dp"
-                android:text="@string/pick"
-                android:id="@+id/startButton"
-                android:textSize="8sp"
+                android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_weight="1"/>
+                android:id="@+id/startButton"
+                android:background="@drawable/button_calendar"/>
 
         </LinearLayout>
 
@@ -214,7 +215,7 @@
             android:layout_width="160dp"
             android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="15pt"
+            android:layout_marginTop="25pt"
             android:background="@drawable/button_save"
             android:enabled="true" />
 

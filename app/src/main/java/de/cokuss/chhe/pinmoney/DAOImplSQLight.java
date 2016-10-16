@@ -86,7 +86,7 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
     public void addEntryToPinMoney(String name, String aktion) {
         db = getWritableDatabase();
         String sql = INSERT_INTO_PIN
-                + " values ( null, date('now'), " + name + ", null, null, null,'" + aktion + "')";
+                + " values ( null, date('now'), '" + name + "', null, null, null,'" + aktion + "')";
         // id eintragsdatum kontoinhaber startdatum turnus betrag aktion
         db.execSQL(sql);
     }
@@ -128,7 +128,7 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
         return result;
     }
 
-
+    //Todo wenn mal Zeit ist:braucht create Konto ein Konto oder reicht auch ein String
     @Override
     public void createKonto(Konto konto) {
         String sql = "Create table " + konto.getInhaber() + "(" +
