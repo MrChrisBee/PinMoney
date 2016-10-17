@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -220,6 +221,13 @@ public class NewRecipientActivity extends AppCompatActivity {
             }
         }
         return date;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main_menu_new_recipient, menu);
+        return true;
     }
     private void log(String string) {
         Log.d(LOG_TAG, string);

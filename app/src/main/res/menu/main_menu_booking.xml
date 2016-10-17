@@ -2,11 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".NewRecipientActivity">
+    tools:context=".BuchenActivity">
 
     <item
 
-        android:id="@+id/action_help_new_recipient"
+        android:id="@+id/action_help_booking"
         android:title="@string/help"
         app:showAsAction="always" />
 
