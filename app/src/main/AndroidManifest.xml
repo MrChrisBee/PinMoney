@@ -15,12 +15,34 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ShowAuszugActivity" />
-        <activity android:name=".NewRecipientActivity" />
-        <activity android:name=".BuchenActivity" />
+
         <activity android:name=".HelpActivity" />
-        <activity android:name=".ChangePinInfoActivity" />
-        <activity android:name=".ShowHistoryActivity"></activity>
+        <activity android:name=".ShowHistoryActivity">
+        </activity>
+
+        <activity
+            android:name=".NewRecipientActivity"
+            android:label="Neuer Empfänger"
+            android:parentActivityName=".MainActivity" >
+        </activity>
+
+        <activity
+            android:name=".ShowAuszugActivity"
+            android:label="Kontoauszug"
+            android:parentActivityName=".MainActivity" >
+        </activity>
+
+        <activity
+        android:name=".BuchenActivity"
+        android:label="Buchung"
+        android:parentActivityName=".MainActivity" >
+    </activity>
+
+        <activity
+            android:name=".ChangePinInfoActivity"
+            android:label="Empfänger Einstellungen"
+            android:parentActivityName=".MainActivity" >
+        </activity>
     </application>
 
 </manifest>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".NewRecipientActivity">
+
+    <item
+
+        android:id="@+id/action_help_new_recipient"
+        android:title="@string/help"
+        app:showAsAction="never" />
+
+</menu>
