@@ -24,10 +24,10 @@
     <string name="days_60">60 Tage</string>
     <string name="einzahlung_auf">Einzahlung auf das Konto von:</string>
     <string name="einzahlung_hint">0.00€</string>
-    <string name="empfaenger">Empfänger</string>
-    <string name="empfaenger_neu">Neuer Taschengeldempfänger:</string>
+    <string name="empfaenger">Empfänger:</string>
+    <string name="empfaenger_neu">Neuer Empfänger:</string>
     <string name="empfaenger_neu_geb_dat">Geb.Dat.:</string>
-    <string name="empfaenger_vorname">Vorname:</string>
+    <string name="empfaenger_name">Name:</string>
     <string name="euro">€</string>
     <string name="help">Hilfe</string>
     <string name="helpText">Über diese App: Die App ist aufgrund diveres Schwierigkeiten leider noch nicht fertig.
@@ -36,7 +36,7 @@
     <string name="history_zeigen">History zeigen</string>
     <string name="impossible">Eigentlich unmöglich</string>
     <string name="insertReciver">Empfänger eintragen</string>
-    <string name="konto_kind">Konto/Kind</string>
+    <string name="konto">Konto</string>
     <string name="kontoWaehlen">Bitte wählen Sie ein Konto aus der Liste (Kleines Dreieck)</string>
     <string name="kontostand">Kontostand:</string>
     <string name="main_title_name">Vorname:</string>
