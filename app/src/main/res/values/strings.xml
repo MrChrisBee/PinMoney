@@ -6,6 +6,7 @@
     <string name="action_empfaenger">Empfänger</string>
     <string name="ausahlung_von">Auszahlung von Konto:</string>
     <string name="betrag">Betrag (€.Cent):</string>
+    <string name="betrag_edit">0.00 €</string>
     <string name="bitte_empf_nger_ausw_hlen">Bitte Empfänger auswählen!</string>
     <string name="buchen">buchen</string>
     <string name="buchungstext">Buchungstext</string>
@@ -18,16 +19,17 @@
     <string name="change_date">Gültig ab:</string>
     <string name="close_app">Beenden</string>
     <string name="datum">Datum</string>
+    <string name="date_edit">Datum</string>
     <string name="daily">täglich</string>
     <string name="days_10">10 Tage</string>
     <string name="days_30">30 Tage</string>
     <string name="days_60">60 Tage</string>
     <string name="einzahlung_auf">Einzahlung auf das Konto von:</string>
     <string name="einzahlung_hint">0.00€</string>
-    <string name="empfaenger">Empfänger</string>
-    <string name="empfaenger_neu">Neuer Taschengeldempfänger:</string>
+    <string name="empfaenger">Empfänger:</string>
+    <string name="empfaenger_neu">Neuer Empfänger:</string>
     <string name="empfaenger_neu_geb_dat">Geb.Dat.:</string>
-    <string name="empfaenger_vorname">Vorname:</string>
+    <string name="empfaenger_name">Name:</string>
     <string name="euro">€</string>
     <string name="help">Hilfe</string>
     <string name="helpText">Über diese App: Die App ist aufgrund diveres Schwierigkeiten leider noch nicht fertig.
@@ -36,7 +38,7 @@
     <string name="history_zeigen">History zeigen</string>
     <string name="impossible">Eigentlich unmöglich</string>
     <string name="insertReciver">Empfänger eintragen</string>
-    <string name="konto_kind">Konto/Kind</string>
+    <string name="konto">Konto wählen:</string>
     <string name="kontoWaehlen">Bitte wählen Sie ein Konto aus der Liste (Kleines Dreieck)</string>
     <string name="kontostand">Kontostand:</string>
     <string name="main_title_name">Vorname:</string>
@@ -46,6 +48,7 @@
     <string name="monthly">monatlich</string>
     <string name="optional">Buchungstext(Optional):</string>
     <string name="PinMoney4">Taschengeld-Einstellungen für:</string>
+    <string name="receiver_edit">Empfänger</string>
     <string name="sampleDate">01.01.2000</string>
     <string name="start_date">Startdatum:</string>
     <string name="start_count">Startbetrag:</string>

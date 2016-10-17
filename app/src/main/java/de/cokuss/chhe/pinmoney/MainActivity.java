@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent2);
                 return true;
             case R.id.action_change:
-                Intent intent3 = new Intent(this, ShowHistoryActivity.class);
+                Intent intent3 = new Intent(this, ChangePinInfoActivity.class);
                 intent3.putExtra("inhaber", selectedKonto.getInhaber());
                 startActivity(intent3);
                 return true;
