@@ -1,5 +1,6 @@
 package de.cokuss.chhe.pinmoney;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,8 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.Calendar;
 import java.util.Locale;
 
 
@@ -82,7 +81,14 @@ public class BuchenActivity extends AppCompatActivity {
                 //Achtung aktualisierung des Kontostandes findet nur hier statt, stelle sicher das dass Vorzeichen Stimmt
                 buchung = new Buchung(null, null , wieviel, buchungstext, null, null, empfaenger.getKontostand() + wieviel);
                 daoImplSQLight.createBuchung(empfaenger, buchung);
-                //Todo mit finish springe ich immer weider auf den ersten Kunden der Liste ->  machs besser (Intend)
+
+                //Von hier sollte es immer wieder zurück zu Main gehen.
+                //finish macht nicht ganz das was der Nutzer erwarten würde, es ist immer der erste Eintrag der Liste ausgewählt
+
+//                Intent intent = new Intent(v.getContext(), MainActivity.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                intent.putExtra("kunde",empfaengerStr);
+//                startActivity(intent);
                 finish();
             }
         });

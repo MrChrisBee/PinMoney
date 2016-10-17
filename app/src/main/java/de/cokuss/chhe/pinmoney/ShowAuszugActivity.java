@@ -10,10 +10,8 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.Locale;
-
 
 public class ShowAuszugActivity extends AppCompatActivity {
 
@@ -47,9 +45,7 @@ public class ShowAuszugActivity extends AppCompatActivity {
             nameList.add(konto.getInhaber());
         }
         makeSpinnerAdapter();
-
         showIt();
-
         setListeners();
     }
 
@@ -72,9 +68,7 @@ public class ShowAuszugActivity extends AppCompatActivity {
     private void makeListViewAdapter () {
         BuchungssatzAdapter buchungssatzAdapter = new BuchungssatzAdapter(this, buchungsListe);
         // Attach the adapter to a ListView
-
-        ListView listView = (ListView) findViewById(R.id.listView);
-
+        ListView listView = (ListView) findViewById(R.id.listViewKontoAuszug);
         listView.setAdapter(buchungssatzAdapter);
     }
 
@@ -91,22 +85,17 @@ public class ShowAuszugActivity extends AppCompatActivity {
                     showIt();
                 }
             }
-
             @Override
             public void onNothingSelected (AdapterView<?> parent) {
                 log(parent.getSelectedItem().toString());
             }
         });
     }
-
     private void log (String string) {
         Log.d(LOG_TAG, string);
     }
-
     private void Toaster (String str) {
         Toast.makeText(this, str, Toast.LENGTH_LONG).show();
     }
 }
-
-
 //help from http://guides.codepath.com/android/Using-an-ArrayAdapter-with-ListView

@@ -62,6 +62,7 @@
     <string name="weekly">wöchentlich</string>
     <string name="pick">Pick</string>
     <string name="wertEingeben">Bitte Betrag eingeben!</string>
+    <string name="no">No Date</string>
     <string-array name="array_name">
         <item>Eintag nicht gültig</item>
     </string-array>

@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent2);
                 return true;
             case R.id.action_change:
-                Intent intent3 = new Intent(this, PinInfoActivity.class);
+                Intent intent3 = new Intent(this, ShowHistoryActivity.class);
                 intent3.putExtra("inhaber", selectedKonto.getInhaber());
                 startActivity(intent3);
                 return true;
@@ -200,10 +200,9 @@ public class MainActivity extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.action_show_history:
-                //Zeige alle History Einträge an -> Auswahlmöglichkeit
-                //todo
-                Intent intent3 = new Intent(this, NewRecipientActivity.class);
-                startActivity(intent3);
+                //todo Zeige alle History Einträge an -> Auswahlmöglichkeit ?
+                Intent intent4 = new Intent(this, ShowHistoryActivity.class);
+                startActivity(intent4);
                 return true;
         }
         return super.onOptionsItemSelected(item);

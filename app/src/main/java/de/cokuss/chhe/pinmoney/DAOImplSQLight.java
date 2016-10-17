@@ -14,11 +14,6 @@ import java.util.Date;
 
 class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, ZahlungenDAO {
     private static final String LOG_TAG = DAOImplSQLight.class.getSimpleName();
-
-    private SQLiteDatabase db;
-    private DateHelper dateHelper = new DateHelper();
-    private static DAOImplSQLight daoImplSQLight;
-
     //Datenbank
     private static final String DB_NAME = "taschengeldkonto.db";
     private static final int DB_VERSION = 2;
@@ -30,7 +25,6 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
     private static final String COLUMN_VERI_ID = "verifikation_id";
     private static final String COLUMN_VERI_TYPE = "verifikation_typ";
     private static final String COLUMN_BALANCE = "kontostand";
-
     //PinInfo: id aktdate name dateStart turnus value aktion (create | update | delete )
     private static final String TABLE_PM_INFO = "PinInfo";
     private static final String COLUMN_PM_ID = "id";
@@ -40,16 +34,14 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
     private static final String COLUMN_PM_CYCLE = "cycle";
     private static final String COLUMN_PM_VALUE = "value";
     private static final String COLUMN_PM_AKTION = "action";
-
     private static final String SQL_DROP_TABLE = "DROP TABLE IF EXIST " + TABLE_PM_INFO + ";";
     private static final String SQL_SELECT_FROM_PIN_MONEY = "select " + COLUMN_PM_STARTDATE + ", " + COLUMN_PM_CYCLE + ", " + COLUMN_PM_VALUE
             + " from " + TABLE_PM_INFO + " where " + COLUMN_PM_ID + " = (SELECT MAX( " + COLUMN_PM_ID + " )  FROM  "
             + TABLE_PM_INFO + " where " + COLUMN_PM_NAME + " like ";
-
+    private static final String SQL_SELECT_ALL_FROM_PIN_MONEY = "select * from " + TABLE_PM_INFO;
     private static final String INSERT_INTO_PIN = "insert into " + TABLE_PM_INFO + "( " + COLUMN_PM_ID
             + ", " + COLUMN_PM_ENTRYDATE + ", " + COLUMN_PM_NAME + ", " + COLUMN_PM_STARTDATE + ", " + COLUMN_PM_CYCLE
             + ", " + COLUMN_PM_VALUE + ", " + COLUMN_PM_AKTION + " )";
-
     private static final String SQL_CREATE_PINMONEY = "CREATE TABLE " + TABLE_PM_INFO + " ( " +
             COLUMN_PM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COLUMN_PM_ENTRYDATE + " NOT NULL, " +
@@ -58,6 +50,9 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
             COLUMN_PM_CYCLE + " , " +
             COLUMN_PM_VALUE + " , " +
             COLUMN_PM_AKTION + " )";
+    private static DAOImplSQLight daoImplSQLight;
+    private SQLiteDatabase db;
+    private DateHelper dateHelper = new DateHelper();
 
     private DAOImplSQLight(Context con) {
         super(con, DB_NAME, null, DB_VERSION);
@@ -101,11 +96,11 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
         String action;
         float value;
         Turnus turnus;
-        // TODO: 04.10.16
         String sql = SQL_SELECT_FROM_PIN_MONEY + inhaber + " order by " + COLUMN_PM_ID + " desc limit 1";
         Cursor c = db.rawQuery(sql, null);
         c.moveToFirst();
         action = c.getString(c.getColumnIndex(COLUMN_PM_AKTION));
+        //Todo könnte noch Probleme mit dem Datum geben
         startDate = new Date(c.getColumnIndex(COLUMN_PM_STARTDATE));
         entryDate = new Date(c.getColumnIndex(COLUMN_PM_ENTRYDATE));
         value = c.getFloat(c.getColumnIndex(COLUMN_PM_VALUE));
@@ -123,12 +118,68 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
                 turnus = Turnus.TAEGLICH;
         }
         zahlungen = new Zahlungen(startDate, turnus, value);
-        result = new PinMoneyEnrty(zahlungen,entryDate,inhaber,action);
+        result = new PinMoneyEnrty(zahlungen, entryDate, inhaber, action);
         c.close();
         return result;
     }
 
-    //Todo wenn mal Zeit ist:braucht create Konto ein Konto oder reicht auch ein String
+    ArrayList<PinMoneyEnrty> getEntryListFromPinMoney() {
+        db = getWritableDatabase();
+        String name, action, cycleStr;
+        Date startDate, entryDate;
+        Float value;
+        Turnus turnus;
+        Zahlungen zahlungen;
+        DateHelper dateHelper = new DateHelper();
+        String sql = SQL_SELECT_ALL_FROM_PIN_MONEY;
+        ArrayList<PinMoneyEnrty> entrys = new ArrayList<>();
+        //hole alle Einträge
+        Cursor c = db.rawQuery(sql, null);
+        c.moveToFirst();
+        log("getEntryListFromPinMoney " + c.getCount() + " HistoryEntrys read");
+        while (!c.isAfterLast()) {
+
+            //erzeuge für jeden Eintrag eine
+            //Zahlungen (Date startDate, Turnus turnus, float betrag) und damit einen
+            //PinMoneyEnrty (Zahlungen zahlungen, Date entryDate, String kontoName, String action)
+            name = c.getString(c.getColumnIndex(COLUMN_PM_NAME));
+            value = c.getFloat(c.getColumnIndex(COLUMN_PM_VALUE));
+            switch (c.getString(c.getColumnIndex(COLUMN_PM_CYCLE))) {
+                case "taeglich":
+                    turnus = Turnus.TAEGLICH;
+                    break;
+                case "woechentlich":
+                    turnus = Turnus.WOECHENTLICH;
+                    break;
+                case "monatlich":
+                    turnus = Turnus.MONATLICH;
+                    break;
+                default:
+                    turnus = Turnus.TAEGLICH;
+            }
+            try {
+                startDate = dateHelper.sdfLong.parse(c.getString(c.getColumnIndex(COLUMN_PM_STARTDATE)));
+            } catch (ParseException e) {
+                startDate = null;
+                log("getEntryListFromPinMoney Kein StartDatum für den Namen " + name);
+            }
+            zahlungen = new Zahlungen(startDate, turnus, value);
+            action = c.getString(c.getColumnIndex(COLUMN_PM_AKTION));
+            try {
+                entryDate = dateHelper.sdfLong.parse(c.getString(c.getColumnIndex(COLUMN_PM_ENTRYDATE)));
+            } catch (ParseException e) {
+                entryDate = null;
+                log("getEntryListFromPinMoney Kein EintragsDatum für den Namen " + name);
+            }
+            entrys.add(new PinMoneyEnrty(zahlungen, entryDate, name, action));
+            c.moveToNext();
+        }
+        c.close();
+        log("getEntryListFromPinMoney() : ArrayList mit " + entrys.size() + " Elementen erzeugt.");
+        return entrys;
+    }
+
+    //Todo wenn mal Zeit ist: Braucht create Konto ein Konto oder reicht auch ein String
     @Override
     public void createKonto(Konto konto) {
         String sql = "Create table " + konto.getInhaber() + "(" +
@@ -158,7 +209,6 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
         log("Buchung erstellen mit: " + sql);
         db.execSQL(sql);
     }
-
 
     Konto getKonto(String kontoname) {
         Konto konto = null;
@@ -203,7 +253,7 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
                 e.printStackTrace();
             }
             buchungen.add(buchung);
-            log("getAllBuchungen : " +buchung.toString());
+            log("getAllBuchungen : " + buchung.toString());
             c.moveToNext();
         }
         c.close();

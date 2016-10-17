@@ -209,7 +209,6 @@
 
         </LinearLayout>
 
-
         <Button
             android:id="@+id/button_save_new_child"
             android:layout_width="160dp"
@@ -218,7 +217,6 @@
             android:layout_marginTop="25pt"
             android:background="@drawable/button_save"
             android:enabled="true" />
-
 
     </LinearLayout>
 </ScrollView>

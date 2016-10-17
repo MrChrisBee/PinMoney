@@ -4,14 +4,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class PinInfoActivity extends AppCompatActivity {
+public class ChangePinInfoActivity extends AppCompatActivity {
     private String inhaber;
     private TextView tvInhaber;
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pin_info);
+        setContentView(R.layout.activity_change_pin_info);
         init();
     }
 

@@ -44,13 +44,13 @@ class HistoryAdapter extends ArrayAdapter<PinMoneyEnrty> {
         // Populate the data into the template view using the data object
 
         if (pinMoneyEnrty != null) {
+            tvAction.setText(pinMoneyEnrty.getAction());
+            tvAccountName.setText(pinMoneyEnrty.getKontoName());
             if (pinMoneyEnrty.getEntryDate() != null) {
                 tvEntryDate.setText(dateHelper.sdfShort.format(pinMoneyEnrty.getEntryDate()));
             } else {
                 tvEntryDate.setText(R.string.no);
             }
-            tvAction.setText(pinMoneyEnrty.getAction());
-            tvAccountName.setText(pinMoneyEnrty.getKontoName());
             if (zahlungen.getDate() != null) {
                 tvStartDate.setText(dateHelper.sdfShort.format(zahlungen.getDate()));
             } else {
