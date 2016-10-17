@@ -2,7 +2,7 @@ package de.cokuss.chhe.pinmoney;
 
 public enum Turnus {
 
-    TAEGLICH("taeglich"), WOECHENTLICH("woechentlich"), MONATLICH("monatlich"), JAEHRLICH("jaehrlich");
+    TAEGLICH("taeglich"), WOECHENTLICH("woechentlich"), MONATLICH("monatlich"), JAEHRLICH("jaehrlich"), KEINE_ANGABE("keine angabe");
 
     private final String bez;
 

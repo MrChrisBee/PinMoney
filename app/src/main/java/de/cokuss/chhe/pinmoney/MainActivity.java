@@ -19,23 +19,21 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
-
+    ArrayList<Konto> kontenListe;
+    //DAO
+    DAOImplSQLight daoImplSQLight;
+    //Alert 4 Delete
+    AlertDialog.Builder alertBuilder;
     //Buttons bekannt machen
     private Button kontoauszug;
     private Button auszahlung;
     private Button einzahlung;
     private Spinner accountName;
-    ArrayList<Konto> kontenListe;
     private ArrayList<String> array4Adapter = new ArrayList<>();
     private ArrayAdapter<String> arrayAdapter;
-    //DAO
-    DAOImplSQLight daoImplSQLight;
     //Konto
     private Konto selectedKonto;
-    //Alert 4 Delete
-    AlertDialog.Builder alertBuilder;
 
-    //savedInstanceState verlassen der View aktualisiert
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -58,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         setListeners();
     }
 
-    private void createAlertDialog (final String konto) {
+    private void createAlertDialog(final String konto) {
         alertBuilder = new AlertDialog.Builder(MainActivity.this);
         alertBuilder.setMessage("Soll das Konto " + konto + " wirklich gelöscht werden ?");
         alertBuilder.setCancelable(true);
@@ -68,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
                         daoImplSQLight.deleteKonto(konto);
                         fillKontoSpinner();
-                        daoImplSQLight.addEntryToPinMoney(konto,"deleted");
+                        daoImplSQLight.addEntryToPinMoney(konto, "deleted");
                         dialog.cancel();
                     }
                 });
@@ -111,9 +109,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (selectedKonto != null) {
-                    Intent intent = new Intent(v.getContext(), ShowAuszugActivity.class);
-                    intent.putExtra("KontoName", selectedKonto.getInhaber());
-                    startActivity(intent);
+                    //in case of all Existing Entrys have been deleted
+                    if (daoImplSQLight.kontoExists(selectedKonto.getInhaber())) {
+                        Intent intent = new Intent(v.getContext(), ShowAuszugActivity.class);
+                        intent.putExtra("KontoName", selectedKonto.getInhaber());
+                        startActivity(intent);
+                    }
                 } else {
                     Toast.makeText(MainActivity.this, "Bitte erst einen \nTaschengeldempfänger anlegen! \nÜber Settings \n  -> Empfänger \n  -> Neuer Empfänger", Toast.LENGTH_SHORT).show();
                 }
