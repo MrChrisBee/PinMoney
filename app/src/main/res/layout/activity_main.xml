@@ -35,7 +35,7 @@
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:layout_marginTop="25dp"
-            android:background="@drawable/rahmen"
+            android:background="@drawable/rahmen_1"
             android:entries="@array/array_name"
             android:textAlignment="center"/>
 
