@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
         alertBuilder = new AlertDialog.Builder(MainActivity.this);
         alertBuilder.setMessage("Soll das Konto " + konto + " wirklich gelöscht werden ?");
         alertBuilder.setCancelable(true);
-
         alertBuilder.setPositiveButton(
                 "Ja",
                 new DialogInterface.OnClickListener() {
@@ -150,12 +149,14 @@ public class MainActivity extends AppCompatActivity {
         accountName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                log("onItemSelected");
                 parent.setSelection(position);
                 setSelectedKonto();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+                log("onNothingSelected");
                 parent.setSelection(0);
                 setSelectedKonto();
             }
