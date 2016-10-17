@@ -38,7 +38,7 @@
     <string name="history_zeigen">History zeigen</string>
     <string name="impossible">Eigentlich unmöglich</string>
     <string name="insertReciver">Empfänger eintragen</string>
-    <string name="konto">Konto</string>
+    <string name="konto">Konto wählen:</string>
     <string name="kontoWaehlen">Bitte wählen Sie ein Konto aus der Liste (Kleines Dreieck)</string>
     <string name="kontostand">Kontostand:</string>
     <string name="main_title_name">Vorname:</string>

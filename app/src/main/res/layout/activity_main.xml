@@ -20,7 +20,7 @@
 
         <TextView
             android:id="@+id/title_name_main"
-            android:layout_width="150dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/konto"
@@ -31,10 +31,11 @@
 
         <Spinner
             android:id="@+id/spinner4Child"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
             android:layout_gravity="center"
             android:layout_marginTop="25dp"
+            android:background="@drawable/rahmen"
             android:entries="@array/array_name"
             android:textAlignment="center"/>
 
@@ -48,6 +49,17 @@
         android:layout_marginTop="30pt"
         android:background="@drawable/button_main_parent_konto" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="(Aktueller Kontostand des oben gewählten Empfänger)"
+        android:textColor="#636363"
+        android:textAlignment="center"
+        android:textSize="12sp"
+        android:ems="10"
+        android:id="@+id/explainCount" />
+
     <Button
         android:id="@+id/button_auszahlung"
         android:layout_width="160dp"
@@ -56,6 +68,17 @@
         android:layout_marginTop="20pt"
         android:background="@drawable/button_main_parent_ausz" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="(Auszahlung an oben gewählten Empfänger)"
+        android:textColor="#636363"
+        android:textAlignment="center"
+        android:textSize="12sp"
+        android:ems="10"
+        android:id="@+id/bookingOut" />
+
     <Button
         android:id="@+id/button_einzahlung"
         android:layout_width="160dp"
@@ -63,5 +86,16 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20pt"
         android:background="@drawable/button_main_parent_einz" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="(Einzahlung auf Konto des oben gewählten Empfänger)"
+        android:textColor="#636363"
+        android:textAlignment="center"
+        android:textSize="12sp"
+        android:ems="10"
+        android:id="@+id/bookingIn" />
 
 </LinearLayout>
