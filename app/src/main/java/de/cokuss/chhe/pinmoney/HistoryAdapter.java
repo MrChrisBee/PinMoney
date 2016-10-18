@@ -31,7 +31,7 @@ class HistoryAdapter extends ArrayAdapter<PinMoneyEnrty> {
         // Check if an existing view is being reused, otherwise inflate the view
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_buchungssatz, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_history_entry, parent, false);
         }
         Zahlungen zahlungen = pinMoneyEnrty.getZahlungen();
         // Lookup view for data population
@@ -44,7 +44,8 @@ class HistoryAdapter extends ArrayAdapter<PinMoneyEnrty> {
         // Populate the data into the template view using the data object
 
         if (pinMoneyEnrty != null) {
-            tvAction.setText(pinMoneyEnrty.getAction());
+            //tvAction.setText(pinMoneyEnrty.getAction());
+            tvAction.setText("Test");
             tvAccountName.setText(pinMoneyEnrty.getKontoName());
             if (pinMoneyEnrty.getEntryDate() != null) {
                 tvEntryDate.setText(dateHelper.sdfShort.format(pinMoneyEnrty.getEntryDate()));
@@ -57,7 +58,7 @@ class HistoryAdapter extends ArrayAdapter<PinMoneyEnrty> {
                 tvStartDate.setText(R.string.no);
             }
             tvBetrag.setText(String.format(Locale.getDefault(), "%.2f", zahlungen.getBetrag()));
-            tvCycle.setText(String.format(Locale.getDefault(), "%.2f", zahlungen.getTurnusStr()));
+            tvCycle.setText(zahlungen.getTurnusStr());
         }
         // Return the completed view to render on screen
         return convertView;
