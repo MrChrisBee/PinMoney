@@ -44,6 +44,18 @@
             android:parentActivityName=".MainActivity">
         </activity>
 
+        <activity
+            android:name=".HelpStartActivity"
+            android:label="Hilfe: Start"
+            android:parentActivityName=".MainActivity">
+        </activity>
+
+        <activity
+            android:name=".HelpNewActivity"
+            android:label="Hilfe: Neuer Empfänger"
+            android:parentActivityName=".NewRecipientActivity">
+        </activity>
+
     </application>
 
 </manifest>
