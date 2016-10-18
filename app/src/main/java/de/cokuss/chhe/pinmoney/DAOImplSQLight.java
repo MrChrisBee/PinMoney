@@ -135,57 +135,58 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
         ArrayList<PinMoneyEnrty> entrys = new ArrayList<>();
         //hole alle Einträge
         Cursor c = db.rawQuery(sql, null);
-            c.moveToFirst();
-            log("getEntryListFromPinMoney " + c.getCount() + " HistoryEntrys read");
-            while (!c.isAfterLast()) {
+        c.moveToFirst();
 
-                //erzeuge für jeden Eintrag eine
-                //Zahlungen (Date startDate, Turnus turnus, float betrag) und damit einen
-                //PinMoneyEnrty (Zahlungen zahlungen, Date entryDate, String kontoName, String action)
-                int i = c.getColumnIndex(COLUMN_PM_NAME);
-                if(i > -1) {
-                    name = c.getString(i);
-                } else name = "Kein Entrag";
+        log("getEntryListFromPinMoney " + c.getCount() + " HistoryEntrys found");
+        while (!c.isAfterLast()) {
 
-                i = c.getColumnIndex(COLUMN_PM_VALUE);
-                if(i > -1) {
+            //erzeuge für jeden Eintrag eine
+            //Zahlungen (Date startDate, Turnus turnus, float betrag) und damit einen
+            //PinMoneyEnrty (Zahlungen zahlungen, Date entryDate, String kontoName, String action)
+            int i = c.getColumnIndex(COLUMN_PM_NAME);
+            if (i > -1) {
+                name = c.getString(i);
+            } else name = "Kein Entrag";
+
+            i = c.getColumnIndex(COLUMN_PM_VALUE);
+            if (i > -1) {
                 value = c.getFloat(i);
-                } else value = 0.00f;
+            } else value = 0.00f;
 
-                i = c.getColumnIndex(COLUMN_PM_CYCLE);
-                if(i > -1) {
-                    switch (c.getString(i)) {
-                        case "taeglich":
-                            turnus = Turnus.TAEGLICH;
-                            break;
-                        case "woechentlich":
-                            turnus = Turnus.WOECHENTLICH;
-                            break;
-                        case "monatlich":
-                            turnus = Turnus.MONATLICH;
-                            break;
-                        default:
-                            turnus = Turnus.TAEGLICH;
-                    }
-                } else turnus = Turnus.KEINE_ANGABE;
+            i = c.getColumnIndex(COLUMN_PM_CYCLE);
+            if (i > -1) {
+                switch (c.getString(i)) {
+                    case "taeglich":
+                        turnus = Turnus.TAEGLICH;
+                        break;
+                    case "woechentlich":
+                        turnus = Turnus.WOECHENTLICH;
+                        break;
+                    case "monatlich":
+                        turnus = Turnus.MONATLICH;
+                        break;
+                    default:
+                        turnus = Turnus.TAEGLICH;
+                }
+            } else turnus = Turnus.KEINE_ANGABE;
 
-                try {
-                    startDate = dateHelper.sdfLong.parse(c.getString(c.getColumnIndex(COLUMN_PM_STARTDATE)));
-                } catch (ParseException e) {
-                    startDate = null;
-                    log("getEntryListFromPinMoney Kein StartDatum für den Namen " + name);
-                }
-                zahlungen = new Zahlungen(startDate, turnus, value);
-                action = c.getString(c.getColumnIndex(COLUMN_PM_AKTION));
-                try {
-                    entryDate = dateHelper.sdfLong.parse(c.getString(c.getColumnIndex(COLUMN_PM_ENTRYDATE)));
-                } catch (ParseException e) {
-                    entryDate = null;
-                    log("getEntryListFromPinMoney Kein EintragsDatum für den Namen " + name);
-                }
-                entrys.add(new PinMoneyEnrty(zahlungen, entryDate, name, action));
-                c.moveToNext();
+            try {
+                startDate = dateHelper.sdfLong.parse(c.getString(c.getColumnIndex(COLUMN_PM_STARTDATE)));
+            } catch (ParseException e) {
+                startDate = null;
+                log("getEntryListFromPinMoney Kein StartDatum für den Namen " + name);
             }
+            zahlungen = new Zahlungen(startDate, turnus, value);
+            action = c.getString(c.getColumnIndex(COLUMN_PM_AKTION));
+            try {
+                entryDate = dateHelper.sdfLong.parse(c.getString(c.getColumnIndex(COLUMN_PM_ENTRYDATE)));
+            } catch (ParseException e) {
+                entryDate = null;
+                log("getEntryListFromPinMoney Kein EintragsDatum für den Namen " + name);
+            }
+            entrys.add(new PinMoneyEnrty(zahlungen, entryDate, name, action));
+            c.moveToNext();
+        }
         c.close();
         log("getEntryListFromPinMoney() : ArrayList mit " + entrys.size() + " Elementen erzeugt.");
         return entrys;

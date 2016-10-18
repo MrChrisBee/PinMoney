@@ -131,6 +131,9 @@ public class NewRecipientActivity extends AppCompatActivity {
             case R.id.radioButton_monthly:
                 turnus = Turnus.MONATLICH;
                 break;
+            default: //einer der Werte sollte es ein
+                Log.e(LOG_TAG,"Cycle not valid");
+                return;
         }
         //betrag
         tmpC4 = checkEditText(betragFeld, "currency");
@@ -173,6 +176,7 @@ public class NewRecipientActivity extends AppCompatActivity {
         String string = nameFeld.getText().toString();
         Check4EditText c4 = new Check4EditText(nameFeld,"",false);
         switch (kind.toLowerCase()){
+            //create in every case a c4 containing the EditText, the Content and bool arg as result of testing
             case "name":
                 log("In Name");
                 if (string.length() == 0 || !string.matches("\\w+")) {
@@ -187,7 +191,7 @@ public class NewRecipientActivity extends AppCompatActivity {
                 break;
             case "date":
                 log("In Date");
-                if (string.length() == 0 || !string.matches("^(0[1-9]|[12][0-9]|3[01])\\.(0[1-9]|1[012])\\.(19|20)\\d\\d$")) {
+                if (string.length() == 0 || !string.matches("^(0?[1-9]|[12][0-9]|3[01])\\.(0?[1-9]|1[012])\\.(19|20)\\d\\d$")) {
                     nameFeld.setError("Bitte ein gültiges Datum eingeben! Z.B. 31.12.1999");
                     c4 = new Check4EditText(nameFeld, "", false);
                     log("date Feld leer aus C4ET für " + nameFeld.getId());

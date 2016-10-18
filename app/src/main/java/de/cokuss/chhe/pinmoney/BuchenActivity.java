@@ -83,14 +83,7 @@ public class BuchenActivity extends AppCompatActivity {
                 //Achtung aktualisierung des Kontostandes findet nur hier statt, stelle sicher das dass Vorzeichen Stimmt
                 buchung = new Buchung(null, null , wieviel, buchungstext, null, null, empfaenger.getKontostand() + wieviel);
                 daoImplSQLight.createBuchung(empfaenger, buchung);
-
-                //Von hier sollte es immer wieder zurück zu Main gehen.
-                //finish macht nicht ganz das was der Nutzer erwarten würde, es ist immer der erste Eintrag der Liste ausgewählt
-
-//                Intent intent = new Intent(v.getContext(), MainActivity.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                intent.putExtra("kunde",empfaengerStr);
-//                startActivity(intent);
+                //Todo änderung ? derzeit geht es immer einfach zum ersten eintrag im Main zurück
                 finish();
             }
         });
