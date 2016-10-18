@@ -1,15 +1,19 @@
 package de.cokuss.chhe.pinmoney;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.util.Calendar;
@@ -228,6 +232,17 @@ public class NewRecipientActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main_menu_new_recipient, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_help_new_recipient:
+                Intent intent1 = new Intent(this, HelpNewActivity.class);
+                startActivity(intent1);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
     private void log(String string) {
         Log.d(LOG_TAG, string);

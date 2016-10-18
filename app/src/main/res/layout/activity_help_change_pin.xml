@@ -16,21 +16,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="5dp"
         android:id="@+id/textView3"
         android:textSize="24sp"
         android:textColor="#000000"
         android:textStyle="normal|bold" />
 
     <TextView
-        android:layout_width="match_parent"
+        android:text="Auf dieser Seite sehen sie die aktuellen Einstellungen des gewählten Empfänger/Konto. Sie können hier den Rhythmus und den regelmäßigen Betrag ändern. Zudem geben sie an, ab wann die Änderungen Gültigkeit haben."
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/helpText"
-        android:textColor="#000000"
-        android:layout_marginTop="30dp"
         android:layout_below="@+id/textView3"
-        android:maxLines="10"
-        android:lines="10"
-        android:layout_alignParentStart="true"
-        android:id="@+id/editText" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:id="@+id/textView4" />
+
+
+
 </RelativeLayout>

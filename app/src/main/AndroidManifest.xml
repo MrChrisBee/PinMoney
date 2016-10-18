@@ -40,8 +40,32 @@
 
         <activity
             android:name=".ChangePinInfoActivity"
-            android:label="Empfänger Einstellungen"
+            android:label="Empf. Einstellungen"
             android:parentActivityName=".MainActivity">
+        </activity>
+
+        <activity
+            android:name=".HelpStartActivity"
+            android:label="Hilfe: Start"
+            android:parentActivityName=".MainActivity">
+        </activity>
+
+        <activity
+            android:name=".HelpChangePinActivity"
+            android:label="Hilfe: Empf. Einstellungen"
+            android:parentActivityName=".ChangePinInfoActivity">
+        </activity>
+
+        <activity
+            android:name=".HelpBookingActivity"
+            android:label="Hilfe: Buchung"
+            android:parentActivityName=".MainActivity">
+        </activity>
+
+        <activity
+            android:name=".HelpNewActivity"
+            android:label="Hilfe: Start"
+            android:parentActivityName=".NewRecipientActivity">
         </activity>
 
     </application>
