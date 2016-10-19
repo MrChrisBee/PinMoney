@@ -62,7 +62,6 @@ public class ShowAuszugActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item, nameList);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
-
     }
 
     private void makeListViewAdapter () {

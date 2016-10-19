@@ -10,6 +10,7 @@ import android.util.Log;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, ZahlungenDAO {
@@ -74,8 +75,9 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
         DateHelper dateHelper = new DateHelper();
         String startDateStr = dateHelper.sdfLong.format(zahlungen.getDate());
         String gebDateStr = dateHelper.sdfLong.format(gebDate);
+        String nowDate = dateHelper.setNowDate();
         String sql = INSERT_INTO_PIN
-                + " values ( null, date('now'), '" + name + "', '" + gebDateStr + "', '" + startDateStr
+                + " values ( null, '" + nowDate + "' ,'" + name + "', '" + gebDateStr + "', '" + startDateStr
                 + "', '" + zahlungen.getTurnusStr() + "', " + zahlungen.getBetrag() + ", '" + aktion + "')";
         db.execSQL(sql);
     }
@@ -157,20 +159,22 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
             i = c.getColumnIndex(COLUMN_PM_CYCLE);
             if (i > -1) {
                 switch (c.getString(i)) {
-                    case "taeglich":
+                    case "tag":
                         turnus = Turnus.TAEGLICH;
                         break;
-                    case "woechentlich":
+                    case "woche":
                         turnus = Turnus.WOECHENTLICH;
                         break;
-                    case "monatlich":
+                    case "monat":
                         turnus = Turnus.MONATLICH;
                         break;
                     default:
-                        turnus = Turnus.TAEGLICH;
+                        log("der Untersuchte String für den Turnus ist: " + c.getString(i));
+                        turnus = Turnus.JAEHRLICH;
                 }
             } else turnus = Turnus.KEINE_ANGABE;
             try {
+                //log("Das StartDatum: " + c.getString(c.getColumnIndex(COLUMN_PM_STARTDATE)));
                 startDate = dateHelper.sdfLong.parse(c.getString(c.getColumnIndex(COLUMN_PM_STARTDATE)));
             } catch (ParseException e) {
                 startDate = null;
@@ -179,6 +183,7 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
             zahlungen = new Zahlungen(startDate, turnus, value);
             action = c.getString(c.getColumnIndex(COLUMN_PM_AKTION));
             try {
+                //log("Das Eintrags Datum: " + c.getString(c.getColumnIndex(COLUMN_PM_ENTRYDATE)));
                 entryDate = dateHelper.sdfLong.parse(c.getString(c.getColumnIndex(COLUMN_PM_ENTRYDATE)));
             } catch (ParseException e) {
                 entryDate = null;
@@ -222,7 +227,7 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
         //Achtung Hier wird direkt Buchung geschrieben : Balance ist vorher korrekt zu setzen!
         String sql = "Insert into " + konto.getInhaber() + " ( "
                 + COLUMN_DATE + "," + COLUMN_VALUE + "," + COLUMN_TEXT + ","
-                + COLUMN_VERI_ID + "," + COLUMN_VERI_TYPE + "," + COLUMN_BALANCE + ")"
+                + COLUMN_VERI_ID + "," + COLUMN_VERI_TYPE + "," + COLUMN_BALANCE + " ) "
                 + "values ('" + datum + "', "
                 + buchung.getValue() + ",'" + buchung.getText() + "'," + buchung.getVeri_id() + ",'"
                 + buchung.getVeri_type() + "'," + buchung.getBalance() + ")";

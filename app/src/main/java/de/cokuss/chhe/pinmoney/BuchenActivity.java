@@ -80,11 +80,13 @@ public class BuchenActivity extends AppCompatActivity {
                         buchungstext = "Auszahlung";
                     }
                 }
-                //Achtung aktualisierung des Kontostandes findet nur hier statt, stelle sicher das dass Vorzeichen Stimmt
+                //Achtung aktualisierung des Kontostandes findet nur hier statt, stelle sicher dass das Vorzeichen Stimmt
                 buchung = new Buchung(null, null , wieviel, buchungstext, null, null, empfaenger.getKontostand() + wieviel);
                 daoImplSQLight.createBuchung(empfaenger, buchung);
-                //Todo änderung ? derzeit geht es immer einfach zum ersten eintrag im Main zurück
-                finish();
+                //Todo statt zur Main geht es zur ShowAuszugActivity
+                Intent intent = new Intent(BuchenActivity.this, ShowAuszugActivity.class);
+                intent.putExtra("KontoName", empfaengerStr);
+                startActivity(intent);
             }
         });
     }
@@ -93,8 +95,6 @@ public class BuchenActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main_menu_booking, menu);
         return true;
-
-
     }
 
     @Override
