@@ -10,7 +10,11 @@ public enum Turnus {
         this.bez = bez;
     }
 
-    public String getBezeichner () {
+    String getBezeichner() {
         return bez;
+    }
+
+    String getBezeichnerLetter() {
+        return "" + bez.charAt(0);
     }
 }

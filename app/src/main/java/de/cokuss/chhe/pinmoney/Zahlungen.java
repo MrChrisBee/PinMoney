@@ -25,6 +25,10 @@ class Zahlungen {
         return turnus.getBezeichner();
     }
 
+    String getTurnusStrShort () {
+        return turnus.getBezeichnerLetter();
+    }
+
     public void setTurnus (Turnus turnus) {
         this.turnus = turnus;
     }

@@ -5,15 +5,6 @@
     android:orientation="horizontal"
     android:weightSum="80">
     <TextView
-        android:id="@+id/iHiEntryDate"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="17"
-        android:maxLines="1"
-        android:textAlignment="textStart"
-        android:text="@string/datum" />
-
-    <TextView
         android:id="@+id/iHiAccountName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -23,10 +14,19 @@
         android:text="@string/empfaenger"/>
 
     <TextView
+        android:id="@+id/iHiEntryDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="16"
+        android:maxLines="1"
+        android:textAlignment="textStart"
+        android:text="@string/datum" />
+
+    <TextView
         android:id="@+id/iHiAction"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="10"
+        android:layout_weight="8"
         android:maxLines="1"
         android:textAlignment="textStart"
         android:text="@string/action_settings" />
@@ -35,7 +35,7 @@
         android:id="@+id/iHiStartDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="17"
+        android:layout_weight="16"
         android:maxLines="1"
         android:textAlignment="textStart"
         android:text="@string/datum" />
@@ -44,7 +44,7 @@
         android:id="@+id/iHiCycle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="13"
+        android:layout_weight="3"
         android:textAlignment="textStart"
         android:text="@string/turnus" />
 
@@ -53,6 +53,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="10"
-        android:textAlignment="textStart"
+        android:textAlignment="textEnd"
         android:text="@string/value" />
 </LinearLayout>

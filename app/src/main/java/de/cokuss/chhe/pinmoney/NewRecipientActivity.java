@@ -110,13 +110,13 @@ public class NewRecipientActivity extends AppCompatActivity {
     private void createNewKonto() {
         Check4EditText tmpC4;
         //kontoname
-        tmpC4 = checkEditText(nameFeld, "name");
+        tmpC4 = Check4EditText.checkEditText(nameFeld, "name");
         if (tmpC4.isValid()) {
             kontoname = tmpC4.getString();
             log("Kontoname gesetzt aus CreateNewKonto: " + kontoname);
         } else return;
         //gebDatum
-        tmpC4 = checkEditText(gebDatFeld, "date");
+        tmpC4 = Check4EditText.checkEditText(gebDatFeld, "date");
         if (tmpC4.isValid()) {
             gebDatum = string2Date(tmpC4);
             log("gebDatum gesetzt aus CreateNewKonto: " + gebDatum.toString());
@@ -136,19 +136,19 @@ public class NewRecipientActivity extends AppCompatActivity {
                 return;
         }
         //betrag
-        tmpC4 = checkEditText(betragFeld, "currency");
+        tmpC4 = Check4EditText.checkEditText(betragFeld, "currency");
         if (tmpC4.isValid()) {
             betrag = Float.parseFloat(tmpC4.getString());
             log("betrag gesetzt aus CreateNewKonto: " + betrag);
         } else return;
         //startBetrag
-        tmpC4 = checkEditText(startBetragFeld, "currency");
+        tmpC4 = Check4EditText.checkEditText(startBetragFeld, "currency");
         if (tmpC4.isValid()) {
             startBetrag = Float.parseFloat(tmpC4.getString());
             log("startBetrag gesetzt aus CreateNewKonto: " + startBetrag);
         } else return;
         //startDatum
-        tmpC4 = checkEditText(startDateFeld, "date");
+        tmpC4 = Check4EditText.checkEditText(startDateFeld, "date");
         if (tmpC4.isValid()) {
             startDatum = string2Date(tmpC4);
             log("startDatum gesetzt aus CreateNewKonto: " + startDatum.toString());
@@ -172,50 +172,6 @@ public class NewRecipientActivity extends AppCompatActivity {
         } else nameFeld.setError("Der Kontoname ist ungültig!");
     }
 
-    private Check4EditText checkEditText(EditText nameFeld, String kind) {
-        String string = nameFeld.getText().toString();
-        Check4EditText c4 = new Check4EditText(nameFeld, "", false);
-        switch (kind.toLowerCase()) {
-            //create in every case a c4 containing the EditText, the Content and bool arg as result of testing
-            case "name":
-                log("In Name");
-                if (string.length() == 0 || !string.matches("\\w+")) {
-                    nameFeld.setError("Bitte einen Namen eingeben! Für Namen nur (A-Za-z0-9_) nuzten!");
-                    c4 = new Check4EditText(nameFeld, "", false);
-                    log("name Feld leer aus C4ET für " + nameFeld.getId());
-                } else {
-                    //erster Test bestanden
-                    c4 = new Check4EditText(nameFeld, string, true);
-                    log("name Test Bestanden aus C4ET " + nameFeld.getId() + " enthält " + c4.getString());
-                }
-                break;
-            case "date":
-                log("In Date");
-                if (string.length() == 0 || !string.matches("^(0?[1-9]|[12][0-9]|3[01])\\.(0?[1-9]|1[012])\\.(19|20)\\d\\d$")) {
-                    nameFeld.setError("Bitte ein gültiges Datum eingeben! Z.B. 31.12.1999");
-                    c4 = new Check4EditText(nameFeld, "", false);
-                    log("date Feld leer aus C4ET für " + nameFeld.getId());
-                } else {
-                    //erster Test bestanden
-                    c4 = new Check4EditText(nameFeld, string, true);
-                    log("date Test Bestanden aus C4ET " + nameFeld.getId() + " enthält " + c4.getString());
-                }
-                break;
-            case "currency":
-                log("In Currency");
-                if (string.length() == 0 || !string.matches("^[+-]?[0-9]{1,3}(?:[0-9]*(?:[.,][0-9]{2})?|(?:,[0-9]{3})*(?:\\.[0-9]{2})?|(?:\\.[0-9]{3})*(?:,[0-9]{2})?)$")) {
-                    nameFeld.setError("Bitte einen gültigen Betrag eingeben! 17.50 (Max. 2 Nachkommastellen und mit . getrennt!)");
-                    c4 = new Check4EditText(nameFeld, "", false);
-                    log("currency Feld leer aus C4ET für " + nameFeld.getId());
-                } else {
-                    //erster Test bestanden
-                    c4 = new Check4EditText(nameFeld, string, true);
-                    log("currency Test Bestanden aus C4ET " + nameFeld.getId() + " enthält " + c4.getString());
-                }
-                break;
-        }
-        return c4;
-    }
 
     public Date string2Date(Check4EditText c4Thing) {
         Date date = null;

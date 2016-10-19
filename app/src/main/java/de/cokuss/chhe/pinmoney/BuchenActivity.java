@@ -65,7 +65,12 @@ public class BuchenActivity extends AppCompatActivity {
                     Toast.makeText(v.getContext(), "Bitte einen gültigen Wert eingeben. \nDas Format ist €.Cent (7.50)", Toast.LENGTH_LONG).show();
                     return;
                 }
-                float wieviel = Float.valueOf(betrag.getText().toString());
+                Check4EditText tmpC4;
+                float wieviel;
+                tmpC4 = Check4EditText.checkEditText(betrag, "currency");
+                if (tmpC4.isValid()) {
+                    wieviel = Float.valueOf(tmpC4.getString());
+                } else return;
                 String wievielTxt = String.format(Locale.getDefault(), "%.2f", wieviel);
                 if (isEinzahlung) {
                     Toast.makeText(v.getContext(), "Einzahlung " + wievielTxt + " €", Toast.LENGTH_SHORT).show();
@@ -90,6 +95,7 @@ public class BuchenActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
