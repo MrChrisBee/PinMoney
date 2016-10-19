@@ -2,10 +2,7 @@ package de.cokuss.chhe.pinmoney;
 
 import java.util.ArrayList;
 
-/**
- * Created by Master on 27.09.2016.
- */
-public interface KontoDAO {
+interface KontoDAO {
     //Konto Methoden
     ArrayList<Konto> getAllKonten();
 

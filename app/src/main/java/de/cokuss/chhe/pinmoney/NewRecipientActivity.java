@@ -21,6 +21,7 @@ import java.util.Date;
 
 public class NewRecipientActivity extends AppCompatActivity {
     private static final String LOG_TAG = NewRecipientActivity.class.getSimpleName();
+    private final Calendar c = Calendar.getInstance();
     private DateHelper dateHelper = new DateHelper();
     private DAOImplSQLight daoImplSQLight;
     private Boolean isValid = true;
@@ -42,7 +43,6 @@ public class NewRecipientActivity extends AppCompatActivity {
     private EditText startDateFeld;
     private Button button, pickerGeb, pickerStart;
     private String tmpText;
-    private final Calendar c = Calendar.getInstance();
     private int mYear = c.get(Calendar.YEAR);
     private int mMonth = c.get(Calendar.MONTH);
     private int mDay = c.get(Calendar.DAY_OF_MONTH);
@@ -132,7 +132,7 @@ public class NewRecipientActivity extends AppCompatActivity {
                 turnus = Turnus.MONATLICH;
                 break;
             default: //einer der Werte sollte es ein
-                Log.e(LOG_TAG,"Cycle not valid");
+                Log.e(LOG_TAG, "Cycle not valid");
                 return;
         }
         //betrag
@@ -165,17 +165,17 @@ public class NewRecipientActivity extends AppCompatActivity {
                 Buchung buchung = new Buchung(null, null, startBetrag, "Neuanlage", null, null, startBetrag);
                 daoImplSQLight.createBuchung(konto, buchung);
                 //Eintrag in die History
-                daoImplSQLight.addEntryToPinMoney(kontoname, zahlungen,"neu");
+                daoImplSQLight.addEntryToPinMoney(kontoname, gebDatum, zahlungen, "neu");
                 log("createnew setPinmoney erstellt");
                 this.finish();
             } else nameFeld.setError("Das Konto Existiert bereits!");
         } else nameFeld.setError("Der Kontoname ist ungültig!");
     }
 
-    private Check4EditText checkEditText (EditText nameFeld, String kind) {
+    private Check4EditText checkEditText(EditText nameFeld, String kind) {
         String string = nameFeld.getText().toString();
-        Check4EditText c4 = new Check4EditText(nameFeld,"",false);
-        switch (kind.toLowerCase()){
+        Check4EditText c4 = new Check4EditText(nameFeld, "", false);
+        switch (kind.toLowerCase()) {
             //create in every case a c4 containing the EditText, the Content and bool arg as result of testing
             case "name":
                 log("In Name");
@@ -248,6 +248,7 @@ public class NewRecipientActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     private void log(String string) {
         Log.d(LOG_TAG, string);
     }

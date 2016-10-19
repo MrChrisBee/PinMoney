@@ -2,34 +2,36 @@ package de.cokuss.chhe.pinmoney;
 
 import java.util.Date;
 
-/**
- * Created by christian on 16.10.16.
- */
 class PinMoneyEnrty {
     private Zahlungen zahlungen; //includes StartDate Cycle and Value
-    private Date entryDate;
+    private Date entryDate, birthDate;
     private String kontoName, action;
 
-    PinMoneyEnrty (Zahlungen zahlungen, Date entryDate, String kontoName, String action) {
+    PinMoneyEnrty(Zahlungen zahlungen, Date entryDate, String kontoName, Date birthDate, String action) {
         this.zahlungen = zahlungen;
         this.entryDate = entryDate;
         this.kontoName = kontoName;
         this.action = action;
+        this.birthDate = birthDate;
     }
 
-    Zahlungen getZahlungen () {
+    Zahlungen getZahlungen() {
         return zahlungen;
     }
 
-    Date getEntryDate () {
+    Date getEntryDate() {
         return entryDate;
     }
 
-    String getKontoName () {
+    Date getBirthDate() {
+        return birthDate;
+    }
+
+    String getKontoName() {
         return kontoName;
     }
 
-    String getAction () {
+    String getAction() {
         return action;
     }
 }

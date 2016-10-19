@@ -4,7 +4,6 @@ import android.util.Log;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -20,12 +19,9 @@ class DateHelper {
 
     float calcAnsparung(Date seit, Zahlungen zahlungen){
         Date heute = today;
-
         return 0.0f;
     }
-
     String setNowDate() {
         return sdfLong.format(today);
     }
-
 }

@@ -31,6 +31,7 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
     private static final String COLUMN_PM_ENTRYDATE = "e_date";
     private static final String COLUMN_PM_NAME = "name";
     private static final String COLUMN_PM_STARTDATE = "s_date";
+    private static final String COLUMN_PM_BIRTHDAY = "birthdate";
     private static final String COLUMN_PM_CYCLE = "cycle";
     private static final String COLUMN_PM_VALUE = "value";
     private static final String COLUMN_PM_AKTION = "action";
@@ -39,13 +40,14 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
             + " from " + TABLE_PM_INFO + " where " + COLUMN_PM_ID + " = (SELECT MAX( " + COLUMN_PM_ID + " )  FROM  "
             + TABLE_PM_INFO + " where " + COLUMN_PM_NAME + " like ";
     private static final String SQL_SELECT_ALL_FROM_PIN_MONEY = "select * from " + TABLE_PM_INFO;
-    private static final String INSERT_INTO_PIN = "insert into " + TABLE_PM_INFO + "( " + COLUMN_PM_ID
-            + ", " + COLUMN_PM_ENTRYDATE + ", " + COLUMN_PM_NAME + ", " + COLUMN_PM_STARTDATE + ", " + COLUMN_PM_CYCLE
+    private static final String INSERT_INTO_PIN = " insert into " + TABLE_PM_INFO + "( " + COLUMN_PM_ID
+            + ", " + COLUMN_PM_ENTRYDATE + ", " + COLUMN_PM_NAME + ", " + COLUMN_PM_BIRTHDAY + ", " + COLUMN_PM_STARTDATE + ", " + COLUMN_PM_CYCLE
             + ", " + COLUMN_PM_VALUE + ", " + COLUMN_PM_AKTION + " )";
     private static final String SQL_CREATE_PINMONEY = "CREATE TABLE " + TABLE_PM_INFO + " ( " +
             COLUMN_PM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COLUMN_PM_ENTRYDATE + " NOT NULL, " +
             COLUMN_PM_NAME + " NOT NULL, " +
+            COLUMN_PM_BIRTHDAY + " , " +
             COLUMN_PM_STARTDATE + " , " +
             COLUMN_PM_CYCLE + " , " +
             COLUMN_PM_VALUE + " , " +
@@ -67,13 +69,14 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
     }
 
     @Override
-    public void addEntryToPinMoney(String name, Zahlungen zahlungen, String aktion) {
+    public void addEntryToPinMoney(String name, Date gebDate, Zahlungen zahlungen, String aktion) {
         db = getWritableDatabase();
         DateHelper dateHelper = new DateHelper();
-        String startDate = dateHelper.sdfLong.format(zahlungen.getDate());
+        String startDateStr = dateHelper.sdfLong.format(zahlungen.getDate());
+        String gebDateStr = dateHelper.sdfLong.format(gebDate);
         String sql = INSERT_INTO_PIN
-                + " values ( null, date('now'), '" + name + "', '" + startDate + "', '" + zahlungen.getTurnusStr()
-                + "', " + zahlungen.getBetrag() + ", '" + aktion + "')";
+                + " values ( null, date('now'), '" + name + "', '" + gebDateStr + "', '" + startDateStr
+                + "', '" + zahlungen.getTurnusStr() + "', " + zahlungen.getBetrag() + ", '" + aktion + "')";
         db.execSQL(sql);
     }
 
@@ -81,7 +84,7 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
     public void addEntryToPinMoney(String name, String aktion) {
         db = getWritableDatabase();
         String sql = INSERT_INTO_PIN
-                + " values ( null, date('now'), '" + name + "', null, null, null,'" + aktion + "')";
+                + " values ( null, date('now'), '" + name + "',null , null, null, null,'" + aktion + "')";
         // id eintragsdatum kontoinhaber startdatum turnus betrag aktion
         db.execSQL(sql);
     }
@@ -92,7 +95,7 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
         db = getWritableDatabase();
         PinMoneyEnrty result;
         Zahlungen zahlungen;
-        Date startDate, entryDate;
+        Date startDate, entryDate, gebDate;
         String action;
         float value;
         Turnus turnus;
@@ -103,6 +106,7 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
         //Todo könnte noch Probleme mit dem Datum geben
         startDate = new Date(c.getColumnIndex(COLUMN_PM_STARTDATE));
         entryDate = new Date(c.getColumnIndex(COLUMN_PM_ENTRYDATE));
+        gebDate = new Date(c.getColumnIndex(COLUMN_PM_BIRTHDAY));
         value = c.getFloat(c.getColumnIndex(COLUMN_PM_VALUE));
         switch (c.getString(c.getColumnIndex(COLUMN_PM_CYCLE))) {
             case "taeglich":
@@ -118,7 +122,7 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
                 turnus = Turnus.TAEGLICH;
         }
         zahlungen = new Zahlungen(startDate, turnus, value);
-        result = new PinMoneyEnrty(zahlungen, entryDate, inhaber, action);
+        result = new PinMoneyEnrty(zahlungen, entryDate, inhaber, gebDate, action);
         c.close();
         return result;
     }
@@ -126,7 +130,7 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
     ArrayList<PinMoneyEnrty> getEntryListFromPinMoney() {
         db = getWritableDatabase();
         String name, action, cycleStr;
-        Date startDate, entryDate;
+        Date startDate, entryDate, birthDate;
         Float value;
         Turnus turnus;
         Zahlungen zahlungen;
@@ -136,10 +140,9 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
         //hole alle Einträge
         Cursor c = db.rawQuery(sql, null);
         c.moveToFirst();
-
         log("getEntryListFromPinMoney " + c.getCount() + " HistoryEntrys found");
         while (!c.isAfterLast()) {
-
+            //todo add birdthDay to History
             //erzeuge für jeden Eintrag eine
             //Zahlungen (Date startDate, Turnus turnus, float betrag) und damit einen
             //PinMoneyEnrty (Zahlungen zahlungen, Date entryDate, String kontoName, String action)
@@ -147,12 +150,10 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
             if (i > -1) {
                 name = c.getString(i);
             } else name = "Kein Entrag";
-
             i = c.getColumnIndex(COLUMN_PM_VALUE);
             if (i > -1) {
                 value = c.getFloat(i);
             } else value = 0.00f;
-
             i = c.getColumnIndex(COLUMN_PM_CYCLE);
             if (i > -1) {
                 switch (c.getString(i)) {
@@ -169,7 +170,6 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
                         turnus = Turnus.TAEGLICH;
                 }
             } else turnus = Turnus.KEINE_ANGABE;
-
             try {
                 startDate = dateHelper.sdfLong.parse(c.getString(c.getColumnIndex(COLUMN_PM_STARTDATE)));
             } catch (ParseException e) {
@@ -184,7 +184,13 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
                 entryDate = null;
                 log("getEntryListFromPinMoney Kein EintragsDatum für den Namen " + name);
             }
-            entrys.add(new PinMoneyEnrty(zahlungen, entryDate, name, action));
+            try {
+                birthDate = dateHelper.sdfLong.parse(c.getString(c.getColumnIndex(COLUMN_PM_BIRTHDAY)));
+            } catch (ParseException e) {
+                birthDate = null;
+                log("getEntryListFromPinMoney Kein Geburtsdatum für den Namen " + name);
+            }
+            entrys.add(new PinMoneyEnrty(zahlungen, entryDate, name, birthDate, action));
             c.moveToNext();
         }
         c.close();
@@ -207,6 +213,7 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
         db.execSQL(sql);
     }
 
+    //here Konto is the right parameter
     @Override
     public void createBuchung(Konto konto, Buchung buchung) {
         db = getWritableDatabase();
