@@ -11,15 +11,17 @@
         android:layout_height="wrap_content"
         android:layout_weight="6"
         android:textAlignment="textStart"
+        android:background="@color/bg_color_1"
         android:text="@string/datum" />
 
     <TextView
         android:id="@+id/iBuBuchungstext"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="39"
+        android:layout_weight="49"
         android:maxLines="1"
         android:paddingLeft="@dimen/buchungssatz_padding"
+        android:background="@color/bg_color_2"
         android:text="@string/buchungstext" />
 
     <TextView
@@ -29,6 +31,7 @@
         android:layout_weight="5"
         android:textAlignment="textEnd"
         android:paddingLeft="@dimen/buchungssatz_padding"
+        android:background="@color/bg_color_1"
         android:text="@string/verifikation" />
 
     <TextView
@@ -38,14 +41,16 @@
         android:layout_weight="20"
         android:paddingLeft="@dimen/buchungssatz_padding"
         android:textAlignment="textEnd"
+        android:background="@color/bg_color_2"
         android:text="@string/betrag" />
 
     <TextView
         android:id="@+id/iBuSumme"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="30"
+        android:layout_weight="20"
         android:paddingLeft="@dimen/buchungssatz_padding"
         android:textAlignment="textEnd"
+        android:background="@color/bg_color_1"
         android:text="@string/summe" />
 </LinearLayout>
