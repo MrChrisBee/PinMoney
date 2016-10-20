@@ -18,6 +18,7 @@
         </activity>
 
         <activity android:name=".HelpActivity" />
+
         <activity
             android:name=".ShowHistoryActivity"
             android:label="PMHistory"
@@ -37,28 +38,24 @@
             android:name=".ShowAuszugActivity"
             android:label="Kontoauszug"
             android:parentActivityName=".MainActivity">
-
         </activity>
 
         <activity
             android:name=".BuchenActivity"
             android:label="Buchung"
             android:parentActivityName=".MainActivity">
-
         </activity>
 
         <activity
             android:name=".ChangePinInfoActivity"
             android:label="Empf. Einstellungen"
             android:parentActivityName=".MainActivity">
-
         </activity>
 
         <activity
             android:name=".HelpStartActivity"
             android:label="Hilfe: Start"
             android:parentActivityName=".MainActivity">
-
         </activity>
 
         <activity
