@@ -55,7 +55,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/button_parents_konto_normal"
+        app:srcCompat="@drawable/button_konto_normal"
         android:id="@+id/imageView3"
         android:layout_below="@+id/textView5"
         android:layout_marginTop="28dp"
@@ -74,7 +74,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/button_parents_ausz_normal"
+        app:srcCompat="@drawable/button_ausz_normal"
         android:id="@+id/imageView4"
         android:layout_below="@+id/textView6"
         android:layout_marginTop="25dp"
@@ -93,7 +93,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/button_parents_einz_normal"
+        app:srcCompat="@drawable/button_einz_normal"
         android:id="@+id/imageView5"
         android:layout_below="@+id/textView7"
         android:layout_marginTop="25dp"
