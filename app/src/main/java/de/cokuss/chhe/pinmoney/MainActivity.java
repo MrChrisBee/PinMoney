@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, array4Adapter);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         accountName.setAdapter(arrayAdapter);
+
     }
 
 
@@ -255,6 +256,7 @@ public class MainActivity extends AppCompatActivity {
         daoImplSQLight.open();
         fillKontoSpinner();
     }
+
 }
 // gut ArrayAdapter https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView
 // später: Bluetooth https://github.com/SoftdeveloperNeumann/Bluetooth.git funzt nicht sicher
