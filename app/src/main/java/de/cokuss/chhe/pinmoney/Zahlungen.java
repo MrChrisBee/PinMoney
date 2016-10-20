@@ -17,7 +17,7 @@ class Zahlungen {
         return date;
     }
 
-    public Turnus getTurnus () {
+    Turnus getTurnus () {
         return turnus;
     }
 

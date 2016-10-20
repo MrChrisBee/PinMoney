@@ -37,9 +37,7 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
     private static final String COLUMN_PM_VALUE = "value";
     private static final String COLUMN_PM_AKTION = "action";
     private static final String SQL_DROP_TABLE = "DROP TABLE IF EXIST " + TABLE_PM_INFO + ";";
-    private static final String SQL_SELECT_FROM_PIN_MONEY = "select " + COLUMN_PM_STARTDATE + ", " + COLUMN_PM_CYCLE + ", " + COLUMN_PM_VALUE
-            + " from " + TABLE_PM_INFO + " where " + COLUMN_PM_ID + " = (SELECT MAX( " + COLUMN_PM_ID + " )  FROM  "
-            + TABLE_PM_INFO + " where " + COLUMN_PM_NAME + " like ";
+    private static final String  SQL_SELECT_FROM_PIN_MONEY = "select * from " + TABLE_PM_INFO + " where " + COLUMN_PM_NAME + " = '";
     private static final String SQL_SELECT_ALL_FROM_PIN_MONEY = "select * from " + TABLE_PM_INFO;
     private static final String INSERT_INTO_PIN = " insert into " + TABLE_PM_INFO + "( " + COLUMN_PM_ID
             + ", " + COLUMN_PM_ENTRYDATE + ", " + COLUMN_PM_NAME + ", " + COLUMN_PM_BIRTHDAY + ", " + COLUMN_PM_STARTDATE + ", " + COLUMN_PM_CYCLE
@@ -97,18 +95,35 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
         db = getWritableDatabase();
         PinMoneyEnrty result;
         Zahlungen zahlungen;
-        Date startDate, entryDate, gebDate;
+        Date startDate, entryDate, birthDate;
         String action;
         float value;
         Turnus turnus;
-        String sql = SQL_SELECT_FROM_PIN_MONEY + inhaber + " order by " + COLUMN_PM_ID + " desc limit 1";
+        //give the last entry for a given account
+        String sql = SQL_SELECT_FROM_PIN_MONEY + inhaber + "' order by " + COLUMN_PM_ID + " desc limit 1";
         Cursor c = db.rawQuery(sql, null);
         c.moveToFirst();
         action = c.getString(c.getColumnIndex(COLUMN_PM_AKTION));
         //Todo könnte noch Probleme mit dem Datum geben
-        startDate = new Date(c.getColumnIndex(COLUMN_PM_STARTDATE));
-        entryDate = new Date(c.getColumnIndex(COLUMN_PM_ENTRYDATE));
-        gebDate = new Date(c.getColumnIndex(COLUMN_PM_BIRTHDAY));
+        try {
+            startDate = dateHelper.sdfLong.parse(c.getString(c.getColumnIndex(COLUMN_PM_STARTDATE)));
+        } catch (ParseException e) {
+            startDate = null;
+            log("getEntryFromPinMoney Kein StartDatum für den Namen " + inhaber);
+        }
+        try {
+            //log("Das Eintrags Datum: " + c.getString(c.getColumnIndex(COLUMN_PM_ENTRYDATE)));
+            entryDate = dateHelper.sdfLong.parse(c.getString(c.getColumnIndex(COLUMN_PM_ENTRYDATE)));
+        } catch (ParseException e) {
+            entryDate = null;
+            log("getEntryFromPinMoney Kein EintragsDatum für den Namen " + inhaber);
+        }
+        try {
+            birthDate = dateHelper.sdfLong.parse(c.getString(c.getColumnIndex(COLUMN_PM_BIRTHDAY)));
+        } catch (ParseException e) {
+            birthDate = null;
+            log("getEntryListFromPinMoney Kein Geburtsdatum für den Namen " + inhaber);
+        }
         value = c.getFloat(c.getColumnIndex(COLUMN_PM_VALUE));
         switch (c.getString(c.getColumnIndex(COLUMN_PM_CYCLE))) {
             case "taeglich":
@@ -124,7 +139,7 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
                 turnus = Turnus.TAEGLICH;
         }
         zahlungen = new Zahlungen(startDate, turnus, value);
-        result = new PinMoneyEnrty(zahlungen, entryDate, inhaber, gebDate, action);
+        result = new PinMoneyEnrty(zahlungen, entryDate, inhaber, birthDate, action);
         c.close();
         return result;
     }
@@ -158,14 +173,19 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
             } else value = 0.00f;
             i = c.getColumnIndex(COLUMN_PM_CYCLE);
             if (i > -1) {
+                //todo Hier stürtzt das Programm ab liegt wohl daran das kein sinvoller Eintrag an dieser Stelle geschrieben wird.
+                //beim löschen gibt es viele Eintrage in der Tabelle nicht
                 switch (c.getString(i)) {
                     case "tag":
+                        log("getEntryListFromPinMoney() " + c.getString(i));
                         turnus = Turnus.TAEGLICH;
                         break;
                     case "woche":
+                        log("getEntryListFromPinMoney() " + c.getString(i));
                         turnus = Turnus.WOECHENTLICH;
                         break;
                     case "monat":
+                        log("getEntryListFromPinMoney() " + c.getString(i));
                         turnus = Turnus.MONATLICH;
                         break;
                     default:
