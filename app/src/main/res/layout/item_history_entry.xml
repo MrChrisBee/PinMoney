@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="13"
         android:maxLines="1"
-        android:background="#f0f"
+        android:background="@color/bg_color_1"
         android:layout_marginRight="@dimen/history_padding"
         android:textAlignment="textStart"
         android:text="@string/empfaenger"/>
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="10"
         android:maxLines="1"
-        android:background="#ff0"
+        android:background="@color/bg_color_2"
         android:textAlignment="textStart"
         android:layout_marginRight="@dimen/history_padding"
         android:text="@string/datum" />
@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="8"
         android:maxLines="1"
-        android:background="#f0f"
+        android:background="@color/bg_color_1"
         android:textAlignment="textStart"
         android:layout_marginRight="@dimen/history_padding"
         android:text="@string/action_settings" />
@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="10"
         android:maxLines="1"
-        android:background="#ff0"
+        android:background="@color/bg_color_2"
         android:textAlignment="textStart"
         android:layout_marginRight="@dimen/history_padding"
         android:text="@string/datum" />
@@ -53,7 +53,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="3"
-        android:background="#f0f"
+        android:background="@color/bg_color_1"
         android:textAlignment="textStart"
         android:layout_marginRight="@dimen/history_padding"
         android:text="@string/turnus" />
@@ -63,7 +63,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="10"
-        android:background="#ff0"
+        android:background="@color/bg_color_2"
         android:textAlignment="textEnd"
         android:text="@string/value" />
 </LinearLayout>
