@@ -3,13 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:weightSum="80">
+    android:weightSum="54">
     <TextView
         android:id="@+id/iHiAccountName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="13"
         android:maxLines="1"
+        android:background="#f0f"
+        android:layout_marginRight="@dimen/history_padding"
         android:textAlignment="textStart"
         android:text="@string/empfaenger"/>
 
@@ -17,9 +19,11 @@
         android:id="@+id/iHiEntryDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="16"
+        android:layout_weight="10"
         android:maxLines="1"
+        android:background="#ff0"
         android:textAlignment="textStart"
+        android:layout_marginRight="@dimen/history_padding"
         android:text="@string/datum" />
 
     <TextView
@@ -28,16 +32,20 @@
         android:layout_height="wrap_content"
         android:layout_weight="8"
         android:maxLines="1"
+        android:background="#f0f"
         android:textAlignment="textStart"
+        android:layout_marginRight="@dimen/history_padding"
         android:text="@string/action_settings" />
 
     <TextView
         android:id="@+id/iHiStartDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="16"
+        android:layout_weight="10"
         android:maxLines="1"
+        android:background="#ff0"
         android:textAlignment="textStart"
+        android:layout_marginRight="@dimen/history_padding"
         android:text="@string/datum" />
 
     <TextView
@@ -45,7 +53,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="3"
+        android:background="#f0f"
         android:textAlignment="textStart"
+        android:layout_marginRight="@dimen/history_padding"
         android:text="@string/turnus" />
 
     <TextView
@@ -53,6 +63,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="10"
+        android:background="#ff0"
         android:textAlignment="textEnd"
         android:text="@string/value" />
 </LinearLayout>
