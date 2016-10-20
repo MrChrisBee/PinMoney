@@ -29,14 +29,10 @@
         android:text="@string/receiver_edit"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/PinMoneyHeader"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textStyle="normal|bold"
         android:layout_marginTop="15dp"
         android:textColor="@color/colorAccent"/>
-
-
-
-
 
     <RadioGroup
         android:id="@+id/cycle"

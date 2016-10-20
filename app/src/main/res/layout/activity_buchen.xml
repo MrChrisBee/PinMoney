@@ -30,7 +30,8 @@
         android:layout_marginTop="15dp"
         android:text="@string/empfaenger"
         android:textAppearance="@style/TextAppearance.AppCompat.Button"
-        android:textStyle="normal|bold" />
+        android:textStyle="normal|bold"
+        android:textSize="18sp"/>
 
     <RelativeLayout
         android:id="@+id/stand"
