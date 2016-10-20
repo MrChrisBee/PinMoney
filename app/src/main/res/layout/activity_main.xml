@@ -10,82 +10,90 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin">
 
+    <!--<android.support.v7.widget.Toolbar
+       android:id="@+id/toolbar_main"
+       android:minHeight="?attr/actionBarSize"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:titleTextColor="@android:color/white"
+       android:background="?attr/colorPrimary">
+   </android.support.v7.widget.Toolbar>-->
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:orientation="vertical">
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_gravity="center_horizontal"
+       android:layout_marginTop="20dp"
+       android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/title_name_main"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/konto"
-            android:textAlignment="center"
-            android:textSize="24sp"
-            android:textColor="#000000"
-            android:textStyle="bold" />
+       <TextView
+           android:id="@+id/title_name_main"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_gravity="center"
+           android:text="@string/konto"
+           android:textAlignment="center"
+           android:textSize="24sp"
+           android:textColor="#000000"
+           android:textStyle="bold" />
 
-        <Spinner
-            android:id="@+id/spinner4Child"
-            android:layout_width="300dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="25dp"
-            android:background="@drawable/rahmen_1"
-            android:popupBackground="#e5d3c1"
-            android:textAlignment="center"
-            android:maxLines="1" />
+       <Spinner
+           android:id="@+id/spinner4Child"
+           android:layout_width="300dp"
+           android:layout_height="40dp"
+           android:layout_gravity="center"
+           android:layout_marginTop="25dp"
+           android:background="@drawable/rahmen_1"
+           android:popupBackground="#e5d3c1"
+           android:textAlignment="center"
+           android:maxLines="1" />
 
-    </LinearLayout>
+   </LinearLayout>
 
-    <Button
-        android:id="@+id/button_konto"
-        android:layout_width="160dp"
-        android:layout_height="40dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30pt"
-        android:background="@drawable/button_main_parent_konto" />
+   <Button
+       android:id="@+id/button_konto"
+       android:layout_width="160dp"
+       android:layout_height="40dp"
+       android:layout_gravity="center_horizontal"
+       android:layout_marginTop="30pt"
+       android:background="@drawable/button_main_parent_konto" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text=""
-        android:textColor="#636363"
-        android:textAlignment="center"
-        android:textSize="12sp"
-        android:ems="10"
-        android:id="@+id/explainCount" />
+   <TextView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:inputType="textPersonName"
+       android:text=""
+       android:textColor="#636363"
+       android:textAlignment="center"
+       android:textSize="12sp"
+       android:ems="10"
+       android:id="@+id/explainCount" />
 
-    <Button
-        android:id="@+id/button_auszahlung"
-        android:layout_width="160dp"
-        android:layout_height="40dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20pt"
-        android:background="@drawable/button_main_parent_ausz" />
+   <Button
+       android:id="@+id/button_auszahlung"
+       android:layout_width="160dp"
+       android:layout_height="40dp"
+       android:layout_gravity="center_horizontal"
+       android:layout_marginTop="20pt"
+       android:background="@drawable/button_main_parent_ausz" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text=""
-        android:textColor="#636363"
-        android:textAlignment="center"
-        android:textSize="12sp"
-        android:ems="10"
-        android:id="@+id/bookingOut" />
+   <TextView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:inputType="textPersonName"
+       android:text=""
+       android:textColor="#636363"
+       android:textAlignment="center"
+       android:textSize="12sp"
+       android:ems="10"
+       android:id="@+id/bookingOut" />
 
-    <Button
-        android:id="@+id/button_einzahlung"
-        android:layout_width="160dp"
-        android:layout_height="40dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20pt"
-        android:background="@drawable/button_main_parent_einz" />
+   <Button
+       android:id="@+id/button_einzahlung"
+       android:layout_width="160dp"
+       android:layout_height="40dp"
+       android:layout_gravity="center_horizontal"
+       android:layout_marginTop="20pt"
+       android:background="@drawable/button_main_parent_einz" />
 
 </LinearLayout>
