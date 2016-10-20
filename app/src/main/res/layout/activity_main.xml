@@ -37,8 +37,8 @@
             android:layout_marginTop="25dp"
             android:background="@drawable/rahmen_1"
             android:popupBackground="#e5d3c1"
-            android:entries="@array/array_name"
-            android:textAlignment="center"/>
+            android:textAlignment="center"
+            android:maxLines="1" />
 
     </LinearLayout>
 
