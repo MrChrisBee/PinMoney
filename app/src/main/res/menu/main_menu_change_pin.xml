@@ -8,6 +8,7 @@
 
         android:id="@+id/action_help_change_pin"
         android:title="@string/help"
+        android:icon="@drawable/help"
         app:showAsAction="always" />
 
 </menu>

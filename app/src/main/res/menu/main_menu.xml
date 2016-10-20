@@ -9,6 +9,7 @@
         android:id="@+id/action_help"
         android:orderInCategory="100"
         android:title="@string/help"
+        android:icon="@drawable/help"
         app:showAsAction="always" />
 
     <item
@@ -56,6 +57,7 @@
         android:orderInCategory="130"
         android:title="@string/history_zeigen"
         app:showAsAction="never" />
+
     <item
         android:id="@+id/action_close_app"
         android:orderInCategory="140"

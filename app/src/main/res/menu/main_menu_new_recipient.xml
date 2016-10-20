@@ -8,6 +8,7 @@
 
         android:id="@+id/action_help_new_recipient"
         android:title="@string/help"
+        android:icon="@drawable/help"
         app:showAsAction="always" />
 
 </menu>
