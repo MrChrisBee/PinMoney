@@ -9,8 +9,8 @@
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-    <item name="textColorPrimary">#000000</item>
-    <item name="textColorSecondary">#000000</item>
+    <item name="android:textColorPrimary">#000000</item>
+    <item name="android:textColorSecondary">#000000</item>
     </style>
 
 </resources>
