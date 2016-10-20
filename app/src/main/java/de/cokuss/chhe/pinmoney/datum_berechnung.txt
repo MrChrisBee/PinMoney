@@ -1,0 +1,5 @@
+Meine Idee:
+
+1. die Berechnung sollte immer dann stattfinden wenn kontoauszug oder Aus/Einzahlung geöffnet wird
+2. bei der allerersten berechnung sollte im kontoauszug dann eine zeile stehen mit dem text "TG Geb. Datum - aktuelles datum" (natürlich in Datumsform)
+3. bei jeder weiteren berechnung eine zeile mit dem text "TG datum letzte buchung - aktuelles datum"
