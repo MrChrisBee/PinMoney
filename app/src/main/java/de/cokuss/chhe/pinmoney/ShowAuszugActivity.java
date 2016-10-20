@@ -1,5 +1,6 @@
 package de.cokuss.chhe.pinmoney;
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,6 +31,9 @@ public class ShowAuszugActivity extends AppCompatActivity {
         setContentView(R.layout.activity_show_auszug);
         daoImplSQLight = DAOImplSQLight.getInstance(getApplicationContext());
         init();
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setIcon(R.mipmap.ic_launcher);
     }
 
     private void init () {
