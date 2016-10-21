@@ -24,6 +24,7 @@ public class ChangePinInfoActivity extends AppCompatActivity {
     private RadioButton radioDay;
     private RadioButton radioWeek;
     private RadioButton radioMonth;
+
     private void log(String string) {
         Log.d(LOG_TAG, string);
     }
@@ -34,9 +35,9 @@ public class ChangePinInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_change_pin_info);
         betrag = (EditText) findViewById(R.id.betragEdit);
         changeDate = (EditText) findViewById(R.id.input_changeDate);
-        radioDay = (RadioButton)findViewById(R.id.rbDay);
-        radioWeek = (RadioButton)findViewById(R.id.rbWeek);
-        radioMonth = (RadioButton)findViewById(R.id.rbMonth);
+        radioDay = (RadioButton) findViewById(R.id.rbDay);
+        radioWeek = (RadioButton) findViewById(R.id.rbWeek);
+        radioMonth = (RadioButton) findViewById(R.id.rbMonth);
         init();
     }
 
@@ -51,7 +52,7 @@ public class ChangePinInfoActivity extends AppCompatActivity {
 
     private void showState() {
         //todo aktuellen Zusatand anzeigen
-        pinMoneyEnrty = daoImplSQLight.getEntryFromPinMoney(inhaber);
+        pinMoneyEnrty = daoImplSQLight.getEntryFromPinMoney(getApplicationContext(), inhaber);
         zahlungen = pinMoneyEnrty.getZahlungen();
         betrag.setText(String.format(Locale.GERMAN, "%.2f", zahlungen.getBetrag()));
         log("ShowState " + zahlungen.getDate());

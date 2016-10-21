@@ -24,7 +24,7 @@ public class ShowHistoryActivity extends AppCompatActivity {
 
     private void init() {
         //befülle die anzuzeigende Liste
-        historyList = daoImplSQLight.getEntryListFromPinMoney();
+        historyList = daoImplSQLight.getEntryListFromPinMoney(getApplicationContext());
         log("HistoryList mit " + historyList.size() + " bekommen.");
         //nutze den History Adapter für die Anzeige
         makeListViewAdapter();
