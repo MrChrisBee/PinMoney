@@ -239,7 +239,7 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, P
 
     //where get this called from?
     @Override
-    public Buchung calcAnsparung(Context context, String owner) {
+    public Buchung calcSavings(Context context, String owner) {
         //this should offer the last line in the history for owner
         //it should hold the active valuesto be calculated.
         //perhaps this should be called from ChangeHistoryEntry to make a cut from the old to
@@ -279,7 +279,7 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, P
                 case MONATLICH:
                     break;
                 default:
-                    log("calcAnsparung() no valid Value for cycle");
+                    log("calcSavings() no valid Value for cycle");
             }
         }
         return null;

@@ -9,6 +9,6 @@ interface BuchungDAO extends KontoDAO {
     ArrayList<Buchung> getAllBuchungen (String name);
 
     void createBuchung (Konto konto, Buchung buchung);
-    Buchung calcAnsparung(Context context, String owner);
+    Buchung calcSavings(Context context, String owner);
 }
 
