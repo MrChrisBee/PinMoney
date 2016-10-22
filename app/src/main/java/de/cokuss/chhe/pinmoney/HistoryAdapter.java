@@ -16,28 +16,27 @@ class HistoryAdapter extends ArrayAdapter<PinMoneyEnrty> {
     private DateHelper dateHelper = new DateHelper();
 
 
-    //PinMoneyEnrty (Zahlungen zahlungen, Date entryDate, String kontoName, String action)
+    //PinMoneyEnrty (Payments payments, Date entryDate, String kontoName, String action)
 
     HistoryAdapter(Context context, ArrayList<PinMoneyEnrty> pinMoneyEnrties) {
         super(context, 0, (List<PinMoneyEnrty>) pinMoneyEnrties);
     }
-    //getView wird vom System zum Inflaten eimer View (hier ListView für die History Einträge) aufgerufen
-    //Hier wird also jeweils eine Zeile der History ListView (Entspricht einer Zeile in PinInfo) befüllt
-
+    //getView gets called from System to inflate a View (here ListView for history entrys)
+    //here every time one row of the History ListView (from one row in PinInfo) gets filled
     @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Zahlungen zahlungen;
+        Payments payments;
         PinMoneyEnrty pinMoneyEnrty = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
 
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_history_entry, parent, false);
         }
-        if(pinMoneyEnrty.getZahlungen() != null) {
-            zahlungen = pinMoneyEnrty.getZahlungen();
+        if(pinMoneyEnrty.getPayments() != null) {
+            payments = pinMoneyEnrty.getPayments();
         } else {
-            zahlungen = new Zahlungen(null,null,0);
+            payments = new Payments(null,null,0);
         }
 
         // Lookup view for data population
@@ -59,13 +58,13 @@ class HistoryAdapter extends ArrayAdapter<PinMoneyEnrty> {
         } else {
             tvEntryDate.setText(R.string.no);
         }
-        if (zahlungen.getDate() != null) {
-            tvStartDate.setText(dateHelper.sdfShort.format(zahlungen.getDate()));
+        if (payments.getDate() != null) {
+            tvStartDate.setText(dateHelper.sdfShort.format(payments.getDate()));
         } else {
             tvStartDate.setText(R.string.no);
         }
-        tvBetrag.setText(String.format(Locale.getDefault(), "%.2f", zahlungen.getBetrag()));
-        tvCycle.setText(zahlungen.getTurnusStrShort());
+        tvBetrag.setText(String.format(Locale.getDefault(), "%.2f", payments.getBetrag()));
+        tvCycle.setText(payments.getTurnusStrShort());
         // Return the completed view to render on screen
         return convertView;
     }

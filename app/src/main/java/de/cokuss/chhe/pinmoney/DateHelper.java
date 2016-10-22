@@ -17,10 +17,7 @@ class DateHelper {
     final DateFormat sdfShort = new SimpleDateFormat("dd.MM.yy", Locale.getDefault());
     final DateFormat sdfLong = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault());
 
-    float calcAnsparung(Date seit, Zahlungen zahlungen){
-        Date heute = today;
-        return 0.0f;
-    }
+
     String setNowDate() {
         return sdfLong.format(today);
     }

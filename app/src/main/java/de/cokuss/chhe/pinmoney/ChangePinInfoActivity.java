@@ -19,7 +19,7 @@ public class ChangePinInfoActivity extends AppCompatActivity {
     private TextView tvInhaber;
     private PinMoneyEnrty pinMoneyEnrty;
     private DAOImplSQLight daoImplSQLight = DAOImplSQLight.getInstance(ChangePinInfoActivity.this);
-    private Zahlungen zahlungen;
+    private Payments payments;
     private EditText betrag, changeDate;
     private RadioButton radioDay;
     private RadioButton radioWeek;
@@ -51,14 +51,12 @@ public class ChangePinInfoActivity extends AppCompatActivity {
     }
 
     private void showState() {
-        //todo aktuellen Zusatand anzeigen
         pinMoneyEnrty = daoImplSQLight.getEntryFromPinMoney(getApplicationContext(), inhaber);
-        zahlungen = pinMoneyEnrty.getZahlungen();
-        betrag.setText(String.format(Locale.GERMAN, "%.2f", zahlungen.getBetrag()));
-        log("ShowState " + zahlungen.getDate());
-        changeDate.setText(dateHelper.sdfShort.format(zahlungen.getDate()));
-        log("********************" + zahlungen.getTurnusStrShort());
-        switch (zahlungen.getTurnusStrShort()) {
+        payments = pinMoneyEnrty.getPayments();
+        betrag.setText(String.format(Locale.GERMAN, "%.2f", payments.getBetrag()));
+        log("ShowState " + payments.getDate());
+        changeDate.setText(dateHelper.sdfShort.format(payments.getDate()));
+        switch (payments.getTurnusStrShort()) {
             case "t":
                 radioDay.setChecked(true);
                 break;
@@ -69,7 +67,6 @@ public class ChangePinInfoActivity extends AppCompatActivity {
                 radioMonth.setChecked(true);
                 break;
         }
-
     }
 
     @Override

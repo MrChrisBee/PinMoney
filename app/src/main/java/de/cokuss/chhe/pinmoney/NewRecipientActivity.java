@@ -2,7 +2,6 @@ package de.cokuss.chhe.pinmoney;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +12,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import java.text.ParseException;
 import java.util.Calendar;
@@ -26,7 +24,7 @@ public class NewRecipientActivity extends AppCompatActivity {
     private DAOImplSQLight daoImplSQLight;
     private Boolean isValid = true;
     private Konto konto;
-    private Zahlungen zahlungen;
+    private Payments payments;
     //alle Felder
     private String kontoname;
     private Date gebDatum;
@@ -156,7 +154,7 @@ public class NewRecipientActivity extends AppCompatActivity {
         if (daoImplSQLight.isValidKontoName(kontoname)) {
             if (!daoImplSQLight.kontoExists(kontoname)) {
                 //Zahlung erstellen
-                zahlungen = new Zahlungen(startDatum, turnus, betrag);
+                payments = new Payments(startDatum, turnus, betrag);
                 //Konto erstellen
                 konto = new Konto(kontoname, startBetrag);
                 daoImplSQLight.createKonto(konto);
@@ -165,7 +163,7 @@ public class NewRecipientActivity extends AppCompatActivity {
                 Buchung buchung = new Buchung(null, null, startBetrag, "Neuanlage", null, null, startBetrag);
                 daoImplSQLight.createBuchung(konto, buchung);
                 //Eintrag in die History
-                daoImplSQLight.addEntryToPinMoney(kontoname, gebDatum, zahlungen, "neu");
+                daoImplSQLight.addEntryToPinMoney(kontoname, gebDatum, payments, "neu");
                 log("createnew setPinmoney erstellt");
                 this.finish();
             } else nameFeld.setError("Das Konto Existiert bereits!");

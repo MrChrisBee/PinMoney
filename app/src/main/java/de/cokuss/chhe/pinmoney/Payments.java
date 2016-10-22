@@ -2,12 +2,12 @@ package de.cokuss.chhe.pinmoney;
 
 import java.util.Date;
 
-class Zahlungen {
+class Payments {
     private Turnus turnus;
     private float betrag;
     private Date date;
 
-    Zahlungen (Date date, Turnus turnus, float betrag) {
+    Payments(Date date, Turnus turnus, float betrag) {
         this.date = date;
         this.turnus = turnus;
         this.betrag = betrag;

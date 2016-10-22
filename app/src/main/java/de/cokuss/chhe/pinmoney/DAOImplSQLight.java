@@ -1,7 +1,6 @@
 package de.cokuss.chhe.pinmoney;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,13 +12,13 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static android.provider.Settings.Global.getString;
-
-class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, ZahlungenDAO {
+class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, PaymentsDAO {
     private static final String LOG_TAG = DAOImplSQLight.class.getSimpleName();
     //Datenbank
     private static final String DB_NAME = "taschengeldkonto.db";
     private static final int DB_VERSION = 2;
+    //Reseved for PM Booking
+    private static final String DONT_USE_THIS_FOR_NORMAL_BOOKING = "PMTG";
     //Spalten für Konto
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_DATE = "datum";
@@ -70,15 +69,15 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
     }
 
     @Override
-    public void addEntryToPinMoney(String name, Date gebDate, Zahlungen zahlungen, String aktion) {
+    public void addEntryToPinMoney(String name, Date gebDate, Payments payments, String aktion) {
         db = getWritableDatabase();
         DateHelper dateHelper = new DateHelper();
-        String startDateStr = dateHelper.sdfLong.format(zahlungen.getDate());
+        String startDateStr = dateHelper.sdfLong.format(payments.getDate());
         String gebDateStr = dateHelper.sdfLong.format(gebDate);
         String nowDate = dateHelper.setNowDate();
         String sql = INSERT_INTO_PIN
                 + " values ( null, '" + nowDate + "' ,'" + name + "', '" + gebDateStr + "', '" + startDateStr
-                + "', '" + zahlungen.getTurnusStr() + "', " + zahlungen.getBetrag() + ", '" + aktion + "')";
+                + "', '" + payments.getTurnusStr() + "', " + payments.getBetrag() + ", '" + aktion + "')";
         db.execSQL(sql);
     }
 
@@ -140,28 +139,28 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
         return turnus;
     }
 
-    //Lies den letzten Eintrag passend zu dem Inhaber
+    //read the last entry that fits to the owner
     @Override
-    public PinMoneyEnrty getEntryFromPinMoney(Context context, String inhaber) {
+    public PinMoneyEnrty getEntryFromPinMoney(Context context, String owner) {
         db = getWritableDatabase();
         PinMoneyEnrty result;
-        Zahlungen zahlungen;
+        Payments payments;
         Date startDate, entryDate, birthDate;
         String action;
         float value;
         Turnus turnus;
         //give the last entry for a given account
-        String sql = SQL_SELECT_FROM_PIN_MONEY + inhaber + "' order by " + COLUMN_PM_ID + " desc limit 1";
+        String sql = SQL_SELECT_FROM_PIN_MONEY + owner + "' order by " + COLUMN_PM_ID + " desc limit 1";
         Cursor c = db.rawQuery(sql, null);
         c.moveToFirst();
         action = getStringFromCursor(context, COLUMN_PM_ACTION, c);
-        startDate = getDate(c, COLUMN_PM_STARTDATE, inhaber);
-        entryDate = getDate(c, COLUMN_PM_ENTRYDATE, inhaber);
-        birthDate = getDate(c, COLUMN_PM_BIRTHDAY, inhaber);
+        startDate = getDate(c, COLUMN_PM_STARTDATE, owner);
+        entryDate = getDate(c, COLUMN_PM_ENTRYDATE, owner);
+        birthDate = getDate(c, COLUMN_PM_BIRTHDAY, owner);
         value = c.getFloat(c.getColumnIndex(COLUMN_PM_VALUE));
         turnus = getTurnusFromCursor(c);
-        zahlungen = new Zahlungen(startDate, turnus, value);
-        result = new PinMoneyEnrty(zahlungen, entryDate, inhaber, birthDate, action);
+        payments = new Payments(startDate, turnus, value);
+        result = new PinMoneyEnrty(payments, entryDate, owner, birthDate, action);
         c.close();
         return result;
     }
@@ -174,7 +173,7 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
         Date startDate, entryDate, birthDate;
         Float value;
         Turnus turnus;
-        Zahlungen zahlungen;
+        Payments payments;
         DateHelper dateHelper = new DateHelper();
         String sql = SQL_SELECT_ALL_FROM_PIN_MONEY;
         ArrayList<PinMoneyEnrty> entrys = new ArrayList<>();
@@ -194,10 +193,10 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
             action = getStringFromCursor(context, COLUMN_PM_ACTION, c);
             entryDate = getDate(c, COLUMN_PM_ENTRYDATE, name);
             birthDate = getDate(c, COLUMN_PM_BIRTHDAY, name);
-            //create a new zahlungen instance
-            zahlungen = new Zahlungen(startDate, turnus, value);
+            //create a new payments instance
+            payments = new Payments(startDate, turnus, value);
             //add a new PinMoneyEntry
-            entrys.add(new PinMoneyEnrty(zahlungen, entryDate, name, birthDate, action));
+            entrys.add(new PinMoneyEnrty(payments, entryDate, name, birthDate, action));
             c.moveToNext();
         }
         c.close();
@@ -220,6 +219,7 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
         db.execSQL(sql);
     }
 
+
     //here Konto is the right parameter
     @Override
     public void createBuchung(Konto konto, Buchung buchung) {
@@ -235,6 +235,69 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, Z
                 + buchung.getVeri_type() + "'," + buchung.getBalance() + ")";
         log("Buchung erstellen mit: " + sql);
         db.execSQL(sql);
+    }
+
+    //where get this called from?
+    @Override
+    public Buchung calcAnsparung(Context context, String owner) {
+        //this should offer the last line in the history for owner
+        //it should hold the active valuesto be calculated.
+        //perhaps this should be called from ChangeHistoryEntry to make a cut from the old to
+        //the new calculating system
+        PinMoneyEnrty pinMoneyEnrty = daoImplSQLight.getEntryFromPinMoney(context, owner);
+        Payments payments = pinMoneyEnrty.getPayments();
+        Turnus turnus = payments.getTurnus();
+        Buchung buchung = daoImplSQLight.getLastPinMoneyBooking(owner);
+        Date historyDate = payments.getDate();
+        Date buchungDate = buchung.getDate();
+        //choose witch date to use (the newest) as startDate for calculation
+        Date startDate = null;
+        if (buchungDate == null)
+            //there has never been a booking of PM before pick HistoryDate
+            startDate = historyDate;
+        else if (historyDate.before(buchungDate)) {
+            //first booking has already been done choose the last Entry of booking
+            startDate = buchungDate;
+        } else if(historyDate.after(buchungDate)) {
+            //the HistoryDate is younger then the last special booking date
+            //this could be only if there had been a change in the payments for the owner
+            startDate = //ToDo hier gehts weiter
+        }
+
+
+        if (startDate.before(dateHelper.today)) {
+            int ountCycles = 0;
+            float valuePerCycle = payments.getBetrag();
+            //letzte TG Buchung aus der History
+
+            switch (turnus) {
+                case TAEGLICH:
+
+                    break;
+                case WOECHENTLICH:
+                    break;
+                case MONATLICH:
+                    break;
+                default:
+                    log("calcAnsparung() no valid Value for cycle");
+            }
+        }
+        return null;
+    }
+
+    private Buchung getLastPinMoneyBooking(String owner) {
+        ArrayList<Buchung> allBuchungen = daoImplSQLight.getAllBuchungen(owner);
+        Buchung buchung = null;
+        //Todo iteriere über allBuchungen
+        //wenn Du im Buchungstext DONT_USE_THIS_FOR_NORMAL_BOOKING als Teilstring findest
+        //  weise diese Buchung buchung zu
+        // mache das bis zum letzten Eintrag in allBuchungen
+        // der Inhalt von buchung ist jetzt null oder die letzte gesuchte Buchung
+        if (allBuchungen != null && !allBuchungen.isEmpty()) {
+            //get the last Buchung
+            //buchung = allBuchungen.get(allBuchungen.size()-1);
+        }
+        return buchung;
     }
 
     Konto getKonto(String kontoname) {

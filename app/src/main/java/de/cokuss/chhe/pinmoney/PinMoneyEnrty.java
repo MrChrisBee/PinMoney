@@ -3,20 +3,20 @@ package de.cokuss.chhe.pinmoney;
 import java.util.Date;
 
 class PinMoneyEnrty {
-    private Zahlungen zahlungen; //includes StartDate Cycle and Value
+    private Payments payments; //includes StartDate Cycle and Value
     private Date entryDate, birthDate;
     private String kontoName, action;
 
-    PinMoneyEnrty(Zahlungen zahlungen, Date entryDate, String kontoName, Date birthDate, String action) {
-        this.zahlungen = zahlungen;
+    PinMoneyEnrty(Payments payments, Date entryDate, String kontoName, Date birthDate, String action) {
+        this.payments = payments;
         this.entryDate = entryDate;
         this.kontoName = kontoName;
         this.action = action;
         this.birthDate = birthDate;
     }
 
-    Zahlungen getZahlungen() {
-        return zahlungen;
+    Payments getPayments() {
+        return payments;
     }
 
     Date getEntryDate() {
