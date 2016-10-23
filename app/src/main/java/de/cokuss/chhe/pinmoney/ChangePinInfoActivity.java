@@ -1,8 +1,10 @@
 package de.cokuss.chhe.pinmoney;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,6 +41,13 @@ public class ChangePinInfoActivity extends AppCompatActivity {
         radioWeek = (RadioButton) findViewById(R.id.rbWeek);
         radioMonth = (RadioButton) findViewById(R.id.rbMonth);
         init();
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setIcon(R.mipmap.ic_launcher_change);
     }
 
     private void init() {
