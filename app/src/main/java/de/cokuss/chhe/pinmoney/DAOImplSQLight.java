@@ -10,6 +10,7 @@ import android.util.Log;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, PaymentsDAO {
@@ -141,9 +142,9 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, P
 
     //read the last entry that fits to the owner
     @Override
-    public PinMoneyEnrty getEntryFromPinMoney(Context context, String owner) {
+    public PinMoneyEntry getEntryFromPinMoney(Context context, String owner) {
         db = getWritableDatabase();
-        PinMoneyEnrty result;
+        PinMoneyEntry result;
         Payments payments;
         Date startDate, entryDate, birthDate;
         String action;
@@ -152,6 +153,7 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, P
         //give the last entry for a given account
         String sql = SQL_SELECT_FROM_PIN_MONEY + owner + "' order by " + COLUMN_PM_ID + " desc limit 1";
         Cursor c = db.rawQuery(sql, null);
+        if (c.getCount() < 1) return null; //safest way ? Only neet to check this
         c.moveToFirst();
         action = getStringFromCursor(context, COLUMN_PM_ACTION, c);
         startDate = getDate(c, COLUMN_PM_STARTDATE, owner);
@@ -160,13 +162,13 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, P
         value = c.getFloat(c.getColumnIndex(COLUMN_PM_VALUE));
         turnus = getTurnusFromCursor(c);
         payments = new Payments(startDate, turnus, value);
-        result = new PinMoneyEnrty(payments, entryDate, owner, birthDate, action);
+        result = new PinMoneyEntry(payments, entryDate, owner, birthDate, action);
         c.close();
         return result;
     }
 
 
-    ArrayList<PinMoneyEnrty> getEntryListFromPinMoney(Context context) {
+    ArrayList<PinMoneyEntry> getEntryListFromPinMoney(Context context) {
         //This Class got no context, for use of resources you need it
         db = getWritableDatabase();
         String name, action, cycleStr;
@@ -176,7 +178,7 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, P
         Payments payments;
         DateHelper dateHelper = new DateHelper();
         String sql = SQL_SELECT_ALL_FROM_PIN_MONEY;
-        ArrayList<PinMoneyEnrty> entrys = new ArrayList<>();
+        ArrayList<PinMoneyEntry> entrys = new ArrayList<>();
         //hole alle Einträge
         Cursor c = db.rawQuery(sql, null);
         c.moveToFirst();
@@ -196,7 +198,7 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, P
             //create a new payments instance
             payments = new Payments(startDate, turnus, value);
             //add a new PinMoneyEntry
-            entrys.add(new PinMoneyEnrty(payments, entryDate, name, birthDate, action));
+            entrys.add(new PinMoneyEntry(payments, entryDate, name, birthDate, action));
             c.moveToNext();
         }
         c.close();
@@ -237,65 +239,131 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, P
         db.execSQL(sql);
     }
 
-    //where get this called from?
+    //where get this called from? It must be from somewhere where you can get a context
     @Override
     public Buchung calcSavings(Context context, String owner) {
+        Calendar historyDate, bookingDate, today, startDate;
+        historyDate = Calendar.getInstance();
+        bookingDate = Calendar.getInstance();
+        startDate = Calendar.getInstance();
+        Payments payments;
         //this should offer the last line in the history for owner
-        //it should hold the active valuesto be calculated.
-        //perhaps this should be called from ChangeHistoryEntry to make a cut from the old to
-        //the new calculating system
-        PinMoneyEnrty pinMoneyEnrty = daoImplSQLight.getEntryFromPinMoney(context, owner);
-        Payments payments = pinMoneyEnrty.getPayments();
-        Turnus turnus = payments.getTurnus();
-        Buchung buchung = daoImplSQLight.getLastPinMoneyBooking(owner);
-        Date historyDate = payments.getDate();
-        Date buchungDate = buchung.getDate();
-        //choose witch date to use (the newest) as startDate for calculation
-        Date startDate = null;
-        if (buchungDate == null)
-            //there has never been a booking of PM before pick HistoryDate
-            startDate = historyDate;
-        else if (historyDate.before(buchungDate)) {
-            //first booking has already been done choose the last Entry of booking
-            startDate = buchungDate;
-        } else if(historyDate.after(buchungDate)) {
-            //the HistoryDate is younger then the last special booking date
-            //this could be only if there had been a change in the payments for the owner
-            startDate = //ToDo hier gehts weiter
+        //perhaps this should be called from ChangeHistoryEntry to make a cut from the old to the new calculating system
+        PinMoneyEntry pinMoneyEntry = daoImplSQLight.getEntryFromPinMoney(context, owner);
+        if (pinMoneyEntry != null) {
+            payments = pinMoneyEntry.getPayments();
+            if (payments == null) {
+                //senseless to continue, massive Error owner without account!!!
+                log("PaymentsError : " + context.getString(R.string.wrongData) + owner);
+                return null;
+            }
+            //getting here only when payments != null so this should work
+            historyDate.setTime(payments.getDate());
+        } else {
+            //senseless to continue, massive Error owner without account!!!
+            log("PinMoneyError : " + context.getString(R.string.wrongData) + owner);
+            return null;
         }
-
-
-        if (startDate.before(dateHelper.today)) {
-            int ountCycles = 0;
-            float valuePerCycle = payments.getBetrag();
-            //letzte TG Buchung aus der History
-
+        //give me the last automatic booking of pinmoney
+        Buchung automaticBooking = daoImplSQLight.getLastRelevantBooking(owner);
+        if (automaticBooking != null) {
+            //there was a automatic booking of pinmoney before
+            bookingDate.setTime(automaticBooking.getDate());
+            //welches Datum nutzen? Das jüngste! (Hier kommt die nachträgliche Änderung ins Spiel)
+            startDate.setTime(getMostRecentDate(bookingDate, historyDate));
+        } else {
+            //no automatic booking of pinmoney
+            startDate = historyDate;
+        }
+        Turnus turnus = payments.getTurnus();
+        float valuePerCycle = payments.getBetrag();
+        int countCycles = 0;
+        float valueToBook = 0f;
+        Calendar setDate = (Calendar) startDate.clone();
+        //Vergleiche der Daten erfolgen auf Basis von Millisekunden also müssen die Daten in der Zeit Völlig übereinstimmen
+        //nur das Datum darf variieren
+        today = setToSameTimeButDate(startDate, Calendar.getInstance());
+        log("StartTime: " + startDate.getTime().toString() + " Today : " + today.getTime().toString());
+        Buchung result = null;
+        if (startDate.before(today)) {
+            log("zwei");
             switch (turnus) {
                 case TAEGLICH:
+                    log("Pro Tag " + valuePerCycle + "€ vom " + dateHelper.sdfShort.format(startDate.getTime()) + " bis " + dateHelper.sdfShort.format(today.getTime()));
+                    //countCycles ermitteln wir sind mit setDate vor today!!
+                    while (!(setDate.compareTo(today) == 0)) {
+                        setDate.add(Calendar.DAY_OF_YEAR, 1);
+                        countCycles++;
+                        valueToBook += valuePerCycle;
+                    }
 
                     break;
                 case WOECHENTLICH:
+                    log("Pro Woche " + valuePerCycle + "€ vom " + dateHelper.sdfShort.format(startDate.getTime()) + " bis " + dateHelper.sdfShort.format(today.getTime()));
+                    while (setDate.before(today)) {
+                        setDate.add(Calendar.DAY_OF_YEAR, 7);
+                        countCycles++;
+                    }
+                    if(setDate.after(today)) {
+                        setDate.add(Calendar.DAY_OF_YEAR, -7);
+                        countCycles--;
+                    }
+                    valueToBook = valuePerCycle * countCycles;
                     break;
                 case MONATLICH:
+                    log("monat");
                     break;
                 default:
                     log("calcSavings() no valid Value for cycle");
             }
         }
-        return null;
+        String text = DONT_USE_THIS_FOR_NORMAL_BOOKING +": "+ countCycles + turnus.getBezeichnerLetter()+". a " +  valuePerCycle+ "€";
+        result = new Buchung(null, setDate.getTime(), valueToBook, text, 0l, 0, (daoImplSQLight.getKontostand(owner) + valueToBook));
+
+        if (result == null) {
+            log("keine Buchung erzeugt");
+        } else
+            log("drei " + result.getText() + " " + result.getValue());
+        return result;
     }
 
-    private Buchung getLastPinMoneyBooking(String owner) {
+    private Calendar setToSameTimeButDate(Calendar getTimeFrom, Calendar getDateFrom) {
+        //gib ein Datum zurück mit der Zeit von gTimeF und dem Datum von gDateF
+        Calendar result = Calendar.getInstance();
+        result = (Calendar) getTimeFrom.clone();
+        result.set(Calendar.DAY_OF_YEAR, getDateFrom.get(Calendar.DAY_OF_YEAR));
+        result.set(Calendar.MONTH, getDateFrom.get(Calendar.MONTH));
+        result.set(Calendar.YEAR, getDateFrom.get(Calendar.YEAR));
+        return result;
+    }
+
+    private Date getMostRecentDate(Calendar first, Calendar second) {
+        Date result = null;
+        log("gmrd: first: " + first.getTime() + " secound: " + second.getTime());
+        if (first.before(second)) {
+            result = second.getTime();
+        } else if (second.before(first)) {
+            result = first.getTime();
+        } else
+            result = first.getTime();
+        return result;
+    }
+
+
+    private Buchung getLastRelevantBooking(String owner) {
         ArrayList<Buchung> allBuchungen = daoImplSQLight.getAllBuchungen(owner);
         Buchung buchung = null;
-        //Todo iteriere über allBuchungen
         //wenn Du im Buchungstext DONT_USE_THIS_FOR_NORMAL_BOOKING als Teilstring findest
         //  weise diese Buchung buchung zu
         // mache das bis zum letzten Eintrag in allBuchungen
         // der Inhalt von buchung ist jetzt null oder die letzte gesuchte Buchung
         if (allBuchungen != null && !allBuchungen.isEmpty()) {
-            //get the last Buchung
-            //buchung = allBuchungen.get(allBuchungen.size()-1);
+            //hoffe es geht in der richtigen Reihenfolge
+            for (Buchung aktBuchung : allBuchungen) {
+                if (aktBuchung.getText().startsWith(DONT_USE_THIS_FOR_NORMAL_BOOKING)) {
+                    buchung = aktBuchung;
+                }
+            }
         }
         return buchung;
     }
@@ -338,12 +406,13 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, P
                 date = dateHelper.sdfLong.parse(c.getString(c.getColumnIndex(COLUMN_DATE)));
                 buchung = new Buchung(id, date, value, text, veri_id, veri_type, balance);
             } catch (ParseException e) {
-                buchung = new Buchung(id, null, value, text, veri_id, veri_type, balance);
+                //buchung = new Buchung(id, null, value, text, veri_id, veri_type, balance);
                 Log.e(LOG_TAG, e.getMessage());
                 e.printStackTrace();
+                //todo Vielleicht falsch ? Ich denke es ist so am Sichersten
+                return null;
             }
             buchungen.add(buchung);
-            log("getAllBuchungen : " + buchung.toString());
             c.moveToNext();
         }
         c.close();

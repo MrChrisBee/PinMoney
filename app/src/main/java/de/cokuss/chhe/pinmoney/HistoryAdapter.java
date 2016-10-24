@@ -12,14 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-class HistoryAdapter extends ArrayAdapter<PinMoneyEnrty> {
+class HistoryAdapter extends ArrayAdapter<PinMoneyEntry> {
     private DateHelper dateHelper = new DateHelper();
 
 
-    //PinMoneyEnrty (Payments payments, Date entryDate, String kontoName, String action)
+    //PinMoneyEntry (Payments payments, Date entryDate, String kontoName, String action)
 
-    HistoryAdapter(Context context, ArrayList<PinMoneyEnrty> pinMoneyEnrties) {
-        super(context, 0, (List<PinMoneyEnrty>) pinMoneyEnrties);
+    HistoryAdapter(Context context, ArrayList<PinMoneyEntry> pinMoneyEnrties) {
+        super(context, 0, (List<PinMoneyEntry>) pinMoneyEnrties);
     }
     //getView gets called from System to inflate a View (here ListView for history entrys)
     //here every time one row of the History ListView (from one row in PinInfo) gets filled
@@ -27,14 +27,14 @@ class HistoryAdapter extends ArrayAdapter<PinMoneyEnrty> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Payments payments;
-        PinMoneyEnrty pinMoneyEnrty = getItem(position);
+        PinMoneyEntry pinMoneyEntry = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
 
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_history_entry, parent, false);
         }
-        if(pinMoneyEnrty.getPayments() != null) {
-            payments = pinMoneyEnrty.getPayments();
+        if(pinMoneyEntry.getPayments() != null) {
+            payments = pinMoneyEntry.getPayments();
         } else {
             payments = new Payments(null,null,0);
         }
@@ -47,14 +47,14 @@ class HistoryAdapter extends ArrayAdapter<PinMoneyEnrty> {
         TextView tvStartDate = (TextView) convertView.findViewById(R.id.iHiStartDate);
         TextView tvCycle = (TextView) convertView.findViewById(R.id.iHiCycle);
         // Populate the data into the template view using the data object
-        if (pinMoneyEnrty.getAction() != null) {
-            tvAction.setText(pinMoneyEnrty.getAction());
+        if (pinMoneyEntry.getAction() != null) {
+            tvAction.setText(pinMoneyEntry.getAction());
         } else {
             tvAction.setText(R.string.none);
         }
-        tvAccountName.setText(pinMoneyEnrty.getKontoName());
-        if (pinMoneyEnrty.getEntryDate() != null) {
-            tvEntryDate.setText(dateHelper.sdfShort.format(pinMoneyEnrty.getEntryDate()));
+        tvAccountName.setText(pinMoneyEntry.getKontoName());
+        if (pinMoneyEntry.getEntryDate() != null) {
+            tvEntryDate.setText(dateHelper.sdfShort.format(pinMoneyEntry.getEntryDate()));
         } else {
             tvEntryDate.setText(R.string.no);
         }

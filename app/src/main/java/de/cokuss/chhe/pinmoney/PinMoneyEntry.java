@@ -2,12 +2,12 @@ package de.cokuss.chhe.pinmoney;
 
 import java.util.Date;
 
-class PinMoneyEnrty {
+class PinMoneyEntry {
     private Payments payments; //includes StartDate Cycle and Value
     private Date entryDate, birthDate;
     private String kontoName, action;
 
-    PinMoneyEnrty(Payments payments, Date entryDate, String kontoName, Date birthDate, String action) {
+    PinMoneyEntry(Payments payments, Date entryDate, String kontoName, Date birthDate, String action) {
         this.payments = payments;
         this.entryDate = entryDate;
         this.kontoName = kontoName;

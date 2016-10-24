@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class ShowHistoryActivity extends AppCompatActivity {
     private static final String LOG_TAG = ShowHistoryActivity.class.getSimpleName();
     DAOImplSQLight daoImplSQLight;
-    ArrayList<PinMoneyEnrty> historyList;
+    ArrayList<PinMoneyEntry> historyList;
 
     //todo Zeige alle History Einträge an -> Auswahlmöglichkeit ?
     @Override
