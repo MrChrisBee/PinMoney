@@ -71,7 +71,7 @@
     <string name="none">keine</string>
     <string name="noEntry">Kein Eintrag</string>
     <string name="test">Test</string>
-    <string name="wrongData">palaver</string>
+    <string name="wrongData">Die gefundenen Daten ermöglichen kein sinvolles weiterarbeiten mit diesem Konto</string>
     <string-array name="array_name">
         <item>Eintag nicht gültig</item>
     </string-array>

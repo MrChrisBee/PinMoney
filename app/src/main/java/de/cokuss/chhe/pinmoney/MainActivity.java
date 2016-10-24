@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
+
     private void alertDialogDoIt(final String konto, final Buchung buchung) {
         alertBuilder = new AlertDialog.Builder(MainActivity.this);
         alertBuilder.setMessage("Soll ich die Buchung für das Konto " + konto + " ausführen? Keine Angst das steht hier nur zu Test zwecken!");
@@ -95,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 "Ja",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        daoImplSQLight.createBuchung(daoImplSQLight.getKonto(konto),buchung);
+                        daoImplSQLight.createBuchung(daoImplSQLight.getKonto(konto), buchung);
                         dialog.cancel();
                     }
                 });
@@ -243,13 +244,13 @@ public class MainActivity extends AppCompatActivity {
                 }
                 String testeMich = accountName.getSelectedItem().toString();
                 //errechne das fällige Taschengeld
-                Buchung buchung = daoImplSQLight.calcSavings(this,testeMich);
-                if(buchung != null) {
+                Buchung buchung = daoImplSQLight.calcSavings(this, testeMich);
+                if (buchung != null) {
                     log(buchung.toString());
-                }else log("Leere Buchung! ");
-                alertDialogDoIt(testeMich,buchung);
-                alertDialog = alertBuilder.create();
-                alertDialog.show();
+                    alertDialogDoIt(testeMich, buchung);
+                    alertDialog = alertBuilder.create();
+                    alertDialog.show();
+                } else log("Leere Buchung! ");
                 return true;
         }
         return super.onOptionsItemSelected(item);

@@ -239,9 +239,11 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, P
         db.execSQL(sql);
     }
 
-    //where get this called from? It must be from somewhere where you can get a context
+    //It must be called from somewhere you can get a context,
+    //For getting a Instance of this Class (DAOImplSQLight) you also need a context that seems ok for me
     @Override
     public Buchung calcSavings(Context context, String owner) {
+        //Todo erzeugt noch eine 0 € Buchung bei erneuter Ausführung
         Calendar historyDate, bookingDate, today, startDate;
         historyDate = Calendar.getInstance();
         bookingDate = Calendar.getInstance();
@@ -282,8 +284,9 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, P
         Calendar setDate = (Calendar) startDate.clone();
         //Vergleiche der Daten erfolgen auf Basis von Millisekunden also müssen die Daten in der Zeit Völlig übereinstimmen
         //nur das Datum darf variieren
-        today = setToSameTimeButDate(startDate, Calendar.getInstance());
+        today = setToSameTimeButDifferentDate(startDate, Calendar.getInstance());
         log("StartTime: " + startDate.getTime().toString() + " Today : " + today.getTime().toString());
+        log("Vergleich startDate.compareTo(today) : " + startDate.compareTo(today));
         Buchung result = null;
         if (startDate.before(today)) {
             log("zwei");
@@ -317,19 +320,18 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, P
                     log("calcSavings() no valid Value for cycle");
             }
         }
-        String text = DONT_USE_THIS_FOR_NORMAL_BOOKING +": "+ countCycles + turnus.getBezeichnerLetter()+". a " +  valuePerCycle+ "€";
-        result = new Buchung(null, setDate.getTime(), valueToBook, text, 0l, 0, (daoImplSQLight.getKontostand(owner) + valueToBook));
 
-        if (result == null) {
-            log("keine Buchung erzeugt");
-        } else
-            log("drei " + result.getText() + " " + result.getValue());
+        if ( valueToBook > 0f) {
+            String text = DONT_USE_THIS_FOR_NORMAL_BOOKING +": "+ countCycles + turnus.getBezeichnerLetter()+". a " +  valuePerCycle+ "€";
+            result = new Buchung(null, setDate.getTime(), valueToBook, text, 0l, 0, (daoImplSQLight.getKontostand(owner) + valueToBook));
+        }
+
         return result;
     }
 
-    private Calendar setToSameTimeButDate(Calendar getTimeFrom, Calendar getDateFrom) {
+    private Calendar setToSameTimeButDifferentDate(Calendar getTimeFrom, Calendar getDateFrom) {
         //gib ein Datum zurück mit der Zeit von gTimeF und dem Datum von gDateF
-        Calendar result = Calendar.getInstance();
+        Calendar result;
         result = (Calendar) getTimeFrom.clone();
         result.set(Calendar.DAY_OF_YEAR, getDateFrom.get(Calendar.DAY_OF_YEAR));
         result.set(Calendar.MONTH, getDateFrom.get(Calendar.MONTH));
@@ -339,13 +341,15 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, P
 
     private Date getMostRecentDate(Calendar first, Calendar second) {
         Date result = null;
-        log("gmrd: first: " + first.getTime() + " secound: " + second.getTime());
         if (first.before(second)) {
             result = second.getTime();
         } else if (second.before(first)) {
             result = first.getTime();
-        } else
+        } else {
             result = first.getTime();
+        }
+        log("gmrd: first: " + dateHelper.sdfShort.format(first.getTime()) + " secound: "
+                + dateHelper.sdfShort.format(second.getTime()) + " Result " + dateHelper.sdfShort.format(result));
         return result;
     }
 
