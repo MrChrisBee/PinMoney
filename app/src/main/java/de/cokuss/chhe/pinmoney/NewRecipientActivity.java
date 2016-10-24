@@ -30,14 +30,14 @@ public class NewRecipientActivity extends AppCompatActivity {
     //alle Felder
     private String kontoname;
     private Date gebDatum;
-    private Turnus turnus;
+    private Cycle cycle;
     private float betrag;
     private float startBetrag;
     private Date startDatum;
     // die Views
     private EditText nameFeld;
     private EditText gebDatFeld;
-    private RadioGroup turnusChecker;
+    private RadioGroup cycleChecker;
     private EditText betragFeld;
     private EditText startBetragFeld;
     private EditText startDateFeld;
@@ -108,7 +108,7 @@ public class NewRecipientActivity extends AppCompatActivity {
         pickerStart = (Button) findViewById(R.id.startButton);
         nameFeld = (EditText) findViewById(R.id.input_name);
         gebDatFeld = (EditText) findViewById(R.id.input_birthday);
-        turnusChecker = (RadioGroup) findViewById(R.id.turnus);
+        cycleChecker = (RadioGroup) findViewById(R.id.cycle);
         betragFeld = (EditText) findViewById(R.id.betrag);
         startBetragFeld = (EditText) findViewById(R.id.startBetrag);
         startDateFeld = (EditText) findViewById(R.id.input_startDate);
@@ -128,15 +128,15 @@ public class NewRecipientActivity extends AppCompatActivity {
             gebDatum = string2Date(tmpC4);
             log("gebDatum gesetzt aus CreateNewKonto: " + gebDatum.toString());
         } else return;
-        switch (turnusChecker.getCheckedRadioButtonId()) {
+        switch (cycleChecker.getCheckedRadioButtonId()) {
             case R.id.radioButton_dayli:
-                turnus = Turnus.TAEGLICH;
+                cycle = Cycle.TAEGLICH;
                 break;
             case R.id.radioButton_weekly:
-                turnus = Turnus.WOECHENTLICH;
+                cycle = Cycle.WOECHENTLICH;
                 break;
             case R.id.radioButton_monthly:
-                turnus = Turnus.MONATLICH;
+                cycle = Cycle.MONATLICH;
                 break;
             default: //einer der Werte sollte es ein
                 Log.e(LOG_TAG, "Cycle not valid");
@@ -163,7 +163,7 @@ public class NewRecipientActivity extends AppCompatActivity {
         if (daoImplSQLight.isValidKontoName(kontoname)) {
             if (!daoImplSQLight.kontoExists(kontoname)) {
                 //Zahlung erstellen
-                payments = new Payments(startDatum, turnus, betrag);
+                payments = new Payments(startDatum, cycle, betrag);
                 //Konto erstellen
                 konto = new Konto(kontoname, startBetrag);
                 daoImplSQLight.createKonto(konto);

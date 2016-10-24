@@ -115,29 +115,29 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, P
         return string;
     }
 
-    private Turnus getTurnusFromCursor(Cursor cursor) {
-        Turnus turnus;
+    private Cycle getTurnusFromCursor(Cursor cursor) {
+        Cycle cycle;
         int i = cursor.getColumnIndex(COLUMN_PM_CYCLE);
         if (i > -1 && !cursor.isNull(i)) { // if you find a Column  check that it is not null
             switch (cursor.getString(i)) {
                 case "tag":
                     log("getEntryListFromPinMoney() " + cursor.getString(i));
-                    turnus = Turnus.TAEGLICH;
+                    cycle = Cycle.TAEGLICH;
                     break;
                 case "woche":
                     log("getEntryListFromPinMoney() " + cursor.getString(i));
-                    turnus = Turnus.WOECHENTLICH;
+                    cycle = Cycle.WOECHENTLICH;
                     break;
                 case "monat":
                     log("getEntryListFromPinMoney() " + cursor.getString(i));
-                    turnus = Turnus.MONATLICH;
+                    cycle = Cycle.MONATLICH;
                     break;
                 default:
-                    log("der Untersuchte String für den Turnus ist: " + cursor.getString(i));
-                    turnus = Turnus.KEINE_ANGABE;
+                    log("der Untersuchte String für den Cycle ist: " + cursor.getString(i));
+                    cycle = Cycle.KEINE_ANGABE;
             }
-        } else turnus = Turnus.KEINE_ANGABE;
-        return turnus;
+        } else cycle = Cycle.KEINE_ANGABE;
+        return cycle;
     }
 
     //read the last entry that fits to the owner
@@ -149,7 +149,7 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, P
         Date startDate, entryDate, birthDate;
         String action;
         float value;
-        Turnus turnus;
+        Cycle cycle;
         //give the last entry for a given account
         String sql = SQL_SELECT_FROM_PIN_MONEY + owner + "' order by " + COLUMN_PM_ID + " desc limit 1";
         Cursor c = db.rawQuery(sql, null);
@@ -160,8 +160,8 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, P
         entryDate = getDate(c, COLUMN_PM_ENTRYDATE, owner);
         birthDate = getDate(c, COLUMN_PM_BIRTHDAY, owner);
         value = c.getFloat(c.getColumnIndex(COLUMN_PM_VALUE));
-        turnus = getTurnusFromCursor(c);
-        payments = new Payments(startDate, turnus, value);
+        cycle = getTurnusFromCursor(c);
+        payments = new Payments(startDate, cycle, value);
         result = new PinMoneyEntry(payments, entryDate, owner, birthDate, action);
         c.close();
         return result;
@@ -174,7 +174,7 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, P
         String name, action, cycleStr;
         Date startDate, entryDate, birthDate;
         Float value;
-        Turnus turnus;
+        Cycle cycle;
         Payments payments;
         DateHelper dateHelper = new DateHelper();
         String sql = SQL_SELECT_ALL_FROM_PIN_MONEY;
@@ -190,13 +190,13 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, P
             if (i > -1 && !c.isNull(i)) {
                 value = c.getFloat(i);
             } else value = 0.00f;
-            turnus = getTurnusFromCursor(c);
+            cycle = getTurnusFromCursor(c);
             startDate = getDate(c, COLUMN_PM_STARTDATE, name);
             action = getStringFromCursor(context, COLUMN_PM_ACTION, c);
             entryDate = getDate(c, COLUMN_PM_ENTRYDATE, name);
             birthDate = getDate(c, COLUMN_PM_BIRTHDAY, name);
             //create a new payments instance
-            payments = new Payments(startDate, turnus, value);
+            payments = new Payments(startDate, cycle, value);
             //add a new PinMoneyEntry
             entrys.add(new PinMoneyEntry(payments, entryDate, name, birthDate, action));
             c.moveToNext();
@@ -277,20 +277,20 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, P
             //no automatic booking of pinmoney
             startDate = historyDate;
         }
-        Turnus turnus = payments.getTurnus();
+        Cycle cycle = payments.getCycle();
         float valuePerCycle = payments.getBetrag();
         int countCycles = 0;
         float valueToBook = 0f;
         Calendar setDate = (Calendar) startDate.clone();
-        //Vergleiche der Daten erfolgen auf Basis von Millisekunden also müssen die Daten in der Zeit Völlig übereinstimmen
+        //Vergleiche der Daten erfolgen auf Basis von Millisekunden also müssen die Daten in der Zeit völlig übereinstimmen
         //nur das Datum darf variieren
         today = setToSameTimeButDifferentDate(startDate, Calendar.getInstance());
         log("StartTime: " + startDate.getTime().toString() + " Today : " + today.getTime().toString());
         log("Vergleich startDate.compareTo(today) : " + startDate.compareTo(today));
         Buchung result = null;
         if (startDate.before(today)) {
-            log("zwei");
-            switch (turnus) {
+            switch (cycle) {
+                //Todo Bei Monatlich habe ich bemerkt das für eine Vorrauszahlung ein Turnus zuwenig gezählt wird
                 case TAEGLICH:
                     log("Pro Tag " + valuePerCycle + "€ vom " + dateHelper.sdfShort.format(startDate.getTime()) + " bis " + dateHelper.sdfShort.format(today.getTime()));
                     //countCycles ermitteln wir sind mit setDate vor today!!
@@ -299,7 +299,6 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, P
                         countCycles++;
                         valueToBook += valuePerCycle;
                     }
-
                     break;
                 case WOECHENTLICH:
                     log("Pro Woche " + valuePerCycle + "€ vom " + dateHelper.sdfShort.format(startDate.getTime()) + " bis " + dateHelper.sdfShort.format(today.getTime()));
@@ -314,15 +313,25 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, P
                     valueToBook = valuePerCycle * countCycles;
                     break;
                 case MONATLICH:
-                    log("monat");
+                    log("Pro Monat " + valuePerCycle + "€ vom " + dateHelper.sdfShort.format(startDate.getTime()) + " bis " + dateHelper.sdfShort.format(today.getTime()));
+                    while (setDate.before(today)) {
+                        setDate.add(Calendar.MONTH, 1);
+                        countCycles++;
+                    } // Vielleicht bin ich jetzt einen Monat zu weit? Immerhin ist gestern auch vor heute (setDate.before(today))
+                    if(setDate.after(today)) {
+                        setDate.add(Calendar.MONTH, -1);
+                        countCycles--;
+                    }
+                    valueToBook = valuePerCycle * countCycles;
                     break;
                 default:
-                    log("calcSavings() no valid Value for cycle");
+                    log("Cycle : " + context.getString(R.string.wrongData) + owner);
+                    return null;
             }
         }
 
         if ( valueToBook > 0f) {
-            String text = DONT_USE_THIS_FOR_NORMAL_BOOKING +": "+ countCycles + turnus.getBezeichnerLetter()+". a " +  valuePerCycle+ "€";
+            String text = DONT_USE_THIS_FOR_NORMAL_BOOKING +": "+ countCycles + cycle.getBezeichnerLetter()+". a " +  valuePerCycle+ "€";
             result = new Buchung(null, setDate.getTime(), valueToBook, text, 0l, 0, (daoImplSQLight.getKontostand(owner) + valueToBook));
         }
 
@@ -491,11 +500,9 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, P
     public float getKontostand(String inhaber) {
         db = getWritableDatabase();
         if (daoImplSQLight.isValidKontoName(inhaber)) {
-            log("getKontostand: Ermittle den Kontostand für " + inhaber);
             float kontostand = 0;
             String sql = "SELECT " + COLUMN_BALANCE + " FROM " + inhaber + " WHERE   ID = (SELECT MAX(ID)  FROM  " + inhaber + " )";
             Cursor c = db.rawQuery(sql, null);
-            log("getKontostand: habe Treffer : " + c.getCount());
             c.moveToFirst();
             switch (c.getCount()) {
                 case 0:
@@ -503,7 +510,7 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, P
                     break;
                 case 1:
                     kontostand = c.getFloat(c.getColumnIndex(COLUMN_BALANCE));
-                    log("getKontostand ist : " + kontostand);
+                    log("getKontostand: Der Kontostand für " + inhaber + " ist " + kontostand + " €");
                     break;
                 default:
                     log("getKontostand: Ich habe " + c.getCount() + " 'letzte' Einträge gefunden!?");

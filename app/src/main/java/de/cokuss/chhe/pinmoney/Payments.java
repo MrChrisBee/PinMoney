@@ -3,13 +3,13 @@ package de.cokuss.chhe.pinmoney;
 import java.util.Date;
 
 class Payments {
-    private Turnus turnus;
+    private Cycle cycle;
     private float betrag;
     private Date date;
 
-    Payments(Date date, Turnus turnus, float betrag) {
+    Payments(Date date, Cycle cycle, float betrag) {
         this.date = date;
-        this.turnus = turnus;
+        this.cycle = cycle;
         this.betrag = betrag;
     }
 
@@ -17,20 +17,20 @@ class Payments {
         return date;
     }
 
-    Turnus getTurnus () {
-        return turnus;
+    Cycle getCycle() {
+        return cycle;
     }
 
     String getTurnusStr () {
-        return turnus.getBezeichner();
+        return cycle.getBezeichner();
     }
 
     String getTurnusStrShort () {
-        return turnus.getBezeichnerLetter();
+        return cycle.getBezeichnerLetter();
     }
 
-    public void setTurnus (Turnus turnus) {
-        this.turnus = turnus;
+    public void setCycle(Cycle cycle) {
+        this.cycle = cycle;
     }
 
     float getBetrag () {

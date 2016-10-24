@@ -56,7 +56,7 @@
         android:background="@color/bg_color_1"
         android:textAlignment="textStart"
         android:layout_marginRight="@dimen/history_padding"
-        android:text="@string/turnus" />
+        android:text="@string/cycle" />
 
     <TextView
         android:id="@+id/iHiValue"

@@ -66,7 +66,7 @@
     <string name="pick">Pick</string>
     <string name="wertEingeben">Bitte Betrag eingeben!</string>
     <string name="no">No Date</string>
-    <string name="turnus">Turnus</string>
+    <string name="cycle">Turnus</string>
     <string name="value">Wert</string>
     <string name="none">keine</string>
     <string name="noEntry">Kein Eintrag</string>
