@@ -173,21 +173,6 @@ public class NewRecipientActivity extends AppCompatActivity {
     }
 
 
-    //todo kapieren warum das hier geht aber nichtin DateHelper ausgelagert
-//    Date string2Date(Check4EditText c4Thing) {
-//        Date date = null;
-//        if (c4Thing.isValid()) {
-//            try {
-//                log("**"+c4Thing.getString()+"**");
-//                date = dateHelper.sdfShort.parse(c4Thing.getString());
-//                log("**string2Date Datum: " + date.toString());
-//            } catch (ParseException e) {
-//                c4Thing.getEditText().setError("Datum ist ungültig!");
-//                log("string2Date Ungültig");
-//            }
-//        }
-//        return date;
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

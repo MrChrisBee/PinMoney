@@ -14,6 +14,7 @@ class DateHelper {
     final DateFormat sdfLong = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault());
     private Date today = new Date();
 
+    //private DateHelper dateHelper = new DateHelper();
     private void log(String string) {
         Log.d(LOG_TAG, string);
     }
@@ -22,7 +23,7 @@ class DateHelper {
         Date date = null;
         if (c4Thing.isValid()) {
             try {
-                // date = dateHelper.sdfShort.parse(c4Thing.getString()); auch wenn vorhanden bringt die App zum Absturz ???
+                //date = dateHelper.sdfShort.parse(c4Thing.getString()); //auch wenn vorhanden bringt die App zum Absturz ???
                 date = sdfShort.parse(c4Thing.getString());
             } catch (ParseException e) {
                 c4Thing.getEditText().setError("Datum ist ungültig!");
