@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -92,10 +94,10 @@ public class NewRecipientActivity extends AppCompatActivity {
         pickerGeb = (Button) findViewById(R.id.birthdayButton);
         pickerStart = (Button) findViewById(R.id.showCalendar);
         nameFeld = (EditText) findViewById(R.id.input_name);
-        gebDatFeld = (EditText) findViewById(R.id.input_birthday);
         cycleChecker = (RadioGroup) findViewById(R.id.cycle);
         betragFeld = (EditText) findViewById(R.id.betrag);
         startBetragFeld = (EditText) findViewById(R.id.startBetrag);
+        gebDatFeld = (EditText) findViewById(R.id.input_birthday);
         startDateFeld = (EditText) findViewById(R.id.input_startDate);
     }
 
@@ -169,6 +171,23 @@ public class NewRecipientActivity extends AppCompatActivity {
             } else nameFeld.setError("Das Konto Existiert bereits!");
         } else nameFeld.setError("Der Kontoname ist ungültig!");
     }
+
+
+    //todo kapieren warum das hier geht aber nichtin DateHelper ausgelagert
+//    Date string2Date(Check4EditText c4Thing) {
+//        Date date = null;
+//        if (c4Thing.isValid()) {
+//            try {
+//                log("**"+c4Thing.getString()+"**");
+//                date = dateHelper.sdfShort.parse(c4Thing.getString());
+//                log("**string2Date Datum: " + date.toString());
+//            } catch (ParseException e) {
+//                c4Thing.getEditText().setError("Datum ist ungültig!");
+//                log("string2Date Ungültig");
+//            }
+//        }
+//        return date;
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

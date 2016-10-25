@@ -10,21 +10,20 @@ import java.util.Locale;
 
 class DateHelper {
     private final static String LOG_TAG = DateHelper.class.getSimpleName();
+    final DateFormat sdfShort = new SimpleDateFormat("dd.MM.yy", Locale.getDefault());
+    final DateFormat sdfLong = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault());
+    private Date today = new Date();
+
     private void log(String string) {
         Log.d(LOG_TAG, string);
     }
-    private DateHelper dateHelper;
-
-    private Date today = new Date();
-    final DateFormat sdfShort = new SimpleDateFormat("dd.MM.yy", Locale.getDefault());
-    final DateFormat sdfLong = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault());
 
     Date string2Date(Check4EditText c4Thing) {
         Date date = null;
         if (c4Thing.isValid()) {
             try {
-                date = dateHelper.sdfShort.parse(c4Thing.getString());
-                log("string2Date Datum: " + date.toString());
+                // date = dateHelper.sdfShort.parse(c4Thing.getString()); auch wenn vorhanden bringt die App zum Absturz ???
+                date = sdfShort.parse(c4Thing.getString());
             } catch (ParseException e) {
                 c4Thing.getEditText().setError("Datum ist ungültig!");
                 log("string2Date Ungültig");
@@ -32,13 +31,13 @@ class DateHelper {
         }
         return date;
     }
+
     Date string2Date(String string) {
         Date date = null;
-            try {
-                date = dateHelper.sdfShort.parse(string);
-            } catch (ParseException e) {
-                log("string2Date Ungültig");
-            }
+        try {
+            date = sdfShort.parse(string);
+        } catch (ParseException e) {
+        }
         return date;
     }
 
