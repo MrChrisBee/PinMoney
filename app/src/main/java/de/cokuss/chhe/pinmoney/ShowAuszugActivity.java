@@ -37,7 +37,7 @@ public class ShowAuszugActivity extends AppCompatActivity {
         //setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setIcon(R.mipmap.ic_launcher);
+        actionBar.setIcon(R.mipmap.ic_launcher_account);
     }
 
     private void init () {
