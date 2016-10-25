@@ -90,6 +90,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:inputType="numberDecimal"
             android:hint="@string/betrag_edit"
             android:textAlignment="center" />
     </LinearLayout>
@@ -125,7 +126,6 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="@drawable/button_calendar" />
-
     </LinearLayout>
 
     <Button
@@ -137,6 +137,4 @@
         android:layout_marginTop="120dp"
         android:background="@drawable/button_change_unused"
         android:clickable="false" />
-
-
 </RelativeLayout>

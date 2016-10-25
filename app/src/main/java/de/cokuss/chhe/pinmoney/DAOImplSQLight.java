@@ -243,7 +243,6 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, P
     //For getting a Instance of this Class (DAOImplSQLight) you also need a context that seems ok for me
     @Override
     public Buchung calcSavings(Context context, String owner) {
-        //Todo erzeugt noch eine 0 € Buchung bei erneuter Ausführung
         Calendar historyDate, bookingDate, today, startDate;
         historyDate = Calendar.getInstance();
         bookingDate = Calendar.getInstance();
@@ -290,15 +289,15 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, P
         Buchung result = null;
         if (startDate.before(today)) {
             switch (cycle) {
-                //Todo Bei Monatlich habe ich bemerkt das für eine Vorrauszahlung ein Turnus zuwenig gezählt wird
                 case TAEGLICH:
-                    log("Pro Tag " + valuePerCycle + "€ vom " + dateHelper.sdfShort.format(startDate.getTime()) + " bis " + dateHelper.sdfShort.format(today.getTime()));
+                    countCycles = 1;
+                    log("Pro Tag " + valuePerCycle + " € vom " + dateHelper.sdfShort.format(startDate.getTime()) + " bis " + dateHelper.sdfShort.format(today.getTime()));
                     //countCycles ermitteln wir sind mit setDate vor today!!
                     while (!(setDate.compareTo(today) == 0)) {
                         setDate.add(Calendar.DAY_OF_YEAR, 1);
                         countCycles++;
-                        valueToBook += valuePerCycle;
                     }
+                    valueToBook = valuePerCycle * countCycles;
                     break;
                 case WOECHENTLICH:
                     log("Pro Woche " + valuePerCycle + "€ vom " + dateHelper.sdfShort.format(startDate.getTime()) + " bis " + dateHelper.sdfShort.format(today.getTime()));
@@ -313,11 +312,12 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, P
                     valueToBook = valuePerCycle * countCycles;
                     break;
                 case MONATLICH:
+                    //
                     log("Pro Monat " + valuePerCycle + "€ vom " + dateHelper.sdfShort.format(startDate.getTime()) + " bis " + dateHelper.sdfShort.format(today.getTime()));
                     while (setDate.before(today)) {
                         setDate.add(Calendar.MONTH, 1);
                         countCycles++;
-                    } // Vielleicht bin ich jetzt einen Monat zu weit? Immerhin ist gestern auch vor heute (setDate.before(today))
+                    } //Vielleicht bin ich jetzt einen Monat zu weit? Immerhin ist gestern auch vor heute (setDate.before(today))
                     if(setDate.after(today)) {
                         setDate.add(Calendar.MONTH, -1);
                         countCycles--;

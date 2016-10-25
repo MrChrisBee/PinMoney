@@ -212,9 +212,9 @@
                 android:inputType="date" />
 
             <Button
+                android:id="@+id/showCalendar"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:id="@+id/startButton"
                 android:background="@drawable/button_calendar"/>
 
         </LinearLayout>

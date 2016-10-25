@@ -90,7 +90,6 @@ public class BuchenActivity extends AppCompatActivity {
                 //Achtung aktualisierung des Kontostandes findet nur hier statt, stelle sicher dass das Vorzeichen Stimmt
                 buchung = new Buchung(null, null , wieviel, buchungstext, null, null, empfaenger.getKontostand() + wieviel);
                 daoImplSQLight.createBuchung(empfaenger, buchung);
-                //Todo statt zur Main geht es zur ShowAuszugActivity
                 Intent intent = new Intent(BuchenActivity.this, ShowAuszugActivity.class);
                 intent.putExtra("KontoName", empfaengerStr);
                 startActivity(intent);

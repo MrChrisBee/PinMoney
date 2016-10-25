@@ -14,26 +14,13 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
-
-import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 
 public class NewRecipientActivity extends AppCompatActivity {
     private static final String LOG_TAG = NewRecipientActivity.class.getSimpleName();
-    private final Calendar c = Calendar.getInstance();
     private DateHelper dateHelper = new DateHelper();
     private DAOImplSQLight daoImplSQLight;
-    private Boolean isValid = true;
-    private Konto konto;
-    private Payments payments;
-    //alle Felder
-    private String kontoname;
-    private Date gebDatum;
-    private Cycle cycle;
-    private float betrag;
-    private float startBetrag;
-    private Date startDatum;
     // die Views
     private EditText nameFeld;
     private EditText gebDatFeld;
@@ -42,7 +29,7 @@ public class NewRecipientActivity extends AppCompatActivity {
     private EditText startBetragFeld;
     private EditText startDateFeld;
     private Button button, pickerGeb, pickerStart;
-    private String tmpText;
+    private final Calendar c = Calendar.getInstance();
     private int mYear = c.get(Calendar.YEAR);
     private int mMonth = c.get(Calendar.MONTH);
     private int mDay = c.get(Calendar.DAY_OF_MONTH);
@@ -64,7 +51,6 @@ public class NewRecipientActivity extends AppCompatActivity {
     private void init() {
         daoImplSQLight = DAOImplSQLight.getInstance(getApplicationContext());
         setViewVars();
-
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,13 +85,12 @@ public class NewRecipientActivity extends AppCompatActivity {
                 datePickerDialog.show();
             }
         });
-
     }
 
     private void setViewVars() {
         button = (Button) findViewById(R.id.button_save_new_child);
         pickerGeb = (Button) findViewById(R.id.birthdayButton);
-        pickerStart = (Button) findViewById(R.id.startButton);
+        pickerStart = (Button) findViewById(R.id.showCalendar);
         nameFeld = (EditText) findViewById(R.id.input_name);
         gebDatFeld = (EditText) findViewById(R.id.input_birthday);
         cycleChecker = (RadioGroup) findViewById(R.id.cycle);
@@ -118,16 +103,19 @@ public class NewRecipientActivity extends AppCompatActivity {
         Check4EditText tmpC4;
         //kontoname
         tmpC4 = Check4EditText.checkEditText(nameFeld, "name");
+        String kontoname;
         if (tmpC4.isValid()) {
             kontoname = tmpC4.getString();
             log("Kontoname gesetzt aus CreateNewKonto: " + kontoname);
         } else return;
         //gebDatum
         tmpC4 = Check4EditText.checkEditText(gebDatFeld, "date");
+        Date gebDatum;
         if (tmpC4.isValid()) {
-            gebDatum = string2Date(tmpC4);
+            gebDatum = dateHelper.string2Date(tmpC4);
             log("gebDatum gesetzt aus CreateNewKonto: " + gebDatum.toString());
         } else return;
+        Cycle cycle;
         switch (cycleChecker.getCheckedRadioButtonId()) {
             case R.id.radioButton_dayli:
                 cycle = Cycle.TAEGLICH;
@@ -138,34 +126,37 @@ public class NewRecipientActivity extends AppCompatActivity {
             case R.id.radioButton_monthly:
                 cycle = Cycle.MONATLICH;
                 break;
-            default: //einer der Werte sollte es ein
+            default: //einer der Werte sollte es sein
                 Log.e(LOG_TAG, "Cycle not valid");
                 return;
         }
         //betrag
         tmpC4 = Check4EditText.checkEditText(betragFeld, "currency");
+        float betrag;
         if (tmpC4.isValid()) {
             betrag = Float.parseFloat(tmpC4.getString());
             log("betrag gesetzt aus CreateNewKonto: " + betrag);
         } else return;
         //startBetrag
         tmpC4 = Check4EditText.checkEditText(startBetragFeld, "currency");
+        float startBetrag;
         if (tmpC4.isValid()) {
             startBetrag = Float.parseFloat(tmpC4.getString());
             log("startBetrag gesetzt aus CreateNewKonto: " + startBetrag);
         } else return;
         //startDatum
         tmpC4 = Check4EditText.checkEditText(startDateFeld, "date");
+        Date startDatum;
         if (tmpC4.isValid()) {
-            startDatum = string2Date(tmpC4);
+            startDatum = dateHelper.string2Date(tmpC4);
             log("startDatum gesetzt aus CreateNewKonto: " + startDatum.toString());
         } else return;
         if (daoImplSQLight.isValidKontoName(kontoname)) {
             if (!daoImplSQLight.kontoExists(kontoname)) {
                 //Zahlung erstellen
-                payments = new Payments(startDatum, cycle, betrag);
+                Payments payments = new Payments(startDatum, cycle, betrag);
                 //Konto erstellen
-                konto = new Konto(kontoname, startBetrag);
+                Konto konto = new Konto(kontoname, startBetrag);
                 daoImplSQLight.createKonto(konto);
                 log("createnew Konto erstellt");
                 //erste Buchung mit Startbetrag
@@ -177,21 +168,6 @@ public class NewRecipientActivity extends AppCompatActivity {
                 this.finish();
             } else nameFeld.setError("Das Konto Existiert bereits!");
         } else nameFeld.setError("Der Kontoname ist ungültig!");
-    }
-
-
-    public Date string2Date(Check4EditText c4Thing) {
-        Date date = null;
-        if (c4Thing.isValid()) {
-            try {
-                date = dateHelper.sdfShort.parse(c4Thing.getString());
-                log("string2Date Datum: " + date.toString());
-            } catch (ParseException e) {
-                c4Thing.getEditText().setError("Datum ist ungültig!");
-                log("string2Date Ungültig");
-            }
-        }
-        return date;
     }
 
     @Override
