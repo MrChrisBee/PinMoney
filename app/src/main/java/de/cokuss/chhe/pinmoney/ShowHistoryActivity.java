@@ -1,7 +1,9 @@
 package de.cokuss.chhe.pinmoney;
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -20,6 +22,14 @@ public class ShowHistoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_show_history);
         daoImplSQLight = DAOImplSQLight.getInstance(getApplicationContext());
         init();
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setIcon(R.mipmap.ic_launcher_account);
+
     }
 
     private void init() {

@@ -33,6 +33,13 @@ public class ShowAuszugActivity extends AppCompatActivity {
         setContentView(R.layout.activity_show_auszug);
         daoImplSQLight = DAOImplSQLight.getInstance(getApplicationContext());
         init();
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setIcon(R.mipmap.ic_launcher_account);
     }
 
     private void init() {
@@ -51,13 +58,7 @@ public class ShowAuszugActivity extends AppCompatActivity {
         showIt();
         setListeners();
 
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_konto);
-        //setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayShowHomeEnabled(true);
-            actionBar.setIcon(R.mipmap.ic_launcher_account);
-        }
+
     }
 
     private void showIt() {
