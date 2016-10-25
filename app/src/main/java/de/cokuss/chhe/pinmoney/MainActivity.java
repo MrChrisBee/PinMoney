@@ -6,7 +6,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -64,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         setListeners();
     }
 
-    private void createAlertDialog(final String konto) {
+    private void alertDialogDelete(final String konto) {
         alertBuilder = new AlertDialog.Builder(MainActivity.this);
         alertBuilder.setMessage("Soll das Konto " + konto + " wirklich gelöscht werden ?");
         alertBuilder.setCancelable(true);
@@ -75,6 +74,27 @@ public class MainActivity extends AppCompatActivity {
                         daoImplSQLight.deleteKonto(konto);
                         fillKontoSpinner();
                         daoImplSQLight.addEntryToPinMoney(konto, "deleted");
+                        dialog.cancel();
+                    }
+                });
+
+        alertBuilder.setNegativeButton(
+                "Nein",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+    }
+    private void alertDialogDoIt(final String konto, final Buchung buchung) {
+        alertBuilder = new AlertDialog.Builder(MainActivity.this);
+        alertBuilder.setMessage("Soll ich die Buchung für das Konto " + konto + " ausführen? Keine Angst das steht hier nur zu Test zwecken!");
+        alertBuilder.setCancelable(true);
+        alertBuilder.setPositiveButton(
+                "Ja",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        daoImplSQLight.createBuchung(daoImplSQLight.getKonto(konto),buchung);
                         dialog.cancel();
                     }
                 });
@@ -198,11 +218,9 @@ public class MainActivity extends AppCompatActivity {
                     return false;
                 }
                 String loescheMich = accountName.getSelectedItem().toString();
-                createAlertDialog(loescheMich);
+                alertDialogDelete(loescheMich);
                 AlertDialog alertDialog = alertBuilder.create();
                 alertDialog.show();
-                //in loescheMich sollte ein gültiger Eintrag sein
-
                 return true;
             case R.id.action_settings:
                 //leider keine Zeit für Extras
@@ -214,6 +232,23 @@ public class MainActivity extends AppCompatActivity {
                 //todo Zeige alle History Einträge an -> Auswahlmöglichkeit ?
                 Intent intent4 = new Intent(this, ShowHistoryActivity.class);
                 startActivity(intent4);
+                return true;
+            case R.id.action_test_the_booker:
+                //todo Zeige alle History Einträge an -> Auswahlmöglichkeit ?
+                accountName.getSelectedItem();
+                if (accountName.getSelectedItem() == null) {
+                    Toast.makeText(this, R.string.kontoWaehlen, Toast.LENGTH_LONG).show();
+                    return false;
+                }
+                String testeMich = accountName.getSelectedItem().toString();
+                //errechne das fällige Taschengeld
+                Buchung buchung = daoImplSQLight.calcSavings(this,testeMich);
+                if(buchung != null) {
+                    log(buchung.toString());
+                }else log("Leere Buchung! ");
+                alertDialogDoIt(testeMich,buchung);
+                alertDialog = alertBuilder.create();
+                alertDialog.show();
                 return true;
         }
         return super.onOptionsItemSelected(item);

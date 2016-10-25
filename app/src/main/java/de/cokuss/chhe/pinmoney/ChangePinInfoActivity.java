@@ -19,7 +19,7 @@ public class ChangePinInfoActivity extends AppCompatActivity {
     DateHelper dateHelper = new DateHelper();
     private String inhaber;
     private TextView tvInhaber;
-    private PinMoneyEnrty pinMoneyEnrty;
+    private PinMoneyEntry pinMoneyEntry;
     private DAOImplSQLight daoImplSQLight = DAOImplSQLight.getInstance(ChangePinInfoActivity.this);
     private Payments payments;
     private EditText betrag, changeDate;
@@ -60,8 +60,8 @@ public class ChangePinInfoActivity extends AppCompatActivity {
     }
 
     private void showState() {
-        pinMoneyEnrty = daoImplSQLight.getEntryFromPinMoney(getApplicationContext(), inhaber);
-        payments = pinMoneyEnrty.getPayments();
+        pinMoneyEntry = daoImplSQLight.getEntryFromPinMoney(getApplicationContext(), inhaber);
+        payments = pinMoneyEntry.getPayments();
         betrag.setText(String.format(Locale.GERMAN, "%.2f", payments.getBetrag()));
         log("ShowState " + payments.getDate());
         changeDate.setText(dateHelper.sdfShort.format(payments.getDate()));
