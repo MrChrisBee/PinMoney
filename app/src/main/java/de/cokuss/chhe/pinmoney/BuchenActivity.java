@@ -43,6 +43,14 @@ public class BuchenActivity extends AppCompatActivity {
         button = (Button) findViewById(R.id.button);
         text = (EditText) findViewById(R.id.eTextBuchen);
 
+        // Die Toolbar mit Seitentitel, HelpButton und Icon
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setIcon(R.mipmap.ic_launcher_booking);
+
         daoImplSQLight = DAOImplSQLight.getInstance(getApplicationContext());
         empfaengerStr = getIntent().getStringExtra("KontoName");
         //über den Intend Parameter InOut wird entschieden ob hier ein oder ausgezahlt wird
@@ -96,12 +104,7 @@ public class BuchenActivity extends AppCompatActivity {
             }
         });
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setIcon(R.mipmap.ic_launcher_booking);
+
     }
 
     @Override
