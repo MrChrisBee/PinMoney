@@ -1,4 +1,4 @@
-package de.cokuss.chhe.pinmoney;
+package de.cokuss.chhe.pinmoney.fundamentals;
 
 public enum Cycle {
 
@@ -14,7 +14,7 @@ public enum Cycle {
         return bez;
     }
 
-    String getBezeichnerLetter() {
+    public String getBezeichnerLetter() {
         return "" + bez.charAt(0);
     }
 }

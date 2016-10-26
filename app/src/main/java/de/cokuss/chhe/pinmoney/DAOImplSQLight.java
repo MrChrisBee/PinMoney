@@ -13,7 +13,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, PaymentsDAO {
+import de.cokuss.chhe.pinmoney.fundamentals.Buchung;
+import de.cokuss.chhe.pinmoney.fundamentals.BuchungDAO;
+import de.cokuss.chhe.pinmoney.fundamentals.Cycle;
+import de.cokuss.chhe.pinmoney.fundamentals.Konto;
+import de.cokuss.chhe.pinmoney.fundamentals.KontoDAO;
+import de.cokuss.chhe.pinmoney.fundamentals.Payments;
+import de.cokuss.chhe.pinmoney.fundamentals.PaymentsDAO;
+
+public class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, PaymentsDAO {
     private static final String LOG_TAG = DAOImplSQLight.class.getSimpleName();
     //Datenbank
     private static final String DB_NAME = "taschengeldkonto.db";
@@ -62,7 +70,7 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, P
         log("Helper hat die DB " + getDatabaseName() + " erzeugt");
     }
 
-    static DAOImplSQLight getInstance(Context c) {
+    public static DAOImplSQLight getInstance(Context c) {
         if (daoImplSQLight == null) {
             daoImplSQLight = new DAOImplSQLight(c);
         }
@@ -168,7 +176,7 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, P
     }
 
 
-    ArrayList<PinMoneyEntry> getEntryListFromPinMoney(Context context) {
+    public ArrayList<PinMoneyEntry> getEntryListFromPinMoney(Context context) {
         //This Class got no context, for use of resources you need it
         db = getWritableDatabase();
         String name, action, cycleStr;
@@ -300,6 +308,7 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, P
                     valueToBook = valuePerCycle * countCycles;
                     break;
                 case WOECHENTLICH:
+                    countCycles = 1;
                     log("Pro Woche " + valuePerCycle + "€ vom " + dateHelper.sdfShort.format(startDate.getTime()) + " bis " + dateHelper.sdfShort.format(today.getTime()));
                     while (setDate.before(today)) {
                         setDate.add(Calendar.DAY_OF_YEAR, 7);
@@ -312,7 +321,7 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, P
                     valueToBook = valuePerCycle * countCycles;
                     break;
                 case MONATLICH:
-                    //
+                    countCycles = 1;
                     log("Pro Monat " + valuePerCycle + "€ vom " + dateHelper.sdfShort.format(startDate.getTime()) + " bis " + dateHelper.sdfShort.format(today.getTime()));
                     while (setDate.before(today)) {
                         setDate.add(Calendar.MONTH, 1);
@@ -381,7 +390,7 @@ class DAOImplSQLight extends SQLiteOpenHelper implements BuchungDAO, KontoDAO, P
         return buchung;
     }
 
-    Konto getKonto(String kontoname) {
+    public Konto getKonto(String kontoname) {
         Konto konto = null;
         if (kontoExists(kontoname)) {
             float kontostand = getKontostand(kontoname);

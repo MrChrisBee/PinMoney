@@ -1,9 +1,11 @@
-package de.cokuss.chhe.pinmoney;
+package de.cokuss.chhe.pinmoney.help;
 
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 
-public class HelpNewActivity extends AppCompatActivity {
+import de.cokuss.chhe.pinmoney.R;
+
+public class HelpActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

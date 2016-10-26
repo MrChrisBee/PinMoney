@@ -12,8 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-class BuchungssatzAdapter extends ArrayAdapter<Buchung> {
-    BuchungssatzAdapter(Context context, ArrayList<Buchung> buchungen) {
+import de.cokuss.chhe.pinmoney.fundamentals.Buchung;
+
+public class BuchungssatzAdapter extends ArrayAdapter<Buchung> {
+    public BuchungssatzAdapter(Context context, ArrayList<Buchung> buchungen) {
         super(context, 0, (List<Buchung>) buchungen);
     }
 

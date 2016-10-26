@@ -1,4 +1,4 @@
-package de.cokuss.chhe.pinmoney;
+package de.cokuss.chhe.pinmoney.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,6 +18,12 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import de.cokuss.chhe.pinmoney.fundamentals.Buchung;
+import de.cokuss.chhe.pinmoney.DAOImplSQLight;
+import de.cokuss.chhe.pinmoney.fundamentals.Konto;
+import de.cokuss.chhe.pinmoney.R;
+import de.cokuss.chhe.pinmoney.help.HelpStartActivity;
 
 public class MainActivity extends AppCompatActivity {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();

@@ -2,7 +2,9 @@ package de.cokuss.chhe.pinmoney;
 
 import java.util.Date;
 
-class PinMoneyEntry {
+import de.cokuss.chhe.pinmoney.fundamentals.Payments;
+
+public class PinMoneyEntry {
     private Payments payments; //includes StartDate Cycle and Value
     private Date entryDate, birthDate;
     private String kontoName, action;
@@ -15,7 +17,7 @@ class PinMoneyEntry {
         this.birthDate = birthDate;
     }
 
-    Payments getPayments() {
+    public Payments getPayments() {
         return payments;
     }
 
@@ -23,7 +25,7 @@ class PinMoneyEntry {
         return entryDate;
     }
 
-    Date getBirthDate() {
+    public Date getBirthDate() {
         return birthDate;
     }
 

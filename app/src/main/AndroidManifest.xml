@@ -9,71 +9,71 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".HelpActivity" />
+        <activity android:name=".help.HelpActivity" />
 
         <activity
-            android:name=".ShowHistoryActivity"
+            android:name=".activity.ShowHistoryActivity"
             android:label="PMHistory"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".activity.MainActivity">
 
         </activity>
 
         <activity
-            android:name=".NewRecipientActivity"
+            android:name=".activity.NewRecipientActivity"
             android:label="Neuer Empfänger"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".activity.MainActivity">
 
         </activity>
 
         <activity
-            android:name=".ShowAuszugActivity"
+            android:name=".activity.ShowAuszugActivity"
             android:label="Kontoauszug"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".activity.MainActivity">
         </activity>
 
         <activity
-            android:name=".BuchenActivity"
+            android:name=".activity.BuchenActivity"
             android:label="Buchung"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".activity.MainActivity">
         </activity>
 
         <activity
-            android:name=".ChangePinInfoActivity"
+            android:name=".activity.ChangePinInfoActivity"
             android:label="Empf. Einstellungen"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".activity.MainActivity">
         </activity>
 
         <activity
-            android:name=".HelpStartActivity"
+            android:name=".help.HelpStartActivity"
             android:label="Hilfe: Start"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".activity.MainActivity">
         </activity>
 
         <activity
-            android:name=".HelpChangePinActivity"
+            android:name=".help.HelpChangePinActivity"
             android:label="Hilfe: Empf. Einstellungen"
-            android:parentActivityName=".ChangePinInfoActivity">
+            android:parentActivityName=".activity.ChangePinInfoActivity">
 
         </activity>
 
         <activity
-            android:name=".HelpBookingActivity"
+            android:name=".help.HelpBookingActivity"
             android:label="Hilfe: Buchung"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".activity.MainActivity">
 
         </activity>
 
         <activity
-            android:name=".HelpNewActivity"
+            android:name=".help.HelpNewActivity"
             android:label="Hilfe: Start"
-            android:parentActivityName=".NewRecipientActivity">
+            android:parentActivityName=".activity.NewRecipientActivity">
 
         </activity>
 

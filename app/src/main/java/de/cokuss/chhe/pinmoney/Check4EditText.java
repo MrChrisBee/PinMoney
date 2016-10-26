@@ -3,7 +3,9 @@ package de.cokuss.chhe.pinmoney;
 import android.util.Log;
 import android.widget.EditText;
 
-class Check4EditText {
+import de.cokuss.chhe.pinmoney.activity.NewRecipientActivity;
+
+public class Check4EditText {
     private static final String LOG_TAG = NewRecipientActivity.class.getSimpleName();
     private String string;
     private boolean valid;
@@ -21,7 +23,7 @@ class Check4EditText {
         return editText;
     }
 
-    boolean isValid() {
+    public boolean isValid() {
         return valid;
     }
 
@@ -29,7 +31,7 @@ class Check4EditText {
         return string;
     }
 
-    static Check4EditText checkEditText(EditText nameFeld, String kind) {
+    public static Check4EditText checkEditText(EditText nameFeld, String kind) {
         String string = nameFeld.getText().toString();
         Check4EditText c4 = new Check4EditText(nameFeld, "", false);
         switch (kind.toLowerCase()) {

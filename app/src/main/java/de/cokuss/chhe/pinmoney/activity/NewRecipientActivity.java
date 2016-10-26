@@ -1,4 +1,4 @@
-package de.cokuss.chhe.pinmoney;
+package de.cokuss.chhe.pinmoney.activity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -15,9 +15,18 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 
-import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
+
+import de.cokuss.chhe.pinmoney.fundamentals.Buchung;
+import de.cokuss.chhe.pinmoney.Check4EditText;
+import de.cokuss.chhe.pinmoney.fundamentals.Cycle;
+import de.cokuss.chhe.pinmoney.DAOImplSQLight;
+import de.cokuss.chhe.pinmoney.DateHelper;
+import de.cokuss.chhe.pinmoney.fundamentals.Konto;
+import de.cokuss.chhe.pinmoney.fundamentals.Payments;
+import de.cokuss.chhe.pinmoney.R;
+import de.cokuss.chhe.pinmoney.help.HelpNewActivity;
 
 public class NewRecipientActivity extends AppCompatActivity {
     private static final String LOG_TAG = NewRecipientActivity.class.getSimpleName();

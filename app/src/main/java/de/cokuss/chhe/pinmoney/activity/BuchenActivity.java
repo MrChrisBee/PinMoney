@@ -1,4 +1,4 @@
-package de.cokuss.chhe.pinmoney;
+package de.cokuss.chhe.pinmoney.activity;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
@@ -14,6 +14,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.Locale;
+
+import de.cokuss.chhe.pinmoney.fundamentals.Buchung;
+import de.cokuss.chhe.pinmoney.Check4EditText;
+import de.cokuss.chhe.pinmoney.DAOImplSQLight;
+import de.cokuss.chhe.pinmoney.fundamentals.Konto;
+import de.cokuss.chhe.pinmoney.R;
+import de.cokuss.chhe.pinmoney.help.HelpBookingActivity;
 
 
 public class BuchenActivity extends AppCompatActivity {

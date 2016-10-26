@@ -1,6 +1,8 @@
-package de.cokuss.chhe.pinmoney;
+package de.cokuss.chhe.pinmoney.fundamentals;
 
 import java.util.Date;
+
+import de.cokuss.chhe.pinmoney.DateHelper;
 
 public class Buchung {
 
@@ -54,7 +56,7 @@ public class Buchung {
         this.id = id;
     }
 
-    Date getDate() {
+    public Date getDate() {
         return date;
     }
 
@@ -62,7 +64,7 @@ public class Buchung {
         this.date = date;
     }
 
-    float getValue() {
+    public float getValue() {
         return value;
     }
 
@@ -70,7 +72,7 @@ public class Buchung {
         this.value = value;
     }
 
-    String getText() {
+    public String getText() {
         return text;
     }
 
@@ -78,7 +80,7 @@ public class Buchung {
         this.text = text;
     }
 
-    Long getVeri_id() {
+    public Long getVeri_id() {
         return veri_id;
     }
 
@@ -86,7 +88,7 @@ public class Buchung {
         this.veri_id = veri_id;
     }
 
-    Integer getVeri_type() {
+    public Integer getVeri_type() {
         return veri_type;
     }
 
@@ -94,7 +96,7 @@ public class Buchung {
         this.veri_type = veri_type;
     }
 
-    float getBalance() {
+    public float getBalance() {
         return balance;
     }
 

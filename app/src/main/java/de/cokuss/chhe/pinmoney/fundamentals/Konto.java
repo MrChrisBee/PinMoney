@@ -1,4 +1,4 @@
-package de.cokuss.chhe.pinmoney;
+package de.cokuss.chhe.pinmoney.fundamentals;
 
 public class Konto {
     private String inhaber;

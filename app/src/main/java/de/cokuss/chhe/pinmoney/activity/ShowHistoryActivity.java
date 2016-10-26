@@ -1,4 +1,4 @@
-package de.cokuss.chhe.pinmoney;
+package de.cokuss.chhe.pinmoney.activity;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +9,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import de.cokuss.chhe.pinmoney.DAOImplSQLight;
+import de.cokuss.chhe.pinmoney.HistoryAdapter;
+import de.cokuss.chhe.pinmoney.PinMoneyEntry;
+import de.cokuss.chhe.pinmoney.R;
 
 public class ShowHistoryActivity extends AppCompatActivity {
     private static final String LOG_TAG = ShowHistoryActivity.class.getSimpleName();

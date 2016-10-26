@@ -1,8 +1,10 @@
-package de.cokuss.chhe.pinmoney;
+package de.cokuss.chhe.pinmoney.fundamentals;
 
 import java.util.ArrayList;
 
-interface KontoDAO {
+import de.cokuss.chhe.pinmoney.fundamentals.Konto;
+
+public interface KontoDAO {
     //Konto Methoden
     ArrayList<Konto> getAllKonten();
 

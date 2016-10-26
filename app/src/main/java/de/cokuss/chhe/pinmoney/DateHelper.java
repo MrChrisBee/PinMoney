@@ -8,9 +8,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-class DateHelper {
+public class DateHelper {
     private final static String LOG_TAG = DateHelper.class.getSimpleName();
-    final DateFormat sdfShort = new SimpleDateFormat("dd.MM.yy", Locale.getDefault());
+    public final DateFormat sdfShort = new SimpleDateFormat("dd.MM.yy", Locale.getDefault());
     final DateFormat sdfLong = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault());
     private Date today = new Date();
 
@@ -19,7 +19,7 @@ class DateHelper {
         Log.d(LOG_TAG, string);
     }
 
-    Date string2Date(Check4EditText c4Thing) {
+    public Date string2Date(Check4EditText c4Thing) {
         Date date = null;
         if (c4Thing.isValid()) {
             try {
@@ -33,7 +33,7 @@ class DateHelper {
         return date;
     }
 
-    Date string2Date(String string) {
+    public Date string2Date(String string) {
         Date date = null;
         try {
             date = sdfShort.parse(string);
