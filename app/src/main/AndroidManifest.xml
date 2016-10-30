@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.MainActivity_">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -21,39 +21,38 @@
         <activity
             android:name=".activity.ShowHistoryActivity"
             android:label="PMHistory"
-            android:parentActivityName=".activity.MainActivity">
-
+            android:parentActivityName=".activity.MainActivity_">
         </activity>
 
         <activity
             android:name=".activity.NewRecipientActivity"
             android:label="Neuer Empfänger"
-            android:parentActivityName=".activity.MainActivity">
+            android:parentActivityName=".activity.MainActivity_">
 
         </activity>
 
         <activity
             android:name=".activity.ShowAuszugActivity"
             android:label="Kontoauszug"
-            android:parentActivityName=".activity.MainActivity">
+            android:parentActivityName=".activity.MainActivity_">
         </activity>
 
         <activity
-            android:name=".activity.BuchenActivity"
+            android:name=".activity.BuchenActivity_"
             android:label="Buchung"
-            android:parentActivityName=".activity.MainActivity">
+            android:parentActivityName=".activity.MainActivity_">
         </activity>
 
         <activity
             android:name=".activity.ChangePinInfoActivity"
             android:label="Empf. Einstellungen"
-            android:parentActivityName=".activity.MainActivity">
+            android:parentActivityName=".activity.MainActivity_">
         </activity>
 
         <activity
             android:name=".help.HelpStartActivity"
             android:label="Hilfe: Start"
-            android:parentActivityName=".activity.MainActivity">
+            android:parentActivityName=".activity.MainActivity_">
         </activity>
 
         <activity
@@ -66,7 +65,7 @@
         <activity
             android:name=".help.HelpBookingActivity"
             android:label="Hilfe: Buchung"
-            android:parentActivityName=".activity.MainActivity">
+            android:parentActivityName=".activity.MainActivity_">
 
         </activity>
 

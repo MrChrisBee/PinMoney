@@ -17,6 +17,10 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Extra;
+
 import java.util.ArrayList;
 
 import de.cokuss.chhe.pinmoney.fundamentals.Buchung;
@@ -25,6 +29,7 @@ import de.cokuss.chhe.pinmoney.fundamentals.Konto;
 import de.cokuss.chhe.pinmoney.R;
 import de.cokuss.chhe.pinmoney.help.HelpStartActivity;
 
+@EActivity(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     ArrayList<Konto> kontenListe;
@@ -32,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     DAOImplSQLight daoImplSQLight;
     //Alert 4 Delete
     AlertDialog.Builder alertBuilder;
+    String KontoName;
     //Buttons bekannt machen
     private Button kontoauszug;
     private Button auszahlung;
@@ -42,25 +48,9 @@ public class MainActivity extends AppCompatActivity {
     //Konto
     private Konto selectedKonto;
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
 
-    @Override
-    protected void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        init();
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setIcon(R.mipmap.ic_launcher);
-    }
-
-    private void init() {
+    @AfterViews
+    protected void init() {
         daoImplSQLight = DAOImplSQLight.getInstance(getApplicationContext());
         accountName = (Spinner) findViewById(R.id.spinner4Child);
         kontoauszug = (Button) findViewById(R.id.button_konto);
@@ -68,6 +58,15 @@ public class MainActivity extends AppCompatActivity {
         einzahlung = (Button) findViewById(R.id.button_einzahlung);
         fillKontoSpinner();
         setListeners();
+        initToolbar();
+    }
+
+    private void initToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setIcon(R.mipmap.ic_launcher);
     }
 
     private void alertDialogDelete(final String konto) {
@@ -142,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setListeners() {
+
         kontoauszug.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -162,10 +162,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (selectedKonto != null) {
-                    Intent intent = new Intent(v.getContext(), BuchenActivity.class);
-                    intent.putExtra("KontoName", selectedKonto.getInhaber());
-                    intent.putExtra("InOut", "In");
-                    startActivity(intent);
+                    BuchenActivity_.intent(v.getContext())
+                            .extra("KontoName",selectedKonto.getInhaber()).extra("InOut","In").start();
+//                    Intent intent = new Intent(v.getContext(), BuchenActivity.class);
+//                    intent.putExtra("KontoName", selectedKonto.getInhaber());
+//                    intent.putExtra("InOut", "In");
+//                    startActivity(intent);
                 } else {
                     Toast.makeText(MainActivity.this, "Bitte erst einen \nTaschengeldempfänger anlegen! \nÜber Settings \n  -> Empfänger \n  -> Neuer Empfänger", Toast.LENGTH_SHORT).show();
                 }
@@ -175,10 +177,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (selectedKonto != null) {
-                    Intent intent = new Intent(v.getContext(), BuchenActivity.class);
-                    intent.putExtra("KontoName", selectedKonto.getInhaber());
-                    intent.putExtra("InOut", "Out");
-                    startActivity(intent);
+                    BuchenActivity_.intent(v.getContext())
+                            .extra("KontoName",selectedKonto.getInhaber()).extra("InOut","Out").start();
+//                    set as a replacement for
+//                    Intent intent = new Intent(v.getContext(), BuchenActivity.class);
+//                    intent.putExtra("KontoName", selectedKonto.getInhaber());
+//                    intent.putExtra("InOut", "Out");
+//                    startActivity(intent);
                 } else {
                     Toast.makeText(MainActivity.this, "Bitte erst einen \nTaschengeldempfänger anlegen! \nÜber Settings \n  -> Empfänger \n  -> Neuer Empfänger", Toast.LENGTH_SHORT).show();
                 }
