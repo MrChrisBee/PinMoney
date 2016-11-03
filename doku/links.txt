@@ -5,3 +5,10 @@ http://www.programmierenlernenhq.de/tutorial-android-options-menu-in-action-bar/
 https://guides.codepath.com/android/Using-the-App-ToolBar
 
 http://www.joda.org/joda-time/index.html
+
+gut ArrayAdapter https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView
+später: Bluetooth https://github.com/SoftdeveloperNeumann/Bluetooth.git funzt nicht sicher
+
+Links zu JUnit
+http://www.torsten-horn.de/techdocs/java-junit.htm
+http://www.tutego.de/blog/javainsel/2010/04/junit-4-tutorial-java-tests-mit-junit

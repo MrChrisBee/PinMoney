@@ -2,7 +2,6 @@ package de.cokuss.chhe.pinmoney.activity;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +12,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EActivity;
+
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -22,6 +24,8 @@ import de.cokuss.chhe.pinmoney.DAOImplSQLight;
 import de.cokuss.chhe.pinmoney.fundamentals.Konto;
 import de.cokuss.chhe.pinmoney.R;
 
+
+@EActivity(R.layout.activity_show_auszug)
 public class ShowAuszugActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = ShowAuszugActivity.class.getSimpleName();
@@ -33,38 +37,38 @@ public class ShowAuszugActivity extends AppCompatActivity {
     ArrayList<Buchung> buchungsListe;
     TextView aktuell;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_auszug);
+    @AfterViews
+    protected void init() {
         daoImplSQLight = DAOImplSQLight.getInstance(getApplicationContext());
-        init();
+        if (getIntent() != null) { //there is a Intent
+            if ((empfaengerStr = getIntent().getStringExtra("KontoName")).length() < 1) {
+                Toaster(getResources().getString(R.string.kontoWaehlen));
+            } else {
+                spinner = (Spinner) findViewById(R.id.spinnerEmpfaenger);
+                kontoList = daoImplSQLight.getAllKonten();
+                aktuell = (TextView) findViewById(R.id.show_actual_count);
+                nameList = new ArrayList<>();
+                for (Konto konto : kontoList) {
+                    nameList.add(konto.getInhaber());
+                }
+                makeSpinnerAdapter();
+                showIt();
+                setListeners();
+                initToolbar();
+            }
+        }
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setIcon(R.mipmap.ic_launcher_account);
     }
 
-    private void init() {
-        if ((empfaengerStr = getIntent().getStringExtra("KontoName")).length() < 1) {
-            Toaster(getResources().getString(R.string.kontoWaehlen));
-            return;
+    private void initToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setDisplayShowHomeEnabled(true);
+            actionBar.setIcon(R.mipmap.ic_launcher_account);
         }
-        spinner = (Spinner) findViewById(R.id.spinnerEmpfaenger);
-        kontoList = daoImplSQLight.getAllKonten();
-        aktuell = (TextView) findViewById(R.id.show_actual_count);
-        nameList = new ArrayList<>();
-        for (Konto konto : kontoList) {
-            nameList.add(konto.getInhaber());
-        }
-        makeSpinnerAdapter();
-        showIt();
-        setListeners();
-
-
     }
 
     private void showIt() {

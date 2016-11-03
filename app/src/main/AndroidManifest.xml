@@ -16,23 +16,23 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".help.HelpActivity" />
+        <activity android:name=".help.HelpActivity_" />
 
         <activity
-            android:name=".activity.ShowHistoryActivity"
+            android:name=".activity.ShowHistoryActivity_"
             android:label="PMHistory"
             android:parentActivityName=".activity.MainActivity_">
         </activity>
 
         <activity
-            android:name=".activity.NewRecipientActivity"
+            android:name=".activity.NewRecipientActivity_"
             android:label="Neuer Empfänger"
             android:parentActivityName=".activity.MainActivity_">
 
         </activity>
 
         <activity
-            android:name=".activity.ShowAuszugActivity"
+            android:name=".activity.ShowAuszugActivity_"
             android:label="Kontoauszug"
             android:parentActivityName=".activity.MainActivity_">
         </activity>
@@ -44,35 +44,35 @@
         </activity>
 
         <activity
-            android:name=".activity.ChangePinInfoActivity"
+            android:name=".activity.ChangePinInfoActivity_"
             android:label="Empf. Einstellungen"
             android:parentActivityName=".activity.MainActivity_">
         </activity>
 
         <activity
-            android:name=".help.HelpStartActivity"
+            android:name=".help.HelpStartActivity_"
             android:label="Hilfe: Start"
             android:parentActivityName=".activity.MainActivity_">
         </activity>
 
         <activity
-            android:name=".help.HelpChangePinActivity"
+            android:name=".help.HelpChangePinActivity_"
             android:label="Hilfe: Empf. Einstellungen"
-            android:parentActivityName=".activity.ChangePinInfoActivity">
+            android:parentActivityName=".activity.ChangePinInfoActivity_">
 
         </activity>
 
         <activity
-            android:name=".help.HelpBookingActivity"
+            android:name=".help.HelpBookingActivity_"
             android:label="Hilfe: Buchung"
             android:parentActivityName=".activity.MainActivity_">
 
         </activity>
 
         <activity
-            android:name=".help.HelpNewActivity"
+            android:name=".help.HelpNewActivity_"
             android:label="Hilfe: Start"
-            android:parentActivityName=".activity.NewRecipientActivity">
+            android:parentActivityName=".activity.NewRecipientActivity_">
 
         </activity>
 

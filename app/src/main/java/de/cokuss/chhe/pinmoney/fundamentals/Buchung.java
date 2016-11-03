@@ -27,14 +27,6 @@ public class Buchung {
         this.balance = balance;
     }
 
-//    @Override
-//    public String toString() {
-//        return "Buchung{ " + id + " vom " + dateHelper.sdfShort.format(date) +
-//                " über " + value + " €  " + text +
-//                " gesammt " + balance + " € }";
-//
-//    }
-
     @Override
     public String toString() {
         return "Buchung{" +

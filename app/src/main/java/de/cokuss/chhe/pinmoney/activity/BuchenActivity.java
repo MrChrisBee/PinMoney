@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -73,9 +72,7 @@ public class BuchenActivity extends AppCompatActivity {
         //Achtung aktualisierung des Kontostandes findet nur hier statt, stelle sicher dass das Vorzeichen Stimmt
         buchung = new Buchung(null, null, wieviel, buchungstext, null, null, empfaenger.getKontostand() + wieviel);
         daoImplSQLight.createBuchung(empfaenger, buchung);
-        Intent intent = new Intent(BuchenActivity.this, ShowAuszugActivity.class);
-        intent.putExtra("KontoName", empfaengerStr);
-        startActivity(intent);
+        ShowAuszugActivity_.intent(this).extra("KontoName", empfaengerStr).start();
     }
 
 
@@ -100,41 +97,6 @@ public class BuchenActivity extends AppCompatActivity {
         //betrag.setText(String.format(Locale.ENGLISH, "%.2f", 0f));
 
 
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (betrag.getTextSize() < 1) {
-//                    Toast.makeText(v.getContext(), "Bitte einen gültigen Wert eingeben. \nDas Format ist €.Cent (7.50)", Toast.LENGTH_LONG).show();
-//                    return;
-//                }
-//                Check4EditText tmpC4;
-//                float wieviel;
-//                tmpC4 = Check4EditText.checkEditText(betrag, "currency");
-//                if (tmpC4.isValid()) {
-//                    wieviel = Float.valueOf(tmpC4.getString());
-//                } else return;
-//                String wievielTxt = String.format(Locale.getDefault(), "%.2f", wieviel);
-//                if (isEinzahlung) {
-//                    Toast.makeText(v.getContext(), "Einzahlung " + wievielTxt + " €", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    Toast.makeText(v.getContext(), "Auszahlung " + wievielTxt + " €", Toast.LENGTH_SHORT).show();
-//                    wieviel = wieviel * -1;
-//                }
-//                if ((text.getText() == null) || (buchungstext = text.getText().toString()).length() < 1) {
-//                    if (isEinzahlung) {
-//                        buchungstext = "Einzahlung";
-//                    } else {
-//                        buchungstext = "Auszahlung";
-//                    }
-//                }
-//                //Achtung aktualisierung des Kontostandes findet nur hier statt, stelle sicher dass das Vorzeichen Stimmt
-//                buchung = new Buchung(null, null, wieviel, buchungstext, null, null, empfaenger.getKontostand() + wieviel);
-//                daoImplSQLight.createBuchung(empfaenger, buchung);
-//                Intent intent = new Intent(BuchenActivity.this, ShowAuszugActivity.class);
-//                intent.putExtra("KontoName", empfaengerStr);
-//                startActivity(intent);
-//            }
-//        });
         initToolbar();
     }
 
@@ -142,10 +104,12 @@ public class BuchenActivity extends AppCompatActivity {
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setIcon(R.mipmap.ic_launcher_booking);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setDisplayShowHomeEnabled(true);
+            actionBar.setIcon(R.mipmap.ic_launcher_booking);
+        }
     }
 
 

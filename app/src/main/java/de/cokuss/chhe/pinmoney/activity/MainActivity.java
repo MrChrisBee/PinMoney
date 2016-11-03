@@ -1,35 +1,33 @@
 package de.cokuss.chhe.pinmoney.activity;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.Extra;
+import org.androidannotations.annotations.OptionsItem;
+import org.androidannotations.annotations.OptionsMenu;
 
 import java.util.ArrayList;
 
+import de.cokuss.chhe.pinmoney.R;
 import de.cokuss.chhe.pinmoney.fundamentals.Buchung;
 import de.cokuss.chhe.pinmoney.DAOImplSQLight;
 import de.cokuss.chhe.pinmoney.fundamentals.Konto;
-import de.cokuss.chhe.pinmoney.R;
-import de.cokuss.chhe.pinmoney.help.HelpStartActivity;
+import de.cokuss.chhe.pinmoney.help.HelpNewActivity_;
 
 @EActivity(R.layout.activity_main)
+@OptionsMenu(R.menu.main_menu)
 public class MainActivity extends AppCompatActivity {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     ArrayList<Konto> kontenListe;
@@ -38,10 +36,6 @@ public class MainActivity extends AppCompatActivity {
     //Alert 4 Delete
     AlertDialog.Builder alertBuilder;
     String KontoName;
-    //Buttons bekannt machen
-    private Button kontoauszug;
-    private Button auszahlung;
-    private Button einzahlung;
     private Spinner accountName;
     private ArrayList<String> array4Adapter = new ArrayList<>();
     private ArrayAdapter<String> arrayAdapter;
@@ -53,9 +47,6 @@ public class MainActivity extends AppCompatActivity {
     protected void init() {
         daoImplSQLight = DAOImplSQLight.getInstance(getApplicationContext());
         accountName = (Spinner) findViewById(R.id.spinner4Child);
-        kontoauszug = (Button) findViewById(R.id.button_konto);
-        auszahlung = (Button) findViewById(R.id.button_auszahlung);
-        einzahlung = (Button) findViewById(R.id.button_einzahlung);
         fillKontoSpinner();
         setListeners();
         initToolbar();
@@ -65,8 +56,45 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setIcon(R.mipmap.ic_launcher);
+        if (actionBar != null) {
+            actionBar.setDisplayShowHomeEnabled(true);
+            actionBar.setIcon(R.mipmap.ic_launcher);
+        }
+    }
+
+    @Click
+    protected void button_konto(View v) {
+        if (selectedKonto != null) {
+            //in case of all Existing Entrys have been deleted
+            if (daoImplSQLight.kontoExists(selectedKonto.getInhaber())) {
+                //Todo delete this if working
+                ShowAuszugActivity_.intent(v.getContext()).extra("KontoName", selectedKonto.getInhaber())
+                        .extra("InOut", "In").start();
+            }
+        } else {
+            Toast.makeText(MainActivity.this, "Bitte erst einen \nTaschengeldempfänger anlegen! \nÜber Settings \n  -> Empfänger \n  -> Neuer Empfänger", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Click
+    protected void button_auszahlung(View v) {
+        if (selectedKonto != null) {
+            BuchenActivity_.intent(v.getContext())
+                    .extra("KontoName", selectedKonto.getInhaber()).extra("InOut", "Out").start();
+        } else {
+            Toast.makeText(MainActivity.this, "Bitte erst einen \nTaschengeldempfänger anlegen! \nÜber Settings \n  -> Empfänger \n  -> Neuer Empfänger", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    @Click
+    protected void button_einzahlung(View v) {
+        if (selectedKonto != null) {
+            BuchenActivity_.intent(v.getContext())
+                    .extra("KontoName", selectedKonto.getInhaber()).extra("InOut", "In").start();
+        } else {
+            Toast.makeText(MainActivity.this, "Bitte erst einen \nTaschengeldempfänger anlegen! \nÜber Settings \n  -> Empfänger \n  -> Neuer Empfänger", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void alertDialogDelete(final String konto) {
@@ -141,54 +169,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setListeners() {
-
-        kontoauszug.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (selectedKonto != null) {
-                    //in case of all Existing Entrys have been deleted
-                    if (daoImplSQLight.kontoExists(selectedKonto.getInhaber())) {
-                        Intent intent = new Intent(v.getContext(), ShowAuszugActivity.class);
-                        intent.putExtra("KontoName", selectedKonto.getInhaber());
-                        startActivity(intent);
-                    }
-                } else {
-                    Toast.makeText(MainActivity.this, "Bitte erst einen \nTaschengeldempfänger anlegen! \nÜber Settings \n  -> Empfänger \n  -> Neuer Empfänger", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        einzahlung.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (selectedKonto != null) {
-                    BuchenActivity_.intent(v.getContext())
-                            .extra("KontoName",selectedKonto.getInhaber()).extra("InOut","In").start();
-//                    Intent intent = new Intent(v.getContext(), BuchenActivity.class);
-//                    intent.putExtra("KontoName", selectedKonto.getInhaber());
-//                    intent.putExtra("InOut", "In");
-//                    startActivity(intent);
-                } else {
-                    Toast.makeText(MainActivity.this, "Bitte erst einen \nTaschengeldempfänger anlegen! \nÜber Settings \n  -> Empfänger \n  -> Neuer Empfänger", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        auszahlung.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (selectedKonto != null) {
-                    BuchenActivity_.intent(v.getContext())
-                            .extra("KontoName",selectedKonto.getInhaber()).extra("InOut","Out").start();
-//                    set as a replacement for
-//                    Intent intent = new Intent(v.getContext(), BuchenActivity.class);
-//                    intent.putExtra("KontoName", selectedKonto.getInhaber());
-//                    intent.putExtra("InOut", "Out");
-//                    startActivity(intent);
-                } else {
-                    Toast.makeText(MainActivity.this, "Bitte erst einen \nTaschengeldempfänger anlegen! \nÜber Settings \n  -> Empfänger \n  -> Neuer Empfänger", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
         accountName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -206,71 +186,72 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_help:
-                Intent intent1 = new Intent(this, HelpStartActivity.class);
-                startActivity(intent1);
-                return true;
-            case R.id.action_new:
-                //Intend für NewReciverActivity
-                Intent intent2 = new Intent(this, NewRecipientActivity.class);
-                startActivity(intent2);
-                return true;
-            case R.id.action_change:
-                Intent intent3 = new Intent(this, ChangePinInfoActivity.class);
-                intent3.putExtra("inhaber", selectedKonto.getInhaber());
-                startActivity(intent3);
-                return true;
-            case R.id.action_delete:
-                //Wurde etwas ausgewählt?
-                accountName.getSelectedItem();
-                if (accountName.getSelectedItem() == null) {
-                    Toast.makeText(this, R.string.kontoWaehlen, Toast.LENGTH_LONG).show();
-                    return false;
-                }
-                String loescheMich = accountName.getSelectedItem().toString();
-                alertDialogDelete(loescheMich);
-                AlertDialog alertDialog = alertBuilder.create();
-                alertDialog.show();
-                return true;
-            case R.id.action_settings:
-                //leider keine Zeit für Extras
-                return true;
-            case R.id.action_close_app:
-                finish();
-                return true;
-            case R.id.action_show_history:
-                //todo Zeige alle History Einträge an -> Auswahlmöglichkeit ?
-                Intent intent4 = new Intent(this, ShowHistoryActivity.class);
-                startActivity(intent4);
-                return true;
-            case R.id.action_test_the_booker:
-                //todo Zeige alle History Einträge an -> Auswahlmöglichkeit ?
-                accountName.getSelectedItem();
-                if (accountName.getSelectedItem() == null) {
-                    Toast.makeText(this, R.string.kontoWaehlen, Toast.LENGTH_LONG).show();
-                    return false;
-                }
-                String testeMich = accountName.getSelectedItem().toString();
-                //errechne das fällige Taschengeld
-                Buchung buchung = daoImplSQLight.calcSavings(this, testeMich);
-                if (buchung != null) {
-                    log(buchung.toString());
-                    alertDialogDoIt(testeMich, buchung);
-                    alertDialog = alertBuilder.create();
-                    alertDialog.show();
-                } else log("Leere Buchung! ");
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
+
+    @OptionsItem(R.id.action_help)
+    void help() {
+        HelpNewActivity_.intent(this).start();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return true;
+    @OptionsItem(R.id.action_close_app)
+    void close() {
+        finish();
+    }
+
+    @OptionsItem(R.id.action_new)
+    void action_new() {
+        NewRecipientActivity_.intent(this).start();
+    }
+
+    @OptionsItem(R.id.action_change)
+    void action_change() {
+        accountName.getSelectedItem();
+        if (accountName.getSelectedItem() == null) {
+            Toast.makeText(this, R.string.kontoWaehlen, Toast.LENGTH_LONG).show();
+        } else {
+            String testeMich = accountName.getSelectedItem().toString();
+            if (testeMich == null || testeMich.length() < 1)
+                log("Achtung : Wert für den Intent nicht gesetzt!");
+            else
+                ChangePinInfoActivity_.intent(this).extra("Inhaber", testeMich).start();
+        }
+    }
+
+    @OptionsItem(R.id.action_delete)
+    void action_delete() {
+        ///Wurde etwas ausgewählt ?
+        accountName.getSelectedItem();
+        if (accountName.getSelectedItem() == null) {
+            Toast.makeText(this, R.string.kontoWaehlen, Toast.LENGTH_LONG).show();
+        } else {
+            String loescheMich = accountName.getSelectedItem().toString();
+            alertDialogDelete(loescheMich);
+            AlertDialog alertDialog = alertBuilder.create();
+            alertDialog.show();
+        }
+    }
+
+    @OptionsItem(R.id.action_show_history)
+    void action_show_history() {
+        ShowHistoryActivity_.intent(this).start();
+    }
+
+    @OptionsItem(R.id.action_test_the_booker)
+    void action_test_the_booker() {
+        //todo Zeige alle History Einträge an -> Auswahlmöglichkeit ?
+        accountName.getSelectedItem();
+        if (accountName.getSelectedItem() == null) {
+            Toast.makeText(this, R.string.kontoWaehlen, Toast.LENGTH_LONG).show();
+        } else {
+            String testeMich = accountName.getSelectedItem().toString();
+            //errechne das fällige Taschengeld
+            Buchung buchung = daoImplSQLight.calcSavings(this, testeMich);
+            if (buchung != null) {
+                log(buchung.toString());
+                alertDialogDoIt(testeMich, buchung);
+                AlertDialog alertDialog = alertBuilder.create();
+                alertDialog.show();
+            } else log("Leere Buchung! ");
+        }
     }
 
     private void log(String string) {
@@ -314,11 +295,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
-// gut ArrayAdapter https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView
-// später: Bluetooth https://github.com/SoftdeveloperNeumann/Bluetooth.git funzt nicht sicher
 
-//Links zu JUnit
-//http://www.torsten-horn.de/techdocs/java-junit.htm
-//http://www.tutego.de/blog/javainsel/2010/04/junit-4-tutorial-java-tests-mit-junit
 
 // NewR\w+|Check\w+|DAO\w+|Pin\w+|MyDate\w+|MainActivity|Show\w+|Konto\w+

@@ -1,19 +1,21 @@
 package de.cokuss.chhe.pinmoney.activity;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.OptionsItem;
+import org.androidannotations.annotations.OptionsMenu;
+import org.androidannotations.annotations.ViewById;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -26,91 +28,85 @@ import de.cokuss.chhe.pinmoney.DateHelper;
 import de.cokuss.chhe.pinmoney.fundamentals.Konto;
 import de.cokuss.chhe.pinmoney.fundamentals.Payments;
 import de.cokuss.chhe.pinmoney.R;
-import de.cokuss.chhe.pinmoney.help.HelpNewActivity;
+import de.cokuss.chhe.pinmoney.help.HelpNewActivity_;
 
+
+@OptionsMenu(R.menu.main_menu_new_recipient)
+@EActivity(R.layout.activity_new_recipient)
 public class NewRecipientActivity extends AppCompatActivity {
     private static final String LOG_TAG = NewRecipientActivity.class.getSimpleName();
+    //private Button button, pickerGeb, pickerStart;
+    private final Calendar c = Calendar.getInstance();
+    // die Views
+    @ViewById(R.id.input_name)
+    EditText nameFeld;
+    @ViewById(R.id.input_birthday)
+    EditText gebDatFeld;
+    @ViewById(R.id.cycle)
+    RadioGroup cycleChecker;
+    @ViewById(R.id.betrag)
+    EditText betragFeld;
+    @ViewById(R.id.startBetrag)
+    EditText startBetragFeld;
+    @ViewById(R.id.input_startDate)
+    EditText startDateFeld;
+
     private DateHelper dateHelper = new DateHelper();
     private DAOImplSQLight daoImplSQLight;
-    // die Views
-    private EditText nameFeld;
-    private EditText gebDatFeld;
-    private RadioGroup cycleChecker;
-    private EditText betragFeld;
-    private EditText startBetragFeld;
-    private EditText startDateFeld;
-    private Button button, pickerGeb, pickerStart;
-    private final Calendar c = Calendar.getInstance();
     private int mYear = c.get(Calendar.YEAR);
     private int mMonth = c.get(Calendar.MONTH);
     private int mDay = c.get(Calendar.DAY_OF_MONTH);
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_recipient);
-        init();
+    @AfterViews
+    void init() {
+        daoImplSQLight = DAOImplSQLight.getInstance(getApplicationContext());
+        initToolbar();
+    }
+
+    void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setIcon(R.mipmap.ic_launcher_new);
     }
 
-    private void init() {
-        daoImplSQLight = DAOImplSQLight.getInstance(getApplicationContext());
-        setViewVars();
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createNewKonto();
-            }
-        });
-        pickerGeb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(),
-                        new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year,
-                                                  int monthOfYear, int dayOfMonth) {
-                                gebDatFeld.setText(dayOfMonth + "." + (monthOfYear + 1) + "." + year);
-                            }
-                        }, mYear, mMonth, mDay);
-                datePickerDialog.show();
-            }
-        });
-        pickerStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(),
-                        new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year,
-                                                  int monthOfYear, int dayOfMonth) {
-                                startDateFeld.setText(dayOfMonth + "." + (monthOfYear + 1) + "." + year);
-                            }
-                        }, mYear, mMonth, mDay);
-                datePickerDialog.show();
-            }
-        });
+    @Click(R.id.button_save_new_child)
+    void button() {
+        createNewKonto();
     }
 
-    private void setViewVars() {
-        button = (Button) findViewById(R.id.button_save_new_child);
-        pickerGeb = (Button) findViewById(R.id.birthdayButton);
-        pickerStart = (Button) findViewById(R.id.showCalendar);
-        nameFeld = (EditText) findViewById(R.id.input_name);
-        cycleChecker = (RadioGroup) findViewById(R.id.cycle);
-        betragFeld = (EditText) findViewById(R.id.betrag);
-        startBetragFeld = (EditText) findViewById(R.id.startBetrag);
-        gebDatFeld = (EditText) findViewById(R.id.input_birthday);
-        startDateFeld = (EditText) findViewById(R.id.input_startDate);
+    @Click(R.id.birthdayButton)
+    void pickerGeb(View v) {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(),
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+                        gebDatFeld.setText(dayOfMonth + "." + (monthOfYear + 1) + "." + year);
+                    }
+                }, mYear, mMonth, mDay);
+        datePickerDialog.show();
+    }
+
+    @Click(R.id.showCalendar)
+    void pickerStart(View v) {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(),
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+                        startDateFeld.setText(dayOfMonth + "." + (monthOfYear + 1) + "." + year);
+                    }
+                }, mYear, mMonth, mDay);
+        datePickerDialog.show();
     }
 
     private void createNewKonto() {
+        //Todo Veryfi via Annotation ???
         Check4EditText tmpC4;
         //kontoname
         tmpC4 = Check4EditText.checkEditText(nameFeld, "name");
@@ -181,24 +177,9 @@ public class NewRecipientActivity extends AppCompatActivity {
         } else nameFeld.setError("Der Kontoname ist ungültig!");
     }
 
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main_menu_new_recipient, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_help_new_recipient:
-                Intent intent1 = new Intent(this, HelpNewActivity.class);
-                startActivity(intent1);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
+    @OptionsItem(R.id.action_help_new_recipient)
+    void helper() {
+        HelpNewActivity_.intent(this).start();
     }
 
     private void log(String string) {
