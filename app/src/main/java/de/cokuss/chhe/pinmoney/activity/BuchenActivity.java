@@ -25,6 +25,7 @@ import de.cokuss.chhe.pinmoney.DAOImplSQLight;
 import de.cokuss.chhe.pinmoney.fundamentals.Konto;
 import de.cokuss.chhe.pinmoney.R;
 import de.cokuss.chhe.pinmoney.help.HelpBookingActivity;
+import de.cokuss.chhe.pinmoney.help.HelpBookingActivity_;
 
 @EActivity(R.layout.activity_buchen)
 public class BuchenActivity extends AppCompatActivity {
@@ -106,10 +107,10 @@ public class BuchenActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            ActionBar actionBar = getSupportActionBar();
-            actionBar.setDisplayShowHomeEnabled(true);
-            actionBar.setIcon(R.mipmap.ic_launcher_booking);
         }
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setIcon(R.mipmap.ic_launcher_booking);
     }
 
 
@@ -125,7 +126,7 @@ public class BuchenActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_help_booking:
-                Intent intent1 = new Intent(this, HelpBookingActivity.class);
+                Intent intent1 = new Intent(this, HelpBookingActivity_.class);
                 startActivity(intent1);
                 return true;
         }
