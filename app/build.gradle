@@ -8,10 +8,11 @@ android {
 
     defaultConfig {
         applicationId "de.cokuss.chhe.pinmoney"
-        minSdkVersion 16
+        minSdkVersion 17
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -19,13 +20,25 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    packagingOptions {
+        exclude 'LICENCE.txt'
+        exclude 'junit/runner/smalllogo.gif'
+        exclude 'junit/runner/logo.gif'
+        exclude 'LICENSE-junit.txt'
+    }
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:25.0.0'
     androidTestCompile files('libs/junit-4.12.jar')
+    compile 'com.android.support:appcompat-v7:25.0.0'
     compile 'com.android.support:design:25.0.0'
     apt "org.androidannotations:androidannotations:$AAVersion"
     compile "org.androidannotations:androidannotations-api:$AAVersion"
+    androidTestCompile ('com.android.support.test.espresso:espresso-core:2.2.2') {
+        exclude group: 'com.android.support'
+    }
+    androidTestCompile ('com.android.support.test:runner:0.5') {
+        exclude group: 'com.android.support'
+    }
 }
