@@ -39,17 +39,17 @@ public class NewRecipientActivity extends AppCompatActivity {
     private final Calendar c = Calendar.getInstance();
     // die Views
     @ViewById(R.id.input_name)
-    EditText nameFeld;
+    EditText nameField;
     @ViewById(R.id.input_birthday)
-    EditText gebDatFeld;
+    EditText gebDatField;
     @ViewById(R.id.cycle)
     RadioGroup cycleChecker;
     @ViewById(R.id.betrag)
-    EditText betragFeld;
+    EditText valueField;
     @ViewById(R.id.startBetrag)
-    EditText startBetragFeld;
-    @ViewById(R.id.input_startDate)
-    EditText startDateFeld;
+    EditText startValueField;
+    @ViewById(R.id.start_date)
+    EditText startDateField;
 
     private DateHelper dateHelper = new DateHelper();
     private DAOImplSQLight daoImplSQLight;
@@ -86,7 +86,7 @@ public class NewRecipientActivity extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
-                        gebDatFeld.setText(dayOfMonth + "." + (monthOfYear + 1) + "." + year);
+                        gebDatField.setText(dayOfMonth + "." + (monthOfYear + 1) + "." + year);
                     }
                 }, mYear, mMonth, mDay);
         datePickerDialog.show();
@@ -99,7 +99,7 @@ public class NewRecipientActivity extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
-                        startDateFeld.setText(dayOfMonth + "." + (monthOfYear + 1) + "." + year);
+                        startDateField.setText(dayOfMonth + "." + (monthOfYear + 1) + "." + year);
                     }
                 }, mYear, mMonth, mDay);
         datePickerDialog.show();
@@ -109,14 +109,14 @@ public class NewRecipientActivity extends AppCompatActivity {
         //Todo Veryfi via Annotation ???
         Check4EditText tmpC4;
         //kontoname
-        tmpC4 = Check4EditText.checkEditText(nameFeld, "name");
+        tmpC4 = Check4EditText.checkEditText(nameField, "name");
         String kontoname;
         if (tmpC4.isValid()) {
             kontoname = tmpC4.getString();
             log("Kontoname gesetzt aus CreateNewKonto: " + kontoname);
         } else return;
         //gebDatum
-        tmpC4 = Check4EditText.checkEditText(gebDatFeld, "date");
+        tmpC4 = Check4EditText.checkEditText(gebDatField, "date");
         Date gebDatum;
         if (tmpC4.isValid()) {
             gebDatum = dateHelper.string2Date(tmpC4);
@@ -138,21 +138,21 @@ public class NewRecipientActivity extends AppCompatActivity {
                 return;
         }
         //betrag
-        tmpC4 = Check4EditText.checkEditText(betragFeld, "currency");
+        tmpC4 = Check4EditText.checkEditText(valueField, "currency");
         float betrag;
         if (tmpC4.isValid()) {
             betrag = Float.parseFloat(tmpC4.getString());
             log("betrag gesetzt aus CreateNewKonto: " + betrag);
         } else return;
         //startBetrag
-        tmpC4 = Check4EditText.checkEditText(startBetragFeld, "currency");
+        tmpC4 = Check4EditText.checkEditText(startValueField, "currency");
         float startBetrag;
         if (tmpC4.isValid()) {
             startBetrag = Float.parseFloat(tmpC4.getString());
             log("startBetrag gesetzt aus CreateNewKonto: " + startBetrag);
         } else return;
         //startDatum
-        tmpC4 = Check4EditText.checkEditText(startDateFeld, "date");
+        tmpC4 = Check4EditText.checkEditText(startDateField, "date");
         Date startDatum;
         if (tmpC4.isValid()) {
             startDatum = dateHelper.string2Date(tmpC4);
@@ -173,8 +173,8 @@ public class NewRecipientActivity extends AppCompatActivity {
                 daoImplSQLight.addEntryToPinMoney(kontoname, gebDatum, payments, "neu");
                 log("createnew setPinmoney erstellt");
                 this.finish();
-            } else nameFeld.setError("Das Konto Existiert bereits!");
-        } else nameFeld.setError("Der Kontoname ist ungültig!");
+            } else nameField.setError("Das Konto Existiert bereits!");
+        } else nameField.setError("Der Kontoname ist ungültig!");
     }
 
     @OptionsItem(R.id.action_help_new_recipient)

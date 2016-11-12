@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
         for (Konto konto : kontenListe) {
             array4Adapter.add(konto.getInhaber());
         }
-        log("fillArray4Adapter array 4 adapter size: " + array4Adapter.size());
+       //rem log("fillArray4Adapter array 4 adapter size: " + array4Adapter.size());
         arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, array4Adapter);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         accountName.setAdapter(arrayAdapter);
