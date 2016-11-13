@@ -1,12 +1,10 @@
 package de.cokuss.chhe.pinmoney.activity;
 
-import android.app.DatePickerDialog;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 
@@ -79,31 +77,42 @@ public class NewRecipientActivity extends AppCompatActivity {
         createNewKonto();
     }
 
+
     @Click(R.id.birthdayButton)
     void pickerGeb(View v) {
-        DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(),
-                new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year,
-                                          int monthOfYear, int dayOfMonth) {
-                        gebDatField.setText(dayOfMonth + "." + (monthOfYear + 1) + "." + year);
-                    }
-                }, mYear, mMonth, mDay);
-        datePickerDialog.show();
+
     }
 
     @Click(R.id.showCalendar)
     void pickerStart(View v) {
-        DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(),
-                new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year,
-                                          int monthOfYear, int dayOfMonth) {
-                        startDateField.setText(dayOfMonth + "." + (monthOfYear + 1) + "." + year);
-                    }
-                }, mYear, mMonth, mDay);
-        datePickerDialog.show();
+
     }
+
+//    @Click(R.id.birthdayButton)
+//    void pickerGeb(View v) {
+//        DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(),
+//                new DatePickerDialog.OnDateSetListener() {
+//                    @Override
+//                    public void onDateSet(DatePicker view, int year,
+//                                          int monthOfYear, int dayOfMonth) {
+//                        gebDatField.setText(dayOfMonth + "." + (monthOfYear + 1) + "." + year);
+//                    }
+//                }, mYear, mMonth, mDay);
+//        datePickerDialog.show();
+//    }
+//
+//    @Click(R.id.showCalendar)
+//    void pickerStart(View v) {
+//        DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(),
+//                new DatePickerDialog.OnDateSetListener() {
+//                    @Override
+//                    public void onDateSet(DatePicker view, int year,
+//                                          int monthOfYear, int dayOfMonth) {
+//                        startDateField.setText(dayOfMonth + "." + (monthOfYear + 1) + "." + year);
+//                    }
+//                }, mYear, mMonth, mDay);
+//        datePickerDialog.show();
+//    }
 
     private void createNewKonto() {
         //Todo Veryfi via Annotation ???
@@ -113,14 +122,12 @@ public class NewRecipientActivity extends AppCompatActivity {
         String kontoname;
         if (tmpC4.isValid()) {
             kontoname = tmpC4.getString();
-            log("Kontoname gesetzt aus CreateNewKonto: " + kontoname);
         } else return;
         //gebDatum
         tmpC4 = Check4EditText.checkEditText(gebDatField, "date");
         Date gebDatum;
         if (tmpC4.isValid()) {
             gebDatum = dateHelper.string2Date(tmpC4);
-            log("gebDatum gesetzt aus CreateNewKonto: " + gebDatum.toString());
         } else return;
         Cycle cycle;
         switch (cycleChecker.getCheckedRadioButtonId()) {
@@ -134,7 +141,6 @@ public class NewRecipientActivity extends AppCompatActivity {
                 cycle = Cycle.MONATLICH;
                 break;
             default: //einer der Werte sollte es sein
-                Log.e(LOG_TAG, "Cycle not valid");
                 return;
         }
         //betrag
@@ -142,21 +148,18 @@ public class NewRecipientActivity extends AppCompatActivity {
         float betrag;
         if (tmpC4.isValid()) {
             betrag = Float.parseFloat(tmpC4.getString());
-            log("betrag gesetzt aus CreateNewKonto: " + betrag);
         } else return;
         //startBetrag
         tmpC4 = Check4EditText.checkEditText(startValueField, "currency");
         float startBetrag;
         if (tmpC4.isValid()) {
             startBetrag = Float.parseFloat(tmpC4.getString());
-            log("startBetrag gesetzt aus CreateNewKonto: " + startBetrag);
         } else return;
         //startDatum
         tmpC4 = Check4EditText.checkEditText(startDateField, "date");
         Date startDatum;
         if (tmpC4.isValid()) {
             startDatum = dateHelper.string2Date(tmpC4);
-            log("startDatum gesetzt aus CreateNewKonto: " + startDatum.toString());
         } else return;
         if (daoImplSQLight.isValidKontoName(kontoname)) {
             if (!daoImplSQLight.kontoExists(kontoname)) {
@@ -165,13 +168,11 @@ public class NewRecipientActivity extends AppCompatActivity {
                 //Konto erstellen
                 Konto konto = new Konto(kontoname, startBetrag);
                 daoImplSQLight.createKonto(konto);
-                log("createnew Konto erstellt");
                 //erste Buchung mit Startbetrag
                 Buchung buchung = new Buchung(null, null, startBetrag, "Neuanlage", null, null, startBetrag);
                 daoImplSQLight.createBuchung(konto, buchung);
                 //Eintrag in die History
                 daoImplSQLight.addEntryToPinMoney(kontoname, gebDatum, payments, "neu");
-                log("createnew setPinmoney erstellt");
                 this.finish();
             } else nameField.setError("Das Konto Existiert bereits!");
         } else nameField.setError("Der Kontoname ist ungültig!");
