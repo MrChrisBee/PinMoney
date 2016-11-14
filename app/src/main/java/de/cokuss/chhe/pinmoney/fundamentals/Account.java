@@ -1,10 +1,10 @@
 package de.cokuss.chhe.pinmoney.fundamentals;
 
-public class Konto {
+public class Account {
     private String inhaber;
     private float kontostand;
 
-    public Konto (String inhaber,float kontostand) {
+    public Account(String inhaber, float kontostand) {
         this.kontostand = kontostand;
         this.inhaber = inhaber;
     }

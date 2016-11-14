@@ -4,7 +4,7 @@ import java.util.Date;
 
 import de.cokuss.chhe.pinmoney.DateHelper;
 
-public class Buchung {
+public class Booking {
 
     private Long id;
     private Date date;
@@ -17,7 +17,7 @@ public class Buchung {
     private DateHelper dateHelper;
 
 
-    public Buchung(Long id, Date date, float value, String text, Long veri_id, Integer veri_type, float balance) {
+    public Booking(Long id, Date date, float value, String text, Long veri_id, Integer veri_type, float balance) {
         this.id = id;
         this.date = date;
         this.value = value;
@@ -29,7 +29,7 @@ public class Buchung {
 
     @Override
     public String toString() {
-        return "Buchung{" +
+        return "Booking{" +
                 "id=" + id +
                 ", date=" + date +
                 ", value=" + value +

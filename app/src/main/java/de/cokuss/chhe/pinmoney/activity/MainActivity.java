@@ -21,26 +21,25 @@ import org.androidannotations.annotations.OptionsMenu;
 import java.util.ArrayList;
 
 import de.cokuss.chhe.pinmoney.R;
-import de.cokuss.chhe.pinmoney.fundamentals.Buchung;
+import de.cokuss.chhe.pinmoney.fundamentals.Booking;
 import de.cokuss.chhe.pinmoney.DAOImplSQLight;
-import de.cokuss.chhe.pinmoney.fundamentals.Konto;
+import de.cokuss.chhe.pinmoney.fundamentals.Account;
 import de.cokuss.chhe.pinmoney.help.HelpNewActivity_;
 
 @EActivity(R.layout.activity_main)
 @OptionsMenu(R.menu.main_menu)
 public class MainActivity extends AppCompatActivity {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
-    ArrayList<Konto> kontenListe;
+    ArrayList<Account> kontenListe;
     //DAO
     DAOImplSQLight daoImplSQLight;
     //Alert 4 Delete
     AlertDialog.Builder alertBuilder;
-    String KontoName;
     private Spinner accountName;
     private ArrayList<String> array4Adapter = new ArrayList<>();
     private ArrayAdapter<String> arrayAdapter;
-    //Konto
-    private Konto selectedKonto;
+    //Account
+    private Account selectedKonto;
 
 
     @AfterViews
@@ -64,13 +63,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Click
     protected void button_konto(View v) {
+        String customer;
         if (selectedKonto != null) {
-            //in case of all Existing Entrys have been deleted
-            if (daoImplSQLight.kontoExists(selectedKonto.getInhaber())) {
-                //Todo delete this if working
-                ShowAuszugActivity_.intent(v.getContext()).extra("KontoName", selectedKonto.getInhaber())
-                        .extra("InOut", "In").start();
-            }
+            customer = selectedKonto.getInhaber();
+            //check and book if there is a change in Pinmoney for this client
+            daoImplSQLight.checkForNewSavings(v.getContext(), customer);
+            ShowAuszugActivity_.intent(v.getContext()).extra("KontoName", customer)
+                    .extra("InOut", "In").start();
         } else {
             Toast.makeText(MainActivity.this, "Bitte erst einen \nTaschengeldempfänger anlegen! \nÜber Settings \n  -> Empfänger \n  -> Neuer Empfänger", Toast.LENGTH_SHORT).show();
         }
@@ -78,9 +77,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Click
     protected void button_auszahlung(View v) {
+        String customer;
         if (selectedKonto != null) {
+            customer = selectedKonto.getInhaber();
+            //check and book if there is a change in Pinmoney for this client
+            daoImplSQLight.checkForNewSavings(v.getContext(), customer);
             BuchenActivity_.intent(v.getContext())
-                    .extra("KontoName", selectedKonto.getInhaber()).extra("InOut", "Out").start();
+                    .extra("KontoName", customer).extra("InOut", "Out").start();
         } else {
             Toast.makeText(MainActivity.this, "Bitte erst einen \nTaschengeldempfänger anlegen! \nÜber Settings \n  -> Empfänger \n  -> Neuer Empfänger", Toast.LENGTH_SHORT).show();
         }
@@ -89,9 +92,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Click
     protected void button_einzahlung(View v) {
+        String customer;
         if (selectedKonto != null) {
+            customer = selectedKonto.getInhaber();
+            //check and book if there is a change in Pinmoney for this client
+            daoImplSQLight.checkForNewSavings(v.getContext(), customer);
             BuchenActivity_.intent(v.getContext())
-                    .extra("KontoName", selectedKonto.getInhaber()).extra("InOut", "In").start();
+                    .extra("KontoName", customer).extra("InOut", "In").start();
         } else {
             Toast.makeText(MainActivity.this, "Bitte erst einen \nTaschengeldempfänger anlegen! \nÜber Settings \n  -> Empfänger \n  -> Neuer Empfänger", Toast.LENGTH_SHORT).show();
         }
@@ -99,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void alertDialogDelete(final String konto) {
         alertBuilder = new AlertDialog.Builder(MainActivity.this);
-        alertBuilder.setMessage("Soll das Konto " + konto + " wirklich gelöscht werden ?");
+        alertBuilder.setMessage("Soll das Account " + konto + " wirklich gelöscht werden ?");
         alertBuilder.setCancelable(true);
         alertBuilder.setPositiveButton(
                 "Ja",
@@ -121,15 +128,15 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    private void alertDialogDoIt(final String konto, final Buchung buchung) {
+    private void alertDialogDoIt(final String konto, final Booking booking) {
         alertBuilder = new AlertDialog.Builder(MainActivity.this);
-        alertBuilder.setMessage("Soll ich die Buchung für das Konto " + konto + " ausführen? Keine Angst das steht hier nur zu Test zwecken!");
+        alertBuilder.setMessage("Soll ich die Booking für den Account " + konto + " ausführen? Keine Angst das steht hier nur zu Test zwecken!");
         alertBuilder.setCancelable(true);
         alertBuilder.setPositiveButton(
                 "Ja",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        daoImplSQLight.createBuchung(daoImplSQLight.getKonto(konto), buchung);
+                        daoImplSQLight.createBuchung(daoImplSQLight.getKonto(konto), booking);
                         dialog.cancel();
                     }
                 });
@@ -146,10 +153,10 @@ public class MainActivity extends AppCompatActivity {
     private void fillKontoSpinner() {
         if (arrayAdapter != null) arrayAdapter.clear();
         kontenListe = daoImplSQLight.getAllKonten();
-        for (Konto konto : kontenListe) {
+        for (Account konto : kontenListe) {
             array4Adapter.add(konto.getInhaber());
         }
-       //rem log("fillArray4Adapter array 4 adapter size: " + array4Adapter.size());
+        //rem log("fillArray4Adapter array 4 adapter size: " + array4Adapter.size());
         arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, array4Adapter);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         accountName.setAdapter(arrayAdapter);
@@ -162,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
         if (daoImplSQLight.isValidKontoName(selectedName)) {
             if (daoImplSQLight.kontoExists(selectedName)) {
                 float kontostand = daoImplSQLight.getKontostand(selectedName);
-                selectedKonto = new Konto(selectedName, kontostand);
+                selectedKonto = new Account(selectedName, kontostand);
                 log("setSelectedKonto: " + selectedKonto.getInhaber() + " " + selectedKonto.getKontostand());
             }
         }
@@ -235,25 +242,6 @@ public class MainActivity extends AppCompatActivity {
         ShowHistoryActivity_.intent(this).start();
     }
 
-    @OptionsItem(R.id.action_test_the_booker)
-    void action_test_the_booker() {
-        //todo Zeige alle History Einträge an -> Auswahlmöglichkeit ?
-        accountName.getSelectedItem();
-        if (accountName.getSelectedItem() == null) {
-            Toast.makeText(this, R.string.kontoWaehlen, Toast.LENGTH_LONG).show();
-        } else {
-            String testeMich = accountName.getSelectedItem().toString();
-            //errechne das fällige Taschengeld
-            Buchung buchung = daoImplSQLight.calcSavings(this, testeMich);
-            if (buchung != null) {
-                log(buchung.toString());
-                alertDialogDoIt(testeMich, buchung);
-                AlertDialog alertDialog = alertBuilder.create();
-                alertDialog.show();
-            } else log("Leere Buchung! ");
-        }
-    }
-
     private void log(String string) {
         Log.d(LOG_TAG, string);
     }
@@ -297,4 +285,4 @@ public class MainActivity extends AppCompatActivity {
 }
 
 
-// NewR\w+|Check\w+|DAO\w+|Pin\w+|MyDate\w+|MainActivity|Show\w+|Konto\w+
+// NewR\w+|Check\w+|DAO\w+|Pin\w+|MyDate\w+|MainActivity|Show\w+|Account\w+

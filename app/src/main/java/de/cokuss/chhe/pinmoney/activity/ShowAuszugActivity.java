@@ -18,10 +18,10 @@ import org.androidannotations.annotations.EActivity;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import de.cokuss.chhe.pinmoney.fundamentals.Buchung;
+import de.cokuss.chhe.pinmoney.fundamentals.Account;
+import de.cokuss.chhe.pinmoney.fundamentals.Booking;
 import de.cokuss.chhe.pinmoney.BuchungssatzAdapter;
 import de.cokuss.chhe.pinmoney.DAOImplSQLight;
-import de.cokuss.chhe.pinmoney.fundamentals.Konto;
 import de.cokuss.chhe.pinmoney.R;
 
 
@@ -32,9 +32,9 @@ public class ShowAuszugActivity extends AppCompatActivity {
     DAOImplSQLight daoImplSQLight;
     String empfaengerStr;
     Spinner spinner;
-    ArrayList<Konto> kontoList;
+    ArrayList<Account> kontoList;
     ArrayList<String> nameList;
-    ArrayList<Buchung> buchungsListe;
+    ArrayList<Booking> buchungsListe;
     TextView aktuell;
 
     @AfterViews
@@ -48,7 +48,7 @@ public class ShowAuszugActivity extends AppCompatActivity {
                 kontoList = daoImplSQLight.getAllKonten();
                 aktuell = (TextView) findViewById(R.id.show_actual_count);
                 nameList = new ArrayList<>();
-                for (Konto konto : kontoList) {
+                for (Account konto : kontoList) {
                     nameList.add(konto.getInhaber());
                 }
                 makeSpinnerAdapter();
@@ -72,8 +72,10 @@ public class ShowAuszugActivity extends AppCompatActivity {
     }
 
     private void showIt() {
-        // make a change via Spinner (see setListeners) possible
+        // make a change via Spinner possible (see setListeners)
         spinner.setSelection(nameList.indexOf(empfaengerStr));
+        //check and book if there is a change in Pinmoney for this client
+        daoImplSQLight.checkForNewSavings(this,empfaengerStr);
         buchungsListe = daoImplSQLight.getAllBuchungen(empfaengerStr);
         aktuell.setText(String.format(Locale.getDefault(), "%.2f", daoImplSQLight.getKontostand(empfaengerStr)));
         makeListViewAdapter();

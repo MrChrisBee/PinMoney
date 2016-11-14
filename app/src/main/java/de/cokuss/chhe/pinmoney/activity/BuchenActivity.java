@@ -19,22 +19,21 @@ import org.androidannotations.annotations.AfterViews;
 
 import java.util.Locale;
 
-import de.cokuss.chhe.pinmoney.fundamentals.Buchung;
+import de.cokuss.chhe.pinmoney.fundamentals.Booking;
 import de.cokuss.chhe.pinmoney.Check4EditText;
 import de.cokuss.chhe.pinmoney.DAOImplSQLight;
-import de.cokuss.chhe.pinmoney.fundamentals.Konto;
+import de.cokuss.chhe.pinmoney.fundamentals.Account;
 import de.cokuss.chhe.pinmoney.R;
-import de.cokuss.chhe.pinmoney.help.HelpBookingActivity;
 import de.cokuss.chhe.pinmoney.help.HelpBookingActivity_;
 
 @EActivity(R.layout.activity_buchen)
 public class BuchenActivity extends AppCompatActivity {
     private static final String LOG_TAG = BuchenActivity.class.getSimpleName();
-    Konto empfaenger;
+    Account empfaenger;
     String empfaengerStr, buchungstext;
     Boolean isEinzahlung;
     DAOImplSQLight daoImplSQLight;
-    Buchung buchung;
+    Booking booking;
     @ViewById
     TextView kontoname, kontostand, header;
     @ViewById
@@ -71,8 +70,8 @@ public class BuchenActivity extends AppCompatActivity {
             }
         }
         //Achtung aktualisierung des Kontostandes findet nur hier statt, stelle sicher dass das Vorzeichen Stimmt
-        buchung = new Buchung(null, null, wieviel, buchungstext, null, null, empfaenger.getKontostand() + wieviel);
-        daoImplSQLight.createBuchung(empfaenger, buchung);
+        booking = new Booking(null, null, wieviel, buchungstext, null, null, empfaenger.getKontostand() + wieviel);
+        daoImplSQLight.createBuchung(empfaenger, booking);
         ShowAuszugActivity_.intent(this).extra("KontoName", empfaengerStr).start();
     }
 

@@ -12,11 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import de.cokuss.chhe.pinmoney.fundamentals.Buchung;
+import de.cokuss.chhe.pinmoney.fundamentals.Booking;
 
-public class BuchungssatzAdapter extends ArrayAdapter<Buchung> {
-    public BuchungssatzAdapter(Context context, ArrayList<Buchung> buchungen) {
-        super(context, 0, (List<Buchung>) buchungen);
+public class BuchungssatzAdapter extends ArrayAdapter<Booking> {
+    public BuchungssatzAdapter(Context context, ArrayList<Booking> buchungen) {
+        super(context, 0, (List<Booking>) buchungen);
     }
 
     private DateHelper dateHelper = new DateHelper();
@@ -24,7 +24,7 @@ public class BuchungssatzAdapter extends ArrayAdapter<Buchung> {
     @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Buchung buchung = getItem(position);
+        Booking booking = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
 
         if (convertView == null) {
@@ -38,20 +38,20 @@ public class BuchungssatzAdapter extends ArrayAdapter<Buchung> {
         TextView tvSumme = (TextView) convertView.findViewById(R.id.iBuSumme);
         // Populate the data into the template view using the data object
 
-        if (buchung != null) {
-            if (buchung.getDate() != null) {
-                tvDate.setText(dateHelper.sdfShort.format(buchung.getDate()));
+        if (booking != null) {
+            if (booking.getDate() != null) {
+                tvDate.setText(dateHelper.sdfShort.format(booking.getDate()));
             } else {
                 tvDate.setText(R.string.impossible);
             }
-            tvBuchungstext.setText(buchung.getText());
-            if (buchung.getVeri_type() != null) {
-                tvVeryfikation.setText(buchung.getVeri_type().toString());
+            tvBuchungstext.setText(booking.getText());
+            if (booking.getVeri_type() != null) {
+                tvVeryfikation.setText(booking.getVeri_type().toString());
             } else {
                 tvVeryfikation.setText(R.string.unbestaetigt);
             }
-            tvBetrag.setText(String.format(Locale.getDefault(), "%.2f", buchung.getValue()));
-            tvSumme.setText(String.format(Locale.getDefault(), "%.2f", buchung.getBalance()));
+            tvBetrag.setText(String.format(Locale.getDefault(), "%.2f", booking.getValue()));
+            tvSumme.setText(String.format(Locale.getDefault(), "%.2f", booking.getBalance()));
         }
         // Return the completed view to render on screen
         return convertView;

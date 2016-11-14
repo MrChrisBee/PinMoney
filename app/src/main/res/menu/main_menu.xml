@@ -59,12 +59,6 @@
         app:showAsAction="never" />
 
     <item
-    android:id="@+id/action_test_the_booker"
-    android:orderInCategory="130"
-    android:title="@string/test"
-    app:showAsAction="always" />
-
-    <item
         android:id="@+id/action_close_app"
         android:orderInCategory="140"
         android:title="@string/close_app"

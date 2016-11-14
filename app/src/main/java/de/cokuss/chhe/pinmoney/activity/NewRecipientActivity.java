@@ -21,12 +21,12 @@ import org.androidannotations.annotations.ViewById;
 import java.util.Calendar;
 import java.util.Date;
 
-import de.cokuss.chhe.pinmoney.fundamentals.Buchung;
+import de.cokuss.chhe.pinmoney.fundamentals.Account;
+import de.cokuss.chhe.pinmoney.fundamentals.Booking;
 import de.cokuss.chhe.pinmoney.Check4EditText;
 import de.cokuss.chhe.pinmoney.fundamentals.Cycle;
 import de.cokuss.chhe.pinmoney.DAOImplSQLight;
 import de.cokuss.chhe.pinmoney.DateHelper;
-import de.cokuss.chhe.pinmoney.fundamentals.Konto;
 import de.cokuss.chhe.pinmoney.fundamentals.Payments;
 import de.cokuss.chhe.pinmoney.R;
 import de.cokuss.chhe.pinmoney.help.HelpNewActivity_;
@@ -35,6 +35,7 @@ import de.cokuss.chhe.pinmoney.help.HelpNewActivity_;
 @OptionsMenu(R.menu.main_menu_new_recipient)
 @EActivity(R.layout.activity_new_recipient)
 public class NewRecipientActivity extends AppCompatActivity implements OnDateSetListener {
+    public static final String DATEPICKER_TAG = "datepicker";
     private static final String LOG_TAG = NewRecipientActivity.class.getSimpleName();
     //private Button button, pickerGeb, pickerStart;
     private final Calendar c = Calendar.getInstance();
@@ -51,21 +52,20 @@ public class NewRecipientActivity extends AppCompatActivity implements OnDateSet
     EditText startValueField;
     @ViewById(R.id.start_date)
     EditText startDateField;
-
     private DateHelper dateHelper = new DateHelper();
     private DAOImplSQLight daoImplSQLight;
     private int mYear = c.get(Calendar.YEAR);
     private int mMonth = c.get(Calendar.MONTH);
     private int mDay = c.get(Calendar.DAY_OF_MONTH);
-    private DatePickerDialog datePickerDialog;
-    public static final String DATEPICKER_TAG = "datepicker";
+    private DatePickerDialog datePickerDialog, gebPickerDialog, startPickerDialog;
     private EditText editDate = null;
+
     @AfterViews
     void init() {
-
         daoImplSQLight = DAOImplSQLight.getInstance(getApplicationContext());
         initToolbar();
-        datePickerDialog = DatePickerDialog.newInstance(this, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), false);
+        gebPickerDialog = DatePickerDialog.newInstance(this, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), false);
+        startPickerDialog = DatePickerDialog.newInstance(this, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), false);
     }
 
     void initToolbar() {
@@ -86,27 +86,30 @@ public class NewRecipientActivity extends AppCompatActivity implements OnDateSet
 
     @Override
     public void onDateSet(DatePickerDialog datePickerDialog, int year, int month, int day) {
-
-        editDate.setText(day + "." + (month+1) + "." + year);
+        editDate.setText(day + "." + (month + 1) + "." + year);
     }
 
     @Click(R.id.birthdayButton)
     void pickerGeb(View v) {
-        dpd(false);
+        //set the DatePicker, using different DatePickerDialog's just for starting date
+        dpd(gebPickerDialog, false);
+        //define the destination for onDateSet
         editDate = gebDatField;
     }
 
     @Click(R.id.startDateButton)
     void pickerStart(View v) {
-        dpd(true);
+        //set the DatePicker, using different DatePickerDialog's just for starting date
+        dpd(startPickerDialog, true);
+        //define the destination for onDateSet
         editDate = startDateField;
     }
 
-    private void dpd(boolean single) {
-        datePickerDialog.setVibrate(false);
-        datePickerDialog.setYearRange(1950, 2036);
-        datePickerDialog.setCloseOnSingleTapDay(single);
-        datePickerDialog.show(getSupportFragmentManager(), DATEPICKER_TAG);
+    private void dpd(DatePickerDialog picker, boolean single) {
+        picker.setVibrate(false);
+        picker.setYearRange(1950, 2036);
+        picker.setCloseOnSingleTapDay(single);
+        picker.show(getSupportFragmentManager(), DATEPICKER_TAG);
     }
 
     private void createNewKonto() {
@@ -138,38 +141,38 @@ public class NewRecipientActivity extends AppCompatActivity implements OnDateSet
             default: //einer der Werte sollte es sein
                 return;
         }
-        //betrag
+        //value
         tmpC4 = Check4EditText.checkEditText(valueField, "currency");
-        float betrag;
+        float value;
         if (tmpC4.isValid()) {
-            betrag = Float.parseFloat(tmpC4.getString());
+            value = Float.parseFloat(tmpC4.getString());
         } else return;
-        //startBetrag
+        //startValue
         tmpC4 = Check4EditText.checkEditText(startValueField, "currency");
-        float startBetrag;
+        float startValue;
         if (tmpC4.isValid()) {
-            startBetrag = Float.parseFloat(tmpC4.getString());
+            startValue = Float.parseFloat(tmpC4.getString());
         } else return;
-        //startDatum
+        //startDate
         tmpC4 = Check4EditText.checkEditText(startDateField, "date");
-        Date startDatum;
+        Date startDate;
         if (tmpC4.isValid()) {
-            startDatum = dateHelper.string2Date(tmpC4);
+            startDate = dateHelper.string2Date(tmpC4);
         } else return;
         if (daoImplSQLight.isValidKontoName(kontoname)) {
             if (!daoImplSQLight.kontoExists(kontoname)) {
-                //Zahlung erstellen
-                Payments payments = new Payments(startDatum, cycle, betrag);
-                //Konto erstellen
-                Konto konto = new Konto(kontoname, startBetrag);
-                daoImplSQLight.createKonto(konto);
-                //erste Buchung mit Startbetrag
-                Buchung buchung = new Buchung(null, null, startBetrag, "Neuanlage", null, null, startBetrag);
-                daoImplSQLight.createBuchung(konto, buchung);
+                //create payments
+                Payments payments = new Payments(startDate, cycle, value);
+                //create account
+                Account account = new Account(kontoname, startValue);
+                daoImplSQLight.createKonto(account);
+                //erste Booking mit Startbetrag
+                Booking booking = new Booking(null, null, startValue, "Neuanlage", null, null, startValue);
+                daoImplSQLight.createBuchung(account, booking);
                 //Eintrag in die History
                 daoImplSQLight.addEntryToPinMoney(kontoname, gebDatum, payments, "neu");
                 this.finish();
-            } else nameField.setError("Das Konto Existiert bereits!");
+            } else nameField.setError("Das Account Existiert bereits!");
         } else nameField.setError("Der Kontoname ist ungültig!");
     }
 

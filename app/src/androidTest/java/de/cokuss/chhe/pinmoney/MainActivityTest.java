@@ -34,19 +34,20 @@ public class MainActivityTest {
     String name = "Testkunde";
 
     @Test
-    public void no0_isCustomerInList() {
+    public void a0_isCustomerInList() {
+        //delete old customer
         onView(withId(R.id.spinner4Child)).perform(click());
         onData(hasToString(startsWith(name))).perform(click());
         onView(allOf(withId(-1), isClickable())).perform(click());
         onView(withText("Empfänger")).perform(click());
         onView(withText("Empfänger löschen")).perform(click());
-        String findme = "Soll das Konto " + name + " wirklich gelöscht werden ?";
+        String findme = "Soll das Account " + name + " wirklich gelöscht werden ?";
         onView(withText(findme)).check(matches(isDisplayed()));
         onView(withText("Ja")).perform(click());
     }
 
     @Test
-    public void no1_LegeTestkundenAn() {
+    public void a1_LegeTestkundenAn() {
 
         onView(allOf(withId(-1), isClickable())).perform(click());
         onView(withText("Empfänger")).perform(click());
