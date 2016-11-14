@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 
+import com.fourmob.datetimepicker.date.DatePickerDialog;
+import com.fourmob.datetimepicker.date.DatePickerDialog.OnDateSetListener;
+
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
@@ -31,7 +34,7 @@ import de.cokuss.chhe.pinmoney.help.HelpNewActivity_;
 
 @OptionsMenu(R.menu.main_menu_new_recipient)
 @EActivity(R.layout.activity_new_recipient)
-public class NewRecipientActivity extends AppCompatActivity {
+public class NewRecipientActivity extends AppCompatActivity implements OnDateSetListener {
     private static final String LOG_TAG = NewRecipientActivity.class.getSimpleName();
     //private Button button, pickerGeb, pickerStart;
     private final Calendar c = Calendar.getInstance();
@@ -54,11 +57,15 @@ public class NewRecipientActivity extends AppCompatActivity {
     private int mYear = c.get(Calendar.YEAR);
     private int mMonth = c.get(Calendar.MONTH);
     private int mDay = c.get(Calendar.DAY_OF_MONTH);
-
+    private DatePickerDialog datePickerDialog;
+    public static final String DATEPICKER_TAG = "datepicker";
+    private EditText editDate = null;
     @AfterViews
     void init() {
+
         daoImplSQLight = DAOImplSQLight.getInstance(getApplicationContext());
         initToolbar();
+        datePickerDialog = DatePickerDialog.newInstance(this, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), false);
     }
 
     void initToolbar() {
@@ -77,42 +84,30 @@ public class NewRecipientActivity extends AppCompatActivity {
         createNewKonto();
     }
 
+    @Override
+    public void onDateSet(DatePickerDialog datePickerDialog, int year, int month, int day) {
+
+        editDate.setText(day + "." + (month+1) + "." + year);
+    }
 
     @Click(R.id.birthdayButton)
     void pickerGeb(View v) {
-
+        dpd(false);
+        editDate = gebDatField;
     }
 
-    @Click(R.id.showCalendar)
+    @Click(R.id.startDateButton)
     void pickerStart(View v) {
-
+        dpd(true);
+        editDate = startDateField;
     }
 
-//    @Click(R.id.birthdayButton)
-//    void pickerGeb(View v) {
-//        DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(),
-//                new DatePickerDialog.OnDateSetListener() {
-//                    @Override
-//                    public void onDateSet(DatePicker view, int year,
-//                                          int monthOfYear, int dayOfMonth) {
-//                        gebDatField.setText(dayOfMonth + "." + (monthOfYear + 1) + "." + year);
-//                    }
-//                }, mYear, mMonth, mDay);
-//        datePickerDialog.show();
-//    }
-//
-//    @Click(R.id.showCalendar)
-//    void pickerStart(View v) {
-//        DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(),
-//                new DatePickerDialog.OnDateSetListener() {
-//                    @Override
-//                    public void onDateSet(DatePicker view, int year,
-//                                          int monthOfYear, int dayOfMonth) {
-//                        startDateField.setText(dayOfMonth + "." + (monthOfYear + 1) + "." + year);
-//                    }
-//                }, mYear, mMonth, mDay);
-//        datePickerDialog.show();
-//    }
+    private void dpd(boolean single) {
+        datePickerDialog.setVibrate(false);
+        datePickerDialog.setYearRange(1950, 2036);
+        datePickerDialog.setCloseOnSingleTapDay(single);
+        datePickerDialog.show(getSupportFragmentManager(), DATEPICKER_TAG);
+    }
 
     private void createNewKonto() {
         //Todo Veryfi via Annotation ???

@@ -33,6 +33,7 @@ dependencies {
     androidTestCompile files('libs/junit-4.12.jar')
     compile 'com.android.support:appcompat-v7:25.0.0'
     compile 'com.android.support:design:25.0.0'
+    compile 'com.github.flavienlaurent.datetimepicker:library:0.0.2'
     apt "org.androidannotations:androidannotations:$AAVersion"
     compile "org.androidannotations:androidannotations-api:$AAVersion"
     androidTestCompile ('com.android.support.test.espresso:espresso-core:2.2.2') {

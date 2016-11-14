@@ -55,7 +55,7 @@
     <string name="summe">Summe</string>
     <string name="select_date">SELECT DATE</string>
     <string name="select_time">SELECT TIME</string>
-    <string name="tg_betrag">TG-Betrag:</string>
+    <string name="tg_betrag">Taschengeld:</string>
     <string name="title_actual_count">Aktuell:</string>
     <string name="title_monthly">monatlich</string>
     <string name="title_weekly">wöchentlich</string>

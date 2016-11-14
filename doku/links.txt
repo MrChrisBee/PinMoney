@@ -12,3 +12,6 @@ später: Bluetooth https://github.com/SoftdeveloperNeumann/Bluetooth.git funzt n
 Links zu JUnit
 http://www.torsten-horn.de/techdocs/java-junit.htm
 http://www.tutego.de/blog/javainsel/2010/04/junit-4-tutorial-java-tests-mit-junit
+
+Der etwas andere DatePicker wg. Samsung Bug bei Android 5
+https://github.com/flavienlaurent/datetimepicker
